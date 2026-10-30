@@ -9,15 +9,19 @@
 // FLOW  one snapshot -> slices -> schema facts -> what each product holds -> judge each path -> one report -> printout
 // The proofs on fake products run first (no network), then the live run.
 //
-// What counts as an inconsistency (the owner's rulings, 2026-10-30):
+// What counts as an inconsistency (the owner's rulings, 2026-10-30), in the order it is printed.
+// A value is listed once, under the first kind that finds it, so the totals count it once;
+// the items inside a list or object that is already listed are covered by that entry.
 //   null stored                          a key whose value is null (the clean form of "no value" is no key at all)
 //   empty list stored                    filterAttributes only: a list with no items
+//   path the schema does not declare     a value on a path the schema does not declare for this scope
 //   mixed form on one path               the products of one scope hold the same path in different forms
 //                                        (text, number, true/false, list, object)
 //   form differs from the schema         a stored form other than the one the schema declares
-//   path the schema does not declare     a value on a path the schema does not declare for this scope
-//   value outside the option list        text not in the schema's option list; in filterAttributes only, also the same word with other capitals
-//                                        (a facet groups by exact text; the non-filter fields are display text, so capitals are not checked there)
+//   value outside the option list        text not in the schema's option list
+//   spellings that differ only by capitals
+//                                        filterAttributes only: a facet groups by exact text, so Black and black are two options;
+//                                        the non-filter fields are display text, so capitals are not checked there
 //   required field absent                non-filter fields only: the schema requires the field and the product has no key
 // A missing key is clean (except a required field). This checks form, not truth: a wrong but well-formed value passes.
 
@@ -50,7 +54,7 @@ type Doc = Record<string, any> & { _id: string };
 type CatalogueItem = { _id: string; _rev: string; slug: string | null; parent: string | null };
 type Snapshot = { count: number; products: Doc[]; catalogue: CatalogueItem[] };
 type Form = 'null' | 'array' | 'object' | 'string' | 'number' | 'boolean';
-type Seen = { id: string; at: string; form: Form; empty: boolean; value: string | null };
+type Seen = { id: string; at: string; up: string | null; form: Form; empty: boolean; value: string | null };
 type Decl = { form: Form | 'any'; opaque: boolean; required: boolean; vocab: string[] | null };
 type Section = Record<string, { note: string; entries: string[] }>;
 type Findings = {
@@ -66,13 +70,13 @@ type Findings = {
 };
 type SchemaInput = { productFields: any[]; filterGroups: Record<string, any[]> };
 
-// The kinds of inconsistency, in the order they are printed.
+// The kinds of inconsistency, in the order they are printed. A value is listed under the first kind that finds it.
 const SECTIONS = [
   ['nullStored', 'null stored'],
   ['emptyListStored', 'empty list stored'],
+  ['undeclared', 'path the schema does not declare here'],
   ['mixedForm', 'mixed form on one path'],
   ['differsFromSchema', 'form differs from the schema'],
-  ['undeclared', 'path the schema does not declare here'],
   ['offList', 'value outside the option list'],
   ['caseVariants', 'spellings that differ only by capitals'],
   ['requiredAbsent', 'required field absent'],
@@ -244,30 +248,32 @@ function readSchema(fields: any[], leaveOut: string[] = []): Map<string, Decl> {
 //      for example 'rows[].v' -> [{ id: 'p01', at: 'rows[0].v', form: 'string', ... }, ...]
 // WHY  everything after this compares the places that share a path; a list is read item by item under 'path[]'
 //      keys that start with _ are the CMS's own and are skipped
+//      each place also names its parent place (up), so a place inside a list or object can be tied to it
 function walk(roots: { id: string; root: Record<string, any>; skip: string[] }[]): Map<string, Seen[]> {
   const seen = new Map<string, Seen[]>();
-  const visit = (value: unknown, path: string, id: string, at: string) => {
+  const visit = (value: unknown, path: string, id: string, at: string, up: string | null) => {
     const form = formOf(value);
     const places = seen.get(path) ?? [];
     seen.set(path, places);
     places.push({
       id,
       at,
+      up,
       form,
       empty: form === 'array' && (value as unknown[]).length === 0,
       value: form === 'string' ? (value as string) : null,
     });
     if (form === 'array') {
-      (value as unknown[]).forEach((item, i) => visit(item, `${path}[]`, id, `${at}[${i}]`));
+      (value as unknown[]).forEach((item, i) => visit(item, `${path}[]`, id, `${at}[${i}]`, at));
     } else if (form === 'object') {
       for (const key of Object.keys(value as object)) {
-        if (!key.startsWith('_')) visit((value as any)[key], `${path}.${key}`, id, `${at}.${key}`);
+        if (!key.startsWith('_')) visit((value as any)[key], `${path}.${key}`, id, `${at}.${key}`, at);
       }
     }
   };
   for (const { id, root, skip } of roots) {
     for (const key of Object.keys(root)) {
-      if (!key.startsWith('_') && !skip.includes(key)) visit(root[key], key, id, key);
+      if (!key.startsWith('_') && !skip.includes(key)) visit(root[key], key, id, key, null);
     }
   }
   return seen;
@@ -279,6 +285,7 @@ function walk(roots: { id: string; root: Record<string, any>; skip: string[] }[]
 // OUT  Findings: one section per kind of inconsistency; each path has a one-line note and its entries
 //      an entry is 'id place' (for example 'p02 cost.amount string')
 // WHY  this is the one place that decides what is an inconsistency; the proof below pins every decision
+//      a value is listed once, under the first kind in the printed order; the items inside a list or object that is already listed are covered by that entry
 const histogram = (counts: Record<string, number>) =>
   Object.keys(counts)
     .sort()
@@ -300,14 +307,34 @@ function classify(
   const opaqueRoots = [...schema].filter(([, d]) => d.opaque).map(([path]) => path);
   const underOpaque = (path: string) => opaqueRoots.some((o) => path.startsWith(`${o}.`) || path.startsWith(`${o}[`));
 
+  // A value is listed once: `take` keeps the places that no earlier kind has listed, and lists them now.
+  const claimed = new Set<string>();
+  const take = (places: Seen[]) => {
+    const fresh = places.filter((s) => !claimed.has(`${s.id} ${s.at}`));
+    for (const s of fresh) claimed.add(`${s.id} ${s.at}`);
+    return fresh;
+  };
+
   for (const path of [...seen.keys()].sort(byText)) {
-    const all = seen.get(path) as Seen[];
-    const nulls = all.filter((s) => s.form === 'null');
-    const empties = all.filter((s) => s.empty);
+    // A path sorts before its children, so a place inside a list or object that is already listed is covered by that entry.
+    const all = (seen.get(path) as Seen[]).filter((s) => {
+      if (s.up === null || !claimed.has(`${s.id} ${s.up}`)) return true;
+      claimed.add(`${s.id} ${s.at}`);
+      return false;
+    });
+    const nulls = take(all.filter((s) => s.form === 'null'));
+    const empties = take(all.filter((s) => s.empty));
     const real = all.filter((s) => s.form !== 'null' && !s.empty);
 
     if (nulls.length) put(f.nullStored, path, '', nulls.map((s) => entry(s)));
     if (empties.length) put(mode === 'filter' ? f.emptyListStored : f.info.emptyLists, path, '', empties.map((s) => entry(s)));
+
+    const decl = schema.get(path);
+    if (!decl && !underOpaque(path)) {
+      const declaredIn = Object.keys(others).filter((name) => others[name].has(path)).sort();
+      const here = take(real);
+      if (here.length) put(f.undeclared, path, declaredIn.length ? `declared in ${declaredIn.join(', ')}` : 'declared nowhere', here.map((s) => entry(s)));
+    }
 
     const counts: Record<string, number> = {};
     for (const s of real) counts[s.form] = (counts[s.form] ?? 0) + 1;
@@ -316,30 +343,23 @@ function classify(
       const majority = forms.reduce((a, b) => (counts[b] > counts[a] ? b : a));
       const rest = { ...counts };
       delete rest[majority];
-      put(
-        f.mixedForm,
-        path,
-        `most hold ${majority}; others: ${histogram(rest)}`,
-        real.filter((s) => s.form !== majority).map((s) => entry(s, ` ${s.form}`)),
-      );
+      const minority = take(real.filter((s) => s.form !== majority));
+      if (minority.length) {
+        put(f.mixedForm, path, `most hold ${majority}; others: ${histogram(rest)}`, minority.map((s) => entry(s, ` ${s.form}`)));
+      }
     }
 
-    const decl = schema.get(path);
     if (decl && decl.form !== 'any') {
-      const wrong = real.filter((s) => s.form !== decl.form);
+      const wrong = take(real.filter((s) => s.form !== decl.form));
       if (wrong.length) {
         put(f.differsFromSchema, path, `schema declares ${decl.form}; stored: ${histogram(counts)}`, wrong.map((s) => entry(s, ` ${s.form}`)));
       }
-    }
-    if (!decl && real.length && !underOpaque(path)) {
-      const declaredIn = Object.keys(others).filter((name) => others[name].has(path)).sort();
-      put(f.undeclared, path, declaredIn.length ? `declared in ${declaredIn.join(', ')}` : 'declared nowhere', real.map((s) => entry(s)));
     }
 
     const strings = real.filter((s) => s.form === 'string');
     const vocab = decl?.vocab ?? null;
     if (vocab) {
-      const off = strings.filter((s) => !vocab.includes(s.value as string));
+      const off = take(strings.filter((s) => !vocab.includes(s.value as string)));
       if (off.length) put(f.offList, path, 'outside the option list', off.map((s) => entry(s, ` value=${s.value}`)));
     } else if (mode === 'filter') {
       // a facet groups by exact text, so two spellings of one word are two options; the non-filter fields are display text
@@ -349,7 +369,7 @@ function classify(
         spellings.set(lower, (spellings.get(lower) ?? new Set<string>()).add(s.value as string));
       }
       const clashing = new Set([...spellings.values()].filter((raws) => raws.size > 1).flatMap((raws) => [...raws]));
-      const hits = strings.filter((s) => clashing.has(s.value as string));
+      const hits = take(strings.filter((s) => clashing.has(s.value as string)));
       if (hits.length) put(f.caseVariants, path, 'same word, different capitals', hits.map((s) => entry(s, ` value=${s.value}`)));
     }
   }
@@ -445,6 +465,8 @@ function renderScope(title: string, f: Findings, limit: number): string[] {
 // Slices: headphones p01 p02 p03 p09, audio-electronics p04 p05 p09, accessories p06 p07 p10; p08 is in none, p09 in two.
 // Each kind of inconsistency appears at least once; the draft must be ignored; the products are not in id order.
 // Capitals: mat (p06 Brass, p10 brass) is flagged in filterAttributes; the labels a (p01) and A (p10) are one word with other capitals on a non-filter field and must not be flagged.
+// Counted once: fx (p01 text, p03 number) is an undeclared path, so it is listed whole and not again as mixed form; extras (p03) is an undeclared
+// list, so its items are not listed again, nor as capitals; wire (p06) is a list where the schema says text, listed once as differing form, its items not again.
 const img = (ref: string) => ({ _type: 'image', asset: { _type: 'reference', _ref: ref } });
 const fakeSchema: SchemaInput = {
   productFields: [
@@ -489,6 +511,7 @@ const fakeSchema: SchemaInput = {
       { name: 'len', type: 'number' },
       { name: 'mat', type: 'string' },
       { name: 'idle', type: 'string' },
+      { name: 'wire', type: 'string' },
     ],
   },
 };
@@ -512,7 +535,7 @@ const fakeSnapshot: Snapshot = {
       cover: 'img',
       rows: [],
       catalogueLocationKeys: ['c-hp-1'],
-      filterAttributes: { tags: [], cups: ['closed', 'Closed'], ohms: 32, bat: { on: 6 }, fx: 1 },
+      filterAttributes: { tags: [], cups: ['closed', 'Closed'], ohms: 32, bat: { on: 6 }, fx: 1, extras: ['n', 'N'] },
     },
     { _id: 'p10', label: 'A', cost: { amount: 90, unit: 'zz' }, cover: img('i9'), catalogueLocationKeys: ['c-ac-1'], filterAttributes: { tags: ['r'], len: 2, mat: 'brass' } },
     {
@@ -522,7 +545,7 @@ const fakeSnapshot: Snapshot = {
       cover: img('i1'),
       rows: [{ k: 'a', v: 'b' }],
       catalogueLocationKeys: ['c-hp-1'],
-      filterAttributes: { tags: ['q'], cups: ['open'], ohms: 32, bat: { on: 5, off: 7 } },
+      filterAttributes: { tags: ['q'], cups: ['open'], ohms: 32, bat: { on: 5, off: 7 }, fx: 'one' },
     },
     { _id: 'p05', label: 'e', cost: null, cover: img('i4'), catalogueLocationKeys: ['c-ae'], filterAttributes: { tags: ['q'], chip: 'Alpha', bal: null } },
     { _id: 'p09', label: 'i', cost: { amount: 80, unit: 'zz' }, cover: img('i8'), catalogueLocationKeys: ['c-hp-1', 'c-ae'], filterAttributes: { tags: ['q'] } },
@@ -546,7 +569,7 @@ const fakeSnapshot: Snapshot = {
       catalogueLocationKeys: ['c-ae'],
       filterAttributes: { tags: ['q'], chip: 'alpha', bal: true, len: 3 },
     },
-    { _id: 'p06', label: 'f', cost: { amount: 50, unit: 'zz' }, cover: img('i5'), catalogueLocationKeys: ['c-ac-1'], filterAttributes: { tags: ['r'], len: 1.5, mat: 'Brass' } },
+    { _id: 'p06', label: 'f', cost: { amount: 50, unit: 'zz' }, cover: img('i5'), catalogueLocationKeys: ['c-ac-1'], filterAttributes: { tags: ['r'], len: 1.5, mat: 'Brass', wire: ['x', 'X'] } },
   ],
 };
 
@@ -576,17 +599,12 @@ const expectedReport = {
   nonFilter: {
     ...blank(),
     nullStored: { cost: s('', ['p05 cost']) },
+    undeclared: { dial: s('declared nowhere', ['p04 dial']) },
     mixedForm: {
       'cost.amount': s('most hold number; others: string 1', ['p02 cost.amount string']),
       cover: s('most hold object; others: string 1', ['p03 cover string']),
       'rows[].v': s('most hold string; others: number 1', ['p02 rows[0].v number']),
     },
-    differsFromSchema: {
-      'cost.amount': s('schema declares number; stored: number 7, string 1', ['p02 cost.amount string']),
-      cover: s('schema declares object; stored: object 9, string 1', ['p03 cover string']),
-      'rows[].v': s('schema declares string; stored: number 1, string 2', ['p02 rows[0].v number']),
-    },
-    undeclared: { dial: s('declared nowhere', ['p04 dial']) },
     requiredAbsent: {
       label: s('required by the schema', ['p08 label']),
       'cost.amount': s('required by the schema', ['p07 cost.amount']),
@@ -598,9 +616,11 @@ const expectedReport = {
       ...blank(),
       nullStored: { 'bat.off': s('', ['p02 bat.off']) },
       emptyListStored: { tags: s('', ['p03 tags']) },
+      undeclared: {
+        extras: s('declared nowhere', ['p03 extras']),
+        fx: s('declared nowhere', ['p01 fx', 'p03 fx']),
+      },
       mixedForm: { cups: s('most hold array; others: string 1', ['p02 cups string']) },
-      differsFromSchema: { cups: s('schema declares array; stored: array 2, string 1', ['p02 cups string']) },
-      undeclared: { fx: s('declared nowhere', ['p03 fx']) },
       offList: { 'cups[]': s('outside the option list', ['p03 cups[1] value=Closed']) },
     },
     'audio-electronics': {
@@ -615,10 +635,7 @@ const expectedReport = {
         len: s('most hold number; others: string 1', ['p07 len string']),
         tags: s('most hold array; others: string 1', ['p07 tags string']),
       },
-      differsFromSchema: {
-        len: s('schema declares number; stored: number 2, string 1', ['p07 len string']),
-        tags: s('schema declares array; stored: array 2, string 1', ['p07 tags string']),
-      },
+      differsFromSchema: { wire: s('schema declares string; stored: array 1', ['p06 wire array']) },
       caseVariants: { mat: s('same word, different capitals', ['p06 mat value=Brass', 'p10 mat value=brass']) },
       info: { emptyLists: {}, heldByNobody: ['idle'] },
     },
@@ -644,14 +661,14 @@ null stored: entries 2, paths 1
 
 empty list stored: none
 
+path the schema does not declare here: none
+
 mixed form on one path: entries 1, paths 1
   cups  count 1
     most hold array; others: string 1
     p02 cups string
 
 form differs from the schema: none
-
-path the schema does not declare here: none
 
 value outside the option list: none
 
@@ -731,7 +748,7 @@ const head = [
   `  in no slice: ${idsOf(result.slices.none)}`,
   `  in several slices: ${idsOf(result.slices.several)}`,
   '',
-  'inconsistencies by scope',
+  'inconsistencies by scope (each value is counted once, under the first kind that finds it)',
   ...scopes.map((scope) => `  ${scope.title}: ${totalOf(scope.findings)}`),
 ];
 const body = (limit: number) => scopes.flatMap((scope) => ['', '', ...renderScope(scope.title, scope.findings, limit)]);
