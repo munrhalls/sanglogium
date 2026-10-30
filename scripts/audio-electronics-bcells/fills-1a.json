@@ -25,7 +25,7 @@
       "name": "iFi Audio GO bar Kensei Portable Hi-Res USB DAC and Preamp",
       "set": {
         "maxSampleRateBitDepth": "32-bit/384kHz",
-        "dsdSupport": "dsd256",
+        "dsdSupport": "dsd256-plus",
         "networkConnection": []
       },
       "sources": [
@@ -40,7 +40,7 @@
       "name": "iFi Audio GO Bar Portable USB DAC & Headphone Amplifier",
       "set": {
         "maxSampleRateBitDepth": "32-bit/384kHz",
-        "dsdSupport": "dsd256",
+        "dsdSupport": "dsd256-plus",
         "networkConnection": []
       },
       "sources": [
