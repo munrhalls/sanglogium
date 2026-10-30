@@ -37,7 +37,6 @@ const { fetchFacetProducts } = await import('@/features/product-filtering/adapte
 const { fetchPicklist } = await import('@/features/product-filtering/adapters/sanity/fetchPicklist');
 const { buildFacetSet } = await import('@/features/product-filtering/core/rules/buildFacetSet');
 const { filterFieldPaths } = await import('@/features/product-filtering/schema/filterFieldPaths');
-const { sharedFields } = await import('@/features/products/schema/productFilterAttributes/shared');
 const { headphonesFields } = await import('@/features/products/schema/productFilterAttributes/headphones');
 const { audioElectronicsFields } = await import('@/features/products/schema/productFilterAttributes/audioElectronics');
 const { accessoriesFields } = await import('@/features/products/schema/productFilterAttributes/accessories');
@@ -49,9 +48,9 @@ const OWN_RULES = new Set(['brand', 'inStock', 'price']); // checked by their ow
 // The fields each slice's picklist can offer: the same composition as filterAttributeGroups in productFilterAttributes/index.ts
 // (that file imports `sanity`, which plain node does not load).
 const PICKABLE: Record<(typeof SLICES)[number], Set<string>> = {
-  headphones: new Set(filterFieldPaths([...sharedFields, ...headphonesFields])),
-  'audio-electronics': new Set(filterFieldPaths([...sharedFields, ...audioElectronicsFields])),
-  accessories: new Set(filterFieldPaths([...sharedFields, ...accessoriesFields])),
+  headphones: new Set(filterFieldPaths([...headphonesFields])),
+  'audio-electronics': new Set(filterFieldPaths([...audioElectronicsFields])),
+  accessories: new Set(filterFieldPaths([...accessoriesFields])),
 };
 
 // The same walk as unrollDescendantKeys in features/catalogue, on the same JSON.

@@ -1,5 +1,4 @@
 import { defineField } from "sanity";
-import { sharedFields } from "./shared";
 import { headphonesFields } from "./headphones";
 import { audioElectronicsFields } from "./audioElectronics";
 import { accessoriesFields } from "./accessories";
@@ -10,7 +9,10 @@ export const filterAttributesField = defineField({
       type: "object",
       description:
         "Closed, machine-readable attributes used by the catalogue filter controls and GROQ predicates. Option lists editors pick from live in ./vocab.ts.",
-      fields: ([...sharedFields, ...headphonesFields, ...audioElectronicsFields, ...accessoriesFields] as any[]).map(({ domain, domainField, ...field }) =>
+      fields: ([...headphonesFields, ...audioElectronicsFields, ...accessoriesFields] as any[])
+        // awards is listed by two slices; Studio gets it once
+        .filter((field, i, all) => all.findIndex((other) => other.name === field.name) === i)
+        .map(({ domain, domainField, ...field }) =>
         defineField({
           ...field,
           hidden: ({ document }) => {
@@ -31,7 +33,7 @@ export const filterAttributesField = defineField({
     });
 
 export const filterAttributeGroups = {
-  headphones: [...sharedFields, ...headphonesFields],
-  audioElectronics: [...sharedFields, ...audioElectronicsFields],
-  accessories: [...sharedFields, ...accessoriesFields],
+  headphones: [...headphonesFields],
+  audioElectronics: [...audioElectronicsFields],
+  accessories: [...accessoriesFields],
 };

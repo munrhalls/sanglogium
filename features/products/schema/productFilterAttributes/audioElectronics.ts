@@ -1,6 +1,8 @@
 import { vocabFor } from "./vocab";
+import { awardsField } from "./shared";
 
 export const audioElectronicsFields: any[] = [
+        awardsField,
         {
           name: "deviceConnectivity",
           title: "Connectivity",
