@@ -1,77 +1,72 @@
-// Products structure check
+// Products structure check: is each thing written one way, wherever it appears?
+// PASS or NO. It judges whether products agree with each other, never whether a value is true.
 //
-// Question: in the published products, is each thing written one way, in every place it appears?
-// Answer: PASS or NO. It judges whether products agree with each other, never whether a value is true.
+// A place is a position in a product, for example filterAttributes.freqResponseHz.min. An array step is [].
+//   1. one form                  a place never holds two of: string, number, boolean, array, object
+//   2. one way to say no value   a place writes "no value" one way: null, empty text, empty list, empty object or a missing key
+//                                (a key counts as missing only where another object at that place has it)
+//   3. one spelling              two values at a place never differ only in case or spaces, nor do two key names under a place
 //
-// A place is a position in a product document, for example filterAttributes.freqResponseHz.min. An array step is [].
-// Three rules, each a yes/no. PASS needs all three to be yes.
-//   1. one form                  a place holds string, number, boolean, array or object, never two of them
-//   2. one way to say no value   "no value" at a place is written one way: null, empty text, empty list, empty object or a missing key.
-//                                A key counts as missing only where another object at that place has it.
-//   3. one spelling              two values at a place never differ only in case or spaces. Nor do two key names under one place.
+// Not read: overviewFields (out of scope) and filterAttributes.sourcing (a quote is exact, and sourcing is assumed true).
+// Not judged: two words for one fact, typos, units, punctuation. Each looks like two real values; only a person's list could tell.
 //
-// Not judged, forced: two different words for one fact ("Frequency response" and "Freq. response", or one key under two names),
-// a letter-off typo ("wirless"), a unit. Each looks exactly like two real values: "in-ear" and "on-ear" are both real.
-// Only a list of the facts and their allowed values, written by a person, could tell.
-// Not judged, chosen: punctuation. "Weight:" and "Weight" are one value but "105dB" and "≥105dB" are two, and only a person can tell.
-// Not read: overviewFields, in every product. It is out of scope, so the walk never looks inside it.
-// Not read: filterAttributes.sourcing, in every product. A quote is exact, so two quotes that differ in case are two quotes, not one value spelled twice. Sourcing is assumed true.
+// Human-run, reads only: node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-products.mjs
+// Exit 0 PASS. Exit 1 NO, every broken place is printed. Exit 2 no verdict: it could not read, or the self-proof failed.
 //
-// Human-run, reads only. From the repo root:
-//   node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-products.mjs
-// Exit 0 = PASS. Exit 1 = NO, every place that breaks a rule is printed. Exit 2 = no verdict: it could not read, or the self-proof failed.
-//
-// FLOW
-//   1. selfProof  fake products      -> throws unless each rule says no where it must, and yes on clean data
-//   2. read       the Sanity dataset -> every published product, whole
-//   3. places     the products       -> what the products put at each place, overviewFields left out
-//   4. rules      the places         -> the places that break each rule
-//   5. report     the broken places  -> the screen text and the exit code
+// FLOW  selfProof -> read -> collect -> judge -> report
 
-// STEP 1: selfProof
-// IN:  fake products with alien names, so no real place can match
-// OUT: throws unless the rules find exactly the planted defects and nothing in the clean cases
-// WHY: a check that cannot say no proves nothing. One defect for each rule and for each spot a defect can sit.
-//      The clean cases pin the edges: null against a value, a missing key against a value, two real values one letter apart,
-//      and two values that differ only in punctuation are all fine.
+const NOT_READ = new Set(['overviewFields', 'filterAttributes.sourcing']);
+const spelling = (text) => text.toLowerCase().replace(/\s/g, '');
+const child = (place, key) => (place ? `${place}.${key}` : key);
+const show = (place) => place || '(product)';
+
+// A tally: what was seen -> how many times, and the first product that had it.
+function count(tally, what, who) {
+  const seen = tally.get(what) ?? { n: 0, first: who };
+  seen.n++;
+  tally.set(what, seen);
+}
+
+function inner(map, key) {
+  if (!map.has(key)) map.set(key, new Map());
+  return map.get(key);
+}
+
+// 1. selfProof: a check that cannot say no proves nothing.
+// Two fake products must give exactly the finding, or none. Alien names, so no real place can match.
 function selfProof() {
-  // product 1, product 2, the broken places wanted ('' = none)
-  const cases = [
-    [{ zorb: 7 }, { zorb: '7' }, 'one form ["zorb"]'],
-    [{ zorb: { quux: 7 } }, { zorb: { quux: '7' } }, 'one form ["zorb","quux"]'],
-    [{ zorb: [7] }, { zorb: ['7'] }, 'one form ["zorb",null]'],
-    [{ zorb: null }, {}, 'one way to say no value ["zorb"]'],
-    [{ zorb: [] }, { zorb: null }, 'one way to say no value ["zorb"]'],
-    [{ zorb: {} }, { zorb: null }, 'one way to say no value ["zorb"]'],
-    [{ zorb: '  ' }, {}, 'one way to say no value ["zorb"]'],
-    [{ zorb: [{ quux: null }] }, { zorb: [{}] }, 'one way to say no value ["zorb",null,"quux"]'],
-    [{ zorb: 'Quux Plomb' }, { zorb: 'quux plomb' }, 'one spelling ["zorb"]'],
-    [{ zorb: 'HD 600' }, { zorb: 'HD600' }, 'one spelling ["zorb"]'],
-    [{ zorbQuux: 1 }, { ZORBQUUX: 1 }, 'one spelling []'],
-    [{ zorb: null }, { zorb: 7 }, ''],
-    [{ zorb: 7 }, {}, ''],
-    [{ zorb: 'in-ear' }, { zorb: 'on-ear' }, ''],
-    [{ zorb: '105dB' }, { zorb: '≥105dB' }, ''],
-    [{ zorb: 'in-ear' }, { zorb: 'in-ear' }, ''],
-    // the same defect (7 against '7') under overviewFields is not read, and beside it is flagged
-    [{ overviewFields: { zorb: 7 }, quux: 7 }, { overviewFields: { zorb: '7' }, quux: '7' }, 'one form ["quux"]'],
-    // the same for filterAttributes.sourcing: two quotes differing in case are not flagged, the same defect beside them is
-    [{ filterAttributes: { sourcing: [{ quote: 'Quux Plomb' }], quux: 7 } }, { filterAttributes: { sourcing: [{ quote: 'quux plomb' }], quux: '7' } }, 'one form ["filterAttributes","quux"]'],
+  const findings = (a, b) => Object.entries(judge(collect([{ name: 'p1', ...a }, { name: 'p2', ...b }]))).flatMap(([rule, found]) => found.map(([place]) => `${rule}: ${show(place)}`)).join('; ');
+  const flagged = [
+    [{ zorb: 7 }, { zorb: '7' }, 'one form: zorb'],
+    [{ zorb: { quux: 7 } }, { zorb: { quux: '7' } }, 'one form: zorb.quux'],
+    [{ zorb: [7] }, { zorb: ['7'] }, 'one form: zorb[]'],
+    [{ zorb: null }, {}, 'one way to say no value: zorb'],
+    [{ zorb: [] }, { zorb: null }, 'one way to say no value: zorb'],
+    [{ zorb: {} }, { zorb: null }, 'one way to say no value: zorb'],
+    [{ zorb: '  ' }, {}, 'one way to say no value: zorb'],
+    [{ zorb: [{ quux: null }] }, { zorb: [{}] }, 'one way to say no value: zorb[].quux'],
+    [{ zorb: 'Quux Plomb' }, { zorb: 'quux plomb' }, 'one spelling: zorb'],
+    [{ zorb: 'HD 600' }, { zorb: 'HD600' }, 'one spelling: zorb'],
+    [{ zorbQuux: 1 }, { ZORBQUUX: 1 }, 'one spelling: (product)'],
+    // the same defect under a place that is not read is not flagged, beside it it is
+    [{ overviewFields: { zorb: 7 }, quux: 7 }, { overviewFields: { zorb: '7' }, quux: '7' }, 'one form: quux'],
+    [{ filterAttributes: { sourcing: [{ quote: 'Quux Plomb' }], quux: 7 } }, { filterAttributes: { sourcing: [{ quote: 'quux plomb' }], quux: '7' } }, 'one form: filterAttributes.quux'],
   ];
-  for (const [a, b, want] of cases) {
-    const broken = rules(places([{ name: 'p1', ...a }, { name: 'p2', ...b }]));
-    const got = Object.entries(broken).flatMap(([rule, found]) => found.map(([key]) => `${rule} ${key}`)).join();
+  const fine = [
+    [{ zorb: null }, { zorb: 7 }],
+    [{ zorb: 7 }, {}],
+    [{ zorb: 'in-ear' }, { zorb: 'on-ear' }],
+    [{ zorb: '105dB' }, { zorb: '≥105dB' }],
+    [{ zorb: 'in-ear' }, { zorb: 'in-ear' }],
+  ];
+  for (const [a, b, want] of [...flagged, ...fine.map(([a, b]) => [a, b, ''])]) {
+    const got = findings(a, b);
     if (got !== want) throw new Error(`self-proof failed on ${JSON.stringify(a)} against ${JSON.stringify(b)}: wanted [${want}], got [${got}]`);
   }
 }
 
-// STEP 2: read
-// IN:  the Sanity project, dataset and read token from .env.local
-// OUT: every published product document, whole, in _id order
-// WHY: one request is one snapshot, so no write can land between two reads. No projection, so nothing is reshaped.
-//      api.sanity.io, not the CDN, so nothing is stale. Drafts and release versions are not published, so they are left out.
-//      order(_id), so "first" in the report is the same on every run.
-//      Zero products is no verdict: a wrong dataset would pass.
+// 2. read: every published product, whole, in _id order, so "first" in the report is the same on every run.
+// One request is one snapshot. api.sanity.io, not the CDN, so nothing is stale. Zero products is no verdict: a wrong dataset would pass.
 async function read() {
   const env = process.env;
   const query = '*[_type == "product" && !(_id in path("drafts.**")) && !(_id in path("versions.**"))] | order(_id)';
@@ -83,98 +78,67 @@ async function read() {
   return result;
 }
 
-// STEP 3: places
-// IN:  the product documents
-// OUT: Map of place -> { path, forms, nones, spells, names, objects }
-//      The place is JSON: ["a","b"], an array step is null.
-//      forms, nones: Map(what -> { n, first }) where first is the first product that has it. forms: the form of each value. nones: each way "no value" is written.
-//      spells: Map(value without case and spaces -> Map(value as written -> { n, first })). names: the same, for the key names under the place.
-//      objects: [{ keys, who }] for each object at the place, so a missing key can be found.
-// WHY: every rule is a question about one place, so each value is filed under its place once and the rules only read the Map.
-//      overviewFields and filterAttributes.sourcing are cut off the copy before the walk, so they leave no place, no key name and no missing key behind.
-function places(products) {
-  const seen = new Map();
-  for (const p of products) {
-    const read = { ...p };
-    delete read.overviewFields;
-    if (read.filterAttributes && typeof read.filterAttributes === 'object') {
-      read.filterAttributes = { ...read.filterAttributes };
-      delete read.filterAttributes.sourcing;
-    }
-    visit(read, [], p.name ?? p._id, seen);
-  }
-  for (const at of seen.values()) {
-    const all = new Set(at.objects.flatMap((o) => [...o.keys]));
-    for (const { keys, who } of at.objects) for (const k of all) if (!keys.has(k)) note(seen.get(JSON.stringify([...at.path, k])).nones, 'missing key', who);
-  }
-  return seen;
-}
+// 3. collect: file everything the products put at each place, once.
+// place -> { forms, nones, spells, names }, each a tally. spells: spelling -> tally of the values as written. names: the same for key names.
+function collect(products) {
+  const places = new Map();
+  const objects = new Map(); // place -> the key set of each object found there, to find missing keys
 
-function visit(value, path, who, seen) {
-  const key = JSON.stringify(path);
-  const at = seen.get(key) ?? { path, forms: new Map(), nones: new Map(), spells: new Map(), names: new Map(), objects: [] };
-  seen.set(key, at);
-  if (value === null) {
-    note(at.nones, 'null', who);
-    return;
-  }
-  note(at.forms, Array.isArray(value) ? 'array' : typeof value, who);
-  if (typeof value === 'string') {
-    if (value.trim() === '') note(at.nones, 'empty text', who);
-    note(group(at.spells, spelling(value)), value, who);
-  } else if (Array.isArray(value)) {
-    if (value.length === 0) note(at.nones, 'empty list', who);
-    for (const item of value) visit(item, [...path, null], who, seen);
-  } else if (typeof value === 'object') {
-    const keys = Object.keys(value);
-    if (keys.length === 0) note(at.nones, 'empty object', who);
-    at.objects.push({ keys: new Set(keys), who });
-    for (const k of keys) {
-      note(group(at.names, spelling(k)), k, who);
-      visit(value[k], [...path, k], who, seen);
+  function visit(value, place, who) {
+    if (!places.has(place)) places.set(place, { forms: new Map(), nones: new Map(), spells: new Map(), names: new Map() });
+    const at = places.get(place);
+    if (value === null) {
+      count(at.nones, 'null', who);
+      return;
+    }
+    count(at.forms, Array.isArray(value) ? 'array' : typeof value, who);
+    if (typeof value === 'string') {
+      if (value.trim() === '') count(at.nones, 'empty text', who);
+      count(inner(at.spells, spelling(value)), value, who);
+    } else if (Array.isArray(value)) {
+      if (value.length === 0) count(at.nones, 'empty list', who);
+      for (const item of value) visit(item, `${place}[]`, who);
+    } else if (typeof value === 'object') {
+      const keys = Object.keys(value).filter((key) => !NOT_READ.has(child(place, key)));
+      if (keys.length === 0) count(at.nones, 'empty object', who);
+      if (!objects.has(place)) objects.set(place, []);
+      objects.get(place).push({ keys: new Set(keys), who });
+      for (const key of keys) {
+        count(inner(at.names, spelling(key)), key, who);
+        visit(value[key], child(place, key), who);
+      }
     }
   }
+
+  for (const product of products) visit(product, '', product.name ?? product._id);
+
+  for (const [place, found] of objects) {
+    const all = new Set(found.flatMap((object) => [...object.keys]));
+    for (const { keys, who } of found) for (const key of all) if (!keys.has(key)) count(places.get(child(place, key)).nones, 'missing key', who);
+  }
+  return places;
 }
 
-const spelling = (text) => text.toLowerCase().replace(/\s/g, '');
-
-function note(map, what, who) {
-  const at = map.get(what) ?? { n: 0, first: who };
-  at.n++;
-  map.set(what, at);
-}
-
-function group(map, key) {
-  if (!map.has(key)) map.set(key, new Map());
-  return map.get(key);
-}
-
-// STEP 4: rules
-// IN:  the places
-// OUT: { rule: [[place, Map(what -> { n, first })], ...] } for the places that break the rule. An empty list is a yes.
-// WHY: if a place holds 7 on one product and "9" on another, or null on one and no key on another, or "Black" and "black",
-//      two readers of the same place can read two different things.
-function rules(seen) {
+// 4. judge: the places that break each rule. If a place holds 7 on one product and "9" on another, null on one and no key on another,
+// or "Black" and "black", two readers of that place can read two different things.
+function judge(places) {
   const broken = { 'one form': [], 'one way to say no value': [], 'one spelling': [] };
-  const quoted = (m) => new Map([...m].map(([text, at]) => [JSON.stringify(text.length > 60 ? text.slice(0, 60) + '…' : text), at]));
-  for (const [key, at] of seen) {
-    if (at.forms.size > 1) broken['one form'].push([key, at.forms]);
-    if (at.nones.size > 1) broken['one way to say no value'].push([key, at.nones]);
-    for (const same of [...at.spells.values(), ...at.names.values()]) if (same.size > 1) broken['one spelling'].push([key, quoted(same)]);
+  for (const [place, at] of places) {
+    if (at.forms.size > 1) broken['one form'].push([place, at.forms]);
+    if (at.nones.size > 1) broken['one way to say no value'].push([place, at.nones]);
+    for (const same of [...at.spells.values(), ...at.names.values()]) if (same.size > 1) broken['one spelling'].push([place, same]);
   }
   return broken;
 }
 
-// STEP 5: report
-// IN:  the products and the broken places of each rule
-// OUT: the screen text, and the exit code: 0 PASS, 1 NO
+// 5. report: the screen text and the exit code.
 function report(products, broken) {
-  const show = (key) => JSON.parse(key).reduce((a, step) => a + (step === null ? '[]' : (a ? '.' : '') + step), '') || '(product)';
+  const quote = (text) => JSON.stringify(text.length > 60 ? `${text.slice(0, 60)}…` : text);
   console.log(`${products.length} published products\n`);
   for (const [rule, found] of Object.entries(broken)) {
-    for (const [key, held] of found) {
-      console.log(`${rule}: ${show(key)}`);
-      for (const [what, { n, first }] of held) console.log(`  ${what} x${n}, first: ${first}`);
+    for (const [place, held] of found) {
+      console.log(`${rule}: ${show(place)}`);
+      for (const [what, { n, first }] of held) console.log(`  ${rule === 'one spelling' ? quote(what) : what} x${n}, first: ${first}`);
       console.log('');
     }
   }
@@ -188,7 +152,7 @@ try {
   selfProof();
   console.log('self-proof: each rule says no where it must, and yes on clean data.\n');
   const products = await read();
-  process.exitCode = report(products, rules(places(products)));
+  process.exitCode = report(products, judge(collect(products)));
 } catch (e) {
   console.error(`NO VERDICT: ${e.message}`);
   process.exitCode = 2;
