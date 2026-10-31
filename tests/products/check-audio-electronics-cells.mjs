@@ -62,11 +62,6 @@ const CELLS = [
 ];
 // Keys that may sit beside the cells: none.
 const ALLOWED = new Set(CELLS.map((c) => c.id));
-// OPEN are cells that apply but whose value no source publishes and that have no gap form. [product name, cell].
-// Each is reported as open, not as a failure. Delete an entry when its cell is filled.
-const OPEN = [
-  ['LeeLoo Desktop Tube Headphone Amplifier', 'inputs'],
-];
 
 // ── STEP 2: judge ──────────────────────────────────────────────────
 // IN:  one product's filterAttributes (an object, possibly empty).
@@ -178,29 +173,25 @@ async function readLive() {
 
 // ── STEP 5: report ─────────────────────────────────────────────────
 // IN:  every product's verdict.
-// OUT: the screen text, and exit code 1 when any cell fails (other than the OPEN ones) or any new undeclared key sits there.
+// OUT: the screen text, and exit code 1 when any cell fails or any new undeclared key sits there.
 selfProof();
 console.log('self-proof: every kind of failure is caught.\n');
 const ae = await readLive();
-const isOpen = (name, cell) => OPEN.some(([n, c]) => n === name && c === cell);
-const bad = [], open = [];
+const bad = [];
 let failing = 0;
 for (const p of ae) {
   const v = judge(p.fa);
-  const fails = v.fails.filter(([cell]) => !isOpen(p.name, cell));
-  for (const [cell, cause] of v.fails) if (isOpen(p.name, cell)) open.push(`${p.name}: ${cell} (${cause})`);
-  failing += fails.length;
-  if (fails.length || v.strays.length) bad.push({ name: p.name, fails, strays: v.strays });
+  failing += v.fails.length;
+  if (v.fails.length || v.strays.length) bad.push({ name: p.name, fails: v.fails, strays: v.strays });
 }
 const cells = ae.length * CELLS.length;
 console.log(`${ae.length} audio-electronics products x ${CELLS.length} cells = ${cells} cells`);
-console.log(`pass ${cells - failing - open.length}, fail ${failing}, open ${open.length}\n`);
+console.log(`pass ${cells - failing}, fail ${failing}\n`);
 for (const b of bad) {
   console.log(b.name);
   for (const [cell, cause] of b.fails) console.log(`  ${cell}: ${cause}`);
   for (const k of b.strays) console.log(`  undeclared key: ${k}`);
   console.log('');
 }
-if (open.length) console.log(`open cells (no source publishes the value):\n${open.map((o) => `  ${o}`).join('\n')}\n`);
 console.log(bad.length ? `RESULT: FAIL, ${bad.length} of ${ae.length} products` : `RESULT: PASS, ${ae.length} of ${ae.length} products`);
 if (bad.length) process.exitCode = 1;
