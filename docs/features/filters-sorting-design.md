@@ -55,8 +55,8 @@ Four questions were put to the live data, in this order. One script answers all 
 picklist (CMS) + products data -> controls and options
 
 In steps:
-1. product filterAttributes fields (shared plus the slice's own), minus brand, in stock, price, lists of objects and the free-text field `compatibility` -> the picklist's choices in Studio
-2. owner's picks -> filterPicklist document
+1. the owner's signed closed list of product fields per slice -> the picklist's choices in Studio (brand, price and stock are the document's read-only always-on list)
+2. owner's picks, in the owner's order (drag to reorder) -> filterPicklist document
 3. filterPicklist + products data -> the picks and the products, read together
 4. picks -> selected facets: one per pick, each with an id, a name and a group
 5. products data -> inventory: per field, its kinds, distinct values and number span
@@ -66,15 +66,16 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. Each slice's list offers the leaf paths of the shared fields and of that slice's own fields (nested fields as `a.b`), minus brand, in stock, price, lists of objects and the free-text field `compatibility` | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `schema/filterFieldPaths.ts`, `features/products/schema/productFilterAttributes/index.ts` |
-| 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
+| 1. Each slice's list offers the owner's signed closed list of fields (nested fields as `a.b`), each held by a product of the slice. Brand, price and stock are the document's read-only `alwaysOn` list: never offered, never stored as picks | `schema/pickableFields.ts`, `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts` |
+| 2. The owner fills three lists, one per slice, and drags them into order. `alwaysOn` is set once by a data write | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks) | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
 | 4. Selected facets are one per distinct pick (brand, in stock and price picks are dropped). A pick's id and URL key come from its name, its name is the field name split into capitalised words, its group is "More filters" | `core/rules/buildFacetSet.ts` (`selectionFor`, `humanizeAttribute`), `core/rules/facetKey.ts` |
 | 5. For each field path the inventory holds the kinds stored (text, number, true/false, list, object), the distinct text and true/false values (sorted; spellings that differ only by case count as one), and the smallest and largest number. A list counts as its items | `core/rules/fieldInventory.ts` |
 | 6. The values decide the control: only true/false, an on/off control; only numbers, a range; only text, a checkbox with one option per value; anything else, none. An option's text is its value as readable words (the rule is in the header of `humanizeFacetValue.ts`) | `core/rules/projectFacets.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts` |
 | 7. A pick with no kind is not drawn. Brand and in stock are fixed in code with their control, because no stored field decides them: in stock is computed from the stock fields; brand has no option list, its names are counted from the products | `core/rules/buildFacetSet.ts`, `core/definitions/awaitingLaterChunks.ts` |
-| Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them | `core/definitions/awaitingLaterChunks.ts` |
-| Proof, passed 2026-10-28: four fake products in real format with alien content, and the expected facet set written by hand (it includes two spellings that differ only by case, and a field mixing text and a number); the slice's own picks used and a failed picklist read giving no picks; the field list of step 1 on a fake schema. The classes in the live data are listed by the real-data check. Not proven here: the brand names and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts`, `tests/product-filtering/backend/filterFieldPaths.test.ts`, `tests/product-filtering/pickablePathsRealData.test.ts` |
+| Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them; the later chunk reads brand, price and stock from the picklist's `alwaysOn` list | `core/definitions/awaitingLaterChunks.ts` |
+| Proof of steps 1 to 3, the picklist itself, passed 2026-10-31: seven questions on the live data (every offer field is held in its slice; offer and `alwaysOn` equal the signed lists; stored picks are offered, once; `alwaysOn` is held by every product, shown read-only, never offered or stored as a pick; one document with nothing else; every list reorderable in Studio), after a self-proof with planted breaks | `tests/product-filtering/picklistRealData.test.ts` |
+| Proof of steps 4 to 7, passed 2026-10-28: four fake products in real format with alien content, and the expected facet set written by hand (it includes two spellings that differ only by case, and a field mixing text and a number); the slice's own picks used and a failed picklist read giving no picks. The classes in the live data are listed by the real-data check. Not proven here: the brand names and `wearingStyle`, which are temporary | `tests/product-filtering/backend/picklistAndProductsToControlsAndOptions.test.ts`, `tests/product-filtering/backend/picklistPerSlice.test.ts`, `tests/product-filtering/pickablePathsRealData.test.ts` |
 
 ## 2. controls and options + curated texts (CMS) -> labelled controls and options
 
