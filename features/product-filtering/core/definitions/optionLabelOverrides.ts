@@ -103,12 +103,6 @@ export const OPTION_LABEL_OVERRIDES: Record<string, Record<string, string>> = {
     'cd-player-transport': 'CD Player / Transport',
   },
 
-  'driverConfigBucket': {
-    'multi-ba': 'Multi Balanced Armature',
-    'hybrid-config': 'Hybrid (Multi-Driver Combo)',
-    'other': 'Other / Unusual Design',
-  },
-
   'driverType': {
     'amt': 'AMT / Ribbon (Air-Motion)',
   },
