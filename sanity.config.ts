@@ -27,6 +27,15 @@ const sanityConfig = defineConfig({
     }),
     visionTool()
   ],
+  document: {
+    // The picklist is one fixed document: nothing in Studio may delete, unpublish or duplicate it, or create a second one.
+    actions: (prev, { schemaType }) =>
+      schemaType === "filterPicklist"
+        ? prev.filter(({ action }) => !["delete", "unpublish", "duplicate"].includes(action ?? ""))
+        : prev,
+    newDocumentOptions: (prev, { creationContext }) =>
+      creationContext.type === "global" ? prev.filter(({ templateId }) => templateId !== "filterPicklist") : prev,
+  },
   initialTemplates: [
     {
       templateId: 'catalogueItem-with-parent',

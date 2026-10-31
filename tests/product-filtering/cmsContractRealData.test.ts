@@ -43,7 +43,6 @@ const { accessoriesFields } = await import('@/features/products/schema/productFi
 
 const SLICES = ['headphones', 'audio-electronics', 'accessories'] as const;
 const FETCH_CAP = 1000; // fetchFacetProducts reads [0...1000]
-const OWN_RULES = new Set(['brand', 'inStock', 'price']); // checked by their own rules below
 
 // The fields each slice's picklist can offer: the same composition as filterAttributeGroups in productFilterAttributes/index.ts
 // (that file imports `sanity`, which plain node does not load).
@@ -139,6 +138,10 @@ const unheld = rule(
 );
 const deadPick = rule('every pick draws a control', 'a pick in the picklist that no product backs, or that mixes kinds, draws nothing');
 const staleSpec = rule('every pick is offered by the schema', 'the picklist offers only the fields of its slice; a pick outside them was offered once and the schema moved on');
+const noPicks = rule(
+  'every slice has picks',
+  'a missing, unpublished or emptied picklist document gives three empty lists, and then every pick rule passes with nothing to check while the sidebar draws no attribute control',
+);
 const pickLines: string[] = [];
 const deriveWrong = rule(
   'derive matches the data',
@@ -188,15 +191,15 @@ for (const slice of SLICES) {
   }
 
   for (const path of [...PICKABLE[slice]].sort()) {
-    if (!OWN_RULES.has(path) && !kinds.has(path)) unheld(`${slice} ${path}`);
+    if (!kinds.has(path)) unheld(`${slice} ${path}`);
   }
   for (const [path, counts] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) {
-    if (OWN_RULES.has(path) || !PICKABLE[slice].has(path) || counts.size < 2) continue;
+    if (!PICKABLE[slice].has(path) || counts.size < 2) continue;
     mixedKinds(`${slice} ${path}: ${[...counts].map(([kind, { n, ex }]) => `${kind} in ${n} (e.g. ${ex.join(' ')})`).join('; ')}`);
   }
   // derive step, every pickable field: the expected control, options and bounds are read straight from the raw products
   // (a list counts as its items; a list of objects holds no value) and compared with what buildFacetSet derives.
-  const fieldPaths = [...PICKABLE[slice]].filter((path) => !OWN_RULES.has(path)).sort();
+  const fieldPaths = [...PICKABLE[slice]].sort();
   const derived = new Map<string, any>(buildFacetSet(products, fieldPaths).facets.map((facet: any) => [facet.attribute, facet]));
   for (const path of fieldPaths) {
     const classes = new Set<string>();
@@ -247,7 +250,8 @@ for (const slice of SLICES) {
     if (problems.length) deriveWrong(`${slice} ${path}: ${problems.join('; ')}`);
   }
 
-  const picks = [...new Set(picklist[slice] as string[])].filter((pick) => !OWN_RULES.has(pick));
+  const picks = [...new Set(picklist[slice] as string[])];
+  if (picks.length === 0) noPicks(slice);
   const drawn = new Map<string, any>(buildFacetSet(products, picks).facets.map((facet: any) => [facet.attribute, facet]));
   pickLines.push(`${slice}: ${picks.length} picks`);
   for (const pick of picks) {
