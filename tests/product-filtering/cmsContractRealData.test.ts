@@ -36,20 +36,16 @@ registerHooks({
 const { fetchFacetProducts } = await import('@/features/product-filtering/adapters/sanity/fetchFacetProducts');
 const { fetchPicklist } = await import('@/features/product-filtering/adapters/sanity/fetchPicklist');
 const { buildFacetSet } = await import('@/features/product-filtering/core/rules/buildFacetSet');
-const { filterFieldPaths } = await import('@/features/product-filtering/schema/filterFieldPaths');
-const { headphonesFields } = await import('@/features/products/schema/productFilterAttributes/headphones');
-const { audioElectronicsFields } = await import('@/features/products/schema/productFilterAttributes/audioElectronics');
-const { accessoriesFields } = await import('@/features/products/schema/productFilterAttributes/accessories');
+const { PICKABLE: SIGNED } = await import('@/features/product-filtering/schema/pickableFields');
 
 const SLICES = ['headphones', 'audio-electronics', 'accessories'] as const;
 const FETCH_CAP = 1000; // fetchFacetProducts reads [0...1000]
 
-// The fields each slice's picklist can offer: the same composition as filterAttributeGroups in productFilterAttributes/index.ts
-// (that file imports `sanity`, which plain node does not load).
+// The fields each slice's picklist can offer: the owner's signed closed list.
 const PICKABLE: Record<(typeof SLICES)[number], Set<string>> = {
-  headphones: new Set(filterFieldPaths([...headphonesFields])),
-  'audio-electronics': new Set(filterFieldPaths([...audioElectronicsFields])),
-  accessories: new Set(filterFieldPaths([...accessoriesFields])),
+  headphones: new Set(SIGNED.headphones),
+  'audio-electronics': new Set(SIGNED.audioElectronics),
+  accessories: new Set(SIGNED.accessories),
 };
 
 // The same walk as unrollDescendantKeys in features/catalogue, on the same JSON.
