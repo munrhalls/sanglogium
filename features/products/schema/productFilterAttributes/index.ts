@@ -2,6 +2,7 @@ import { defineField } from "sanity";
 import { headphonesFields } from "./headphones";
 import { audioElectronicsFields } from "./audioElectronics";
 import { accessoriesFields } from "./accessories";
+import { ordered } from "../orderRules";
 
 export const filterAttributesField = defineField({
       name: "filterAttributes",
@@ -14,7 +15,7 @@ export const filterAttributesField = defineField({
         .filter((field, i, all) => all.findIndex((other) => other.name === field.name) === i)
         .map(({ domain, domainField, ...field }) =>
         defineField({
-          ...field,
+          ...ordered(field),
           hidden: ({ document }) => {
             if (domain) {
               // domainField names which filterAttributes field this field is
