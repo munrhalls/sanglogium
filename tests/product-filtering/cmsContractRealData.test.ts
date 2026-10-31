@@ -1,10 +1,13 @@
-// CMS data vs what filtering and sorting read: on the live data, every rule the filter and sort code relies on.
+// CMS data vs what filtering and sorting read: on the live data, the rules every product must hold, and the derive check.
 // Human-run only. Prints one block per rule: why the code needs it, how many products break it, a few examples.
 // Exit code 1 when any rule is broken. Reads only; the same input gives the same output until the data changes.
 // node --conditions=react-server --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/cmsContractRealData.test.ts
 //
-// Same transport swap as pickablePathsRealData.test.ts: the code that shapes the data is the real one, only the fetch differs.
-// `sanity` is swapped too: headphones.ts imports defineArrayMember from it, and the field lists are plain objects.
+// Not here, because it is proven elsewhere: that products agree on kinds and spellings (tests/products), and that the picklist
+// offers, stores and shows the right fields (picklistRealData.test.ts).
+//
+// Plain node cannot load `next-sanity` (it imports next/dynamic) and has no `server-only` package, so those imports are
+// swapped. Every query, and all the code that shapes the result, is the real one; only the transport differs.
 import { createClient } from '@sanity/client';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -22,7 +25,6 @@ const stub = (source: string) => ({ url: `data:text/javascript,${encodeURICompon
 registerHooks({
   resolve(specifier, context, nextResolve) {
     if (specifier === 'server-only') return stub('');
-    if (specifier === 'sanity') return stub('export const defineArrayMember = (x) => x; export const defineField = (x) => x;');
     if (specifier === 'next-sanity') {
       return stub('export const groq = (s, ...v) => s.reduce((a, c, i) => a + c + (v[i] ?? ""), "");');
     }
@@ -34,12 +36,10 @@ registerHooks({
 });
 
 const { fetchFacetProducts } = await import('@/features/product-filtering/adapters/sanity/fetchFacetProducts');
-const { fetchPicklist } = await import('@/features/product-filtering/adapters/sanity/fetchPicklist');
 const { buildFacetSet } = await import('@/features/product-filtering/core/rules/buildFacetSet');
 const { PICKABLE: SIGNED } = await import('@/features/product-filtering/schema/pickableFields');
 
 const SLICES = ['headphones', 'audio-electronics', 'accessories'] as const;
-const FETCH_CAP = 1000; // fetchFacetProducts reads [0...1000]
 
 // The fields each slice's picklist can offer: the owner's signed closed list.
 const PICKABLE: Record<(typeof SLICES)[number], Set<string>> = {
@@ -122,77 +122,16 @@ for (const p of all) {
   }
 }
 
-// ---- slice-level rules, on the products each slice's sidebar reads ----
-const tooMany = rule('a slice fits one fetch', `fetchFacetProducts reads at most ${FETCH_CAP} products; the rest are silently left out`);
-const mixedKinds = rule(
-  'one kind per field',
-  'a pickable field holding text in some products and numbers or true/false in others gets no control; a list counts as its items',
-);
-const unheld = rule(
-  'every offered field is held by a product',
-  'a field the schema offers but no product of the slice holds can never draw a control',
-);
-const deadPick = rule('every pick draws a control', 'a pick in the picklist that no product backs, or that mixes kinds, draws nothing');
-const staleSpec = rule('every pick is offered by the schema', 'the picklist offers only the fields of its slice; a pick outside them was offered once and the schema moved on');
-const noPicks = rule(
-  'every slice has picks',
-  'a missing, unpublished or emptied picklist document gives three empty lists, and then every pick rule passes with nothing to check while the sidebar draws no attribute control',
-);
-const pickLines: string[] = [];
+// ---- slice-level rule, on the products each slice's sidebar reads ----
 const deriveWrong = rule(
   'derive matches the data',
   'a control must offer exactly what the products hold: a checkbox the distinct values (spellings that differ only by case are one value), a range the smallest to the largest number, on/off only true/false, and none when the field is empty or mixes kinds',
 );
 const fieldClasses = new Map<string, number>();
 
-const picklist = await fetchPicklist();
-
-const kindOf = (v: unknown): string | null =>
-  typeof v === 'string' ? 'text' : typeof v === 'boolean' ? 'true/false' : isNumber(v) ? 'number' : null;
-
 for (const slice of SLICES) {
   const products = await fetchFacetProducts({ keys: keysOf(slice) });
-  if (products.length >= FETCH_CAP) tooMany(`${slice}: ${products.length}`);
 
-  let currentId = '';
-  const kinds = new Map<string, Map<string, { n: number; ex: string[] }>>();
-  const walk = (obj: Record<string, unknown>, prefix: string) => {
-    for (const [key, value] of Object.entries(obj)) {
-      if (key.startsWith('_')) continue;
-      const path = prefix ? `${prefix}.${key}` : key;
-      const items = Array.isArray(value) ? value : [value];
-      const seen = new Set<string>();
-      for (const item of items) {
-        if (item && typeof item === 'object' && !Array.isArray(item) && !Array.isArray(value)) {
-          walk(item as Record<string, unknown>, path);
-          continue;
-        }
-        const kind = kindOf(item);
-        if (kind === null || (kind === 'text' && item === '')) continue;
-        seen.add(kind);
-      }
-      for (const kind of seen) {
-        if (!kinds.has(path)) kinds.set(path, new Map());
-        const counts = kinds.get(path)!;
-        const entry = counts.get(kind) ?? { n: 0, ex: [] };
-        entry.n += 1;
-        if (entry.ex.length < 2) entry.ex.push(`${currentId}=${JSON.stringify(value)}`);
-        counts.set(kind, entry);
-      }
-    }
-  };
-  for (const product of products) {
-    currentId = product._id;
-    if (product.filterAttributes && typeof product.filterAttributes === 'object') walk(product.filterAttributes, '');
-  }
-
-  for (const path of [...PICKABLE[slice]].sort()) {
-    if (!kinds.has(path)) unheld(`${slice} ${path}`);
-  }
-  for (const [path, counts] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) {
-    if (!PICKABLE[slice].has(path) || counts.size < 2) continue;
-    mixedKinds(`${slice} ${path}: ${[...counts].map(([kind, { n, ex }]) => `${kind} in ${n} (e.g. ${ex.join(' ')})`).join('; ')}`);
-  }
   // derive step, every pickable field: the expected control, options and bounds are read straight from the raw products
   // (a list counts as its items; a list of objects holds no value) and compared with what buildFacetSet derives.
   const fieldPaths = [...PICKABLE[slice]].sort();
@@ -245,27 +184,10 @@ for (const slice of SLICES) {
     }
     if (problems.length) deriveWrong(`${slice} ${path}: ${problems.join('; ')}`);
   }
-
-  const picks = [...new Set(picklist[slice] as string[])];
-  if (picks.length === 0) noPicks(slice);
-  const drawn = new Map<string, any>(buildFacetSet(products, picks).facets.map((facet: any) => [facet.attribute, facet]));
-  pickLines.push(`${slice}: ${picks.length} picks`);
-  for (const pick of picks) {
-    const offered = PICKABLE[slice].has(pick);
-    const facet = drawn.get(pick);
-    const held = kinds.get(pick);
-    const holding = held ? Math.max(...[...held.values()].map((k) => k.n)) : 0;
-    if (!offered) staleSpec(`${slice} ${pick}`);
-    if (!facet) deadPick(`${slice} ${pick}`);
-    pickLines.push(`  ${pick} | offered ${offered ? 'yes' : 'NO'} | in ${holding} products | ${facet ? facet.control : 'NO CONTROL'}`);
-  }
 }
 
 // ---- print ----
 const lines: string[] = [
-  'picklist, every pick',
-  ...pickLines,
-  '',
   'derive, every pickable field, by class',
   ...[...fieldClasses].sort(([a], [b]) => a.localeCompare(b)).map(([cls, n]) => `  ${cls}: ${n}`),
   '',
