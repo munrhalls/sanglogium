@@ -28,13 +28,15 @@ const sanityConfig = defineConfig({
     visionTool()
   ],
   document: {
-    // The picklist is one fixed document: nothing in Studio may delete, unpublish or duplicate it, or create a second one.
+    // The picklist and the labels are one fixed document each: nothing in Studio may delete, unpublish or duplicate them, or create a second one.
     actions: (prev, { schemaType }) =>
-      schemaType === "filterPicklist"
+      ["filterPicklist", "filterLabels"].includes(schemaType)
         ? prev.filter(({ action }) => !["delete", "unpublish", "duplicate"].includes(action ?? ""))
         : prev,
     newDocumentOptions: (prev, { creationContext }) =>
-      creationContext.type === "global" ? prev.filter(({ templateId }) => templateId !== "filterPicklist") : prev,
+      creationContext.type === "global"
+        ? prev.filter(({ templateId }) => !["filterPicklist", "filterLabels"].includes(templateId))
+        : prev,
   },
   initialTemplates: [
     {

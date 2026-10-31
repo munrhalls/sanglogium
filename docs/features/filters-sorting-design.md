@@ -4,7 +4,7 @@ Scope: the filter, sort and pagination flow, from the CMS to the shopper's scree
 
 ## Progress
 
-Next: chunk 2 waits for the owner to rule how the curated texts are stored. Chunks 6 to 8 need a way to render components in a test; none is merged.
+Next: chunk 2 step 2 (the code that applies the curated texts) is not built; step 1, the labels document, is. Chunks 6 to 8 need a way to render components in a test; none is merged.
 
 | # | chunk | side | proof |
 |---|---|---|---|
@@ -82,14 +82,14 @@ In steps:
 controls and options + curated texts (CMS) -> labelled controls and options
 
 In steps:
-1. owner's curated texts -> the CMS (shape not decided)
+1. owner's curated texts -> the CMS (rows of field, optional value, text)
 2. controls and options + curated texts -> names and option texts
 ```
 
 | step | file |
 |---|---|
-| 1. The owner enters a text for a control name or an option. It lives in the CMS, so no deploy is needed | not built |
-| 2. A curated text wins; without one, a control's name comes from its field name and an option's text from its value. It attaches inside chunk 1's code: option texts in `projectFacets.ts` (chunk 1 step 6) via `applyOptionLabels`, the control's name in `buildFacetSet.ts` (chunk 1 step 4). With no curated text both change nothing, so chunk 1's expected output stays true | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` (this table in code goes when step 1 is built) |
+| 1. The owner enters a text for a control name or an option. It lives in the CMS, so no deploy is needed. A row is a field, an optional value (none: the control's name; otherwise that option, capitals ignored) and a text; no row or an empty text means the automatic wording; if two rows name the same field and value, the first counts | `schema/filterLabelsType.ts`, `studio/schema.ts`, `studio/structure.ts` |
+| 2. A curated text wins; without one, a control's name comes from its field name and an option's text from its value. It attaches inside chunk 1's code: option texts in `projectFacets.ts` (chunk 1 step 6) via `applyOptionLabels`, the control's name in `buildFacetSet.ts` (chunk 1 step 4). With no curated text both change nothing, so chunk 1's expected output stays true | `core/rules/applyOptionLabels.ts`, `core/definitions/optionLabelOverrides.ts` (this table in code goes when step 2 is built) |
 | Proof: not written. Classes: text curated or not, for a control name and for an option. Source: the curated list | not written |
 
 ## 3. URL + labelled controls -> filter state
