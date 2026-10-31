@@ -15,6 +15,7 @@
 // Only a list of the facts and their allowed values, written by a person, could tell.
 // Not judged, chosen: punctuation. "Weight:" and "Weight" are one value but "105dB" and "≥105dB" are two, and only a person can tell.
 // Not read: overviewFields, in every product. It is out of scope, so the walk never looks inside it.
+// Not read: filterAttributes.sourcing, in every product. A quote is exact, so two quotes that differ in case are two quotes, not one value spelled twice. Sourcing is assumed true.
 //
 // Human-run, reads only. From the repo root:
 //   node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-products.mjs
@@ -54,6 +55,8 @@ function selfProof() {
     [{ zorb: 'in-ear' }, { zorb: 'in-ear' }, ''],
     // the same defect (7 against '7') under overviewFields is not read, and beside it is flagged
     [{ overviewFields: { zorb: 7 }, quux: 7 }, { overviewFields: { zorb: '7' }, quux: '7' }, 'one form ["quux"]'],
+    // the same for filterAttributes.sourcing: two quotes differing in case are not flagged, the same defect beside them is
+    [{ filterAttributes: { sourcing: [{ quote: 'Quux Plomb' }], quux: 7 } }, { filterAttributes: { sourcing: [{ quote: 'quux plomb' }], quux: '7' } }, 'one form ["filterAttributes","quux"]'],
   ];
   for (const [a, b, want] of cases) {
     const broken = rules(places([{ name: 'p1', ...a }, { name: 'p2', ...b }]));
@@ -88,12 +91,16 @@ async function read() {
 //      spells: Map(value without case and spaces -> Map(value as written -> { n, first })). names: the same, for the key names under the place.
 //      objects: [{ keys, who }] for each object at the place, so a missing key can be found.
 // WHY: every rule is a question about one place, so each value is filed under its place once and the rules only read the Map.
-//      overviewFields is cut off the copy before the walk, so it leaves no place, no key name and no missing key behind.
+//      overviewFields and filterAttributes.sourcing are cut off the copy before the walk, so they leave no place, no key name and no missing key behind.
 function places(products) {
   const seen = new Map();
   for (const p of products) {
     const read = { ...p };
     delete read.overviewFields;
+    if (read.filterAttributes && typeof read.filterAttributes === 'object') {
+      read.filterAttributes = { ...read.filterAttributes };
+      delete read.filterAttributes.sourcing;
+    }
     visit(read, [], p.name ?? p._id, seen);
   }
   for (const at of seen.values()) {
