@@ -14,6 +14,7 @@
 // a letter-off typo ("wirless"), a unit. Each looks exactly like two real values: "in-ear" and "on-ear" are both real.
 // Only a list of the facts and their allowed values, written by a person, could tell.
 // Not judged, chosen: punctuation. "Weight:" and "Weight" are one value but "105dB" and "≥105dB" are two, and only a person can tell.
+// Not read: overviewFields, in every product. It is out of scope, so the walk never looks inside it.
 //
 // Human-run, reads only. From the repo root:
 //   node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-products.mjs
@@ -22,7 +23,7 @@
 // FLOW
 //   1. selfProof  fake products      -> throws unless each rule says no where it must, and yes on clean data
 //   2. read       the Sanity dataset -> every published product, whole
-//   3. places     the products       -> what the products put at each place
+//   3. places     the products       -> what the products put at each place, overviewFields left out
 //   4. rules      the places         -> the places that break each rule
 //   5. report     the broken places  -> the screen text and the exit code
 
@@ -51,6 +52,8 @@ function selfProof() {
     [{ zorb: 'in-ear' }, { zorb: 'on-ear' }, ''],
     [{ zorb: '105dB' }, { zorb: '≥105dB' }, ''],
     [{ zorb: 'in-ear' }, { zorb: 'in-ear' }, ''],
+    // the same defect (7 against '7') under overviewFields is not read, and beside it is flagged
+    [{ overviewFields: { zorb: 7 }, quux: 7 }, { overviewFields: { zorb: '7' }, quux: '7' }, 'one form ["quux"]'],
   ];
   for (const [a, b, want] of cases) {
     const broken = rules(places([{ name: 'p1', ...a }, { name: 'p2', ...b }]));
@@ -85,9 +88,14 @@ async function read() {
 //      spells: Map(value without case and spaces -> Map(value as written -> { n, first })). names: the same, for the key names under the place.
 //      objects: [{ keys, who }] for each object at the place, so a missing key can be found.
 // WHY: every rule is a question about one place, so each value is filed under its place once and the rules only read the Map.
+//      overviewFields is cut off the copy before the walk, so it leaves no place, no key name and no missing key behind.
 function places(products) {
   const seen = new Map();
-  for (const p of products) visit(p, [], p.name ?? p._id, seen);
+  for (const p of products) {
+    const read = { ...p };
+    delete read.overviewFields;
+    visit(read, [], p.name ?? p._id, seen);
+  }
   for (const at of seen.values()) {
     const all = new Set(at.objects.flatMap((o) => [...o.keys]));
     for (const { keys, who } of at.objects) for (const k of all) if (!keys.has(k)) note(seen.get(JSON.stringify([...at.path, k])).nones, 'missing key', who);
