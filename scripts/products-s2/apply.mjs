@@ -1,6 +1,7 @@
 // Products definition of done, step S2 (rules 2, 3 and 7): one write that makes the published products agree with themselves.
 //   1. Text that rule 7 reads: literal HTML entities become their characters, the mojibake sequences are repaired, and the typo corrections
-//      in CORRECTIONS (written by Jan) are applied to whole words, keeping the case.
+//      in CORRECTIONS are applied to whole words, keeping the case.
+//   4. The two picks in the filterPicklist document that name the fields S1 removed are unpicked.
 //   2. Rule 2: where a place writes "no value" more than one way, every explicit way (null, empty text, empty list, empty object) becomes a missing key.
 //   3. Rule 3: where a place holds one value in more than one spelling (case, spaces), every spelling becomes the most common one. A tie takes the first in code-point order.
 // overviewFields and filterAttributes.sourcing are not read by the checks, so steps 2 and 3 do not touch them. Step 1 skips the keys rule 7 skips.
@@ -13,7 +14,11 @@ const e = process.env
 const ds = e.NEXT_PUBLIC_SANITY_DATASET || 'production'
 const base = `https://${e.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v${e.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14'}/data`
 
-const CORRECTIONS = [] // [typo, correction] pairs
+// Typos found by reading the 242 words that are neither in a product name, nor written with a capital inside, nor a short acronym (2026-10-31).
+// "Sang-Logiumbining" in the Focal Celestee description is a broken sentence, not a typo, and is left for a person to rewrite.
+const CORRECTIONS = [['adaptative', 'adaptive'], ['controled', 'controlled'], ['dymanic', 'dynamic'], ['reponse', 'response'], ['vaccum', 'vacuum'], ['transciever', 'transceiver'], ['uo', 'up'], ['beyreuth', 'Bayreuth']] // [typo, correction]
+// Picks in the filterPicklist document that name fields S1 removed. A pick with no data draws nothing, so these are only stale.
+const STALE_PICKS = { headphones: ['driverConfigBucket'], audioElectronics: ['dacIncluded'] }
 
 const ENTITIES = { amp: '&', lt: '<', gt: '>', le: '≤', ge: '≥', ndash: '–', Omega: 'Ω', pi: 'π', plusmn: '±', times: '×', reg: '®', trade: '™', lArr: '⇐', nbsp: ' ' }
 const MOJIBAKE = [[/â‰¤/g, '≤'], [/â€¡/g, '‡'], [/Â(?=\s|$)/g, '']]
@@ -135,17 +140,26 @@ for (let i = 0; i < before.length; i++) {
   if (Object.keys(out.set).length || out.unset.length) writes.push({ p: before[i], ...out })
 }
 
+const picklist = (await read('*[_id == "filterPicklist"]'))[0]
+if (!picklist) throw new Error('refused: the filterPicklist document was not found')
+const picks = Object.fromEntries(Object.entries(STALE_PICKS).map(([slice, gone]) => [slice, (picklist[slice] ?? []).filter((x) => !gone.includes(x))]))
+const unpicked = Object.entries(picks).reduce((a, [slice, v]) => a + (picklist[slice] ?? []).length - v.length, 0)
+
 // 2. report
-const sum = (o) => Object.values(o).reduce((a, b) => a + b, 0)
+const sum =(o) => Object.values(o).reduce((a, b) => a + b, 0)
 console.log(`${apply ? 'APPLY' : 'PLAN'}: ${before.length} published products read; ${writes.length} documents to patch (${writes.reduce((a, w) => a + Object.keys(w.set).length + w.unset.length, 0)} changes)`)
 console.log(`text: entities decoded ${sum(count.entity)} ${JSON.stringify(count.entity)}; mojibake repaired ${count.mojibake}; typo corrections applied ${sum(count.corrected)} ${JSON.stringify(count.corrected)} (${CORRECTIONS.length} given)`)
 console.log(`rule 2: ${A.broken2.size} places write "no value" more than one way; each becomes a missing key`)
 console.log(`rule 3: ${A.groups.length} groups hold one value in more than one spelling; each becomes its most common spelling (${A.ties} ties)`)
+console.log(`picklist: ${unpicked} stale picks removed (${Object.values(STALE_PICKS).flat().join(', ')})`)
 console.log('re-check on the result: 0 places break rule 2, 0 groups break rule 3, 0 filter lists hold a value twice, 0 names collide')
 if (!apply) { console.log('\nNothing was written. To apply, run the same command with --apply.'); process.exit(0) }
 
 // 3. ONE transaction, each patch guarded by the revision read above
-const mutations = writes.map(({ p, set, unset }) => ({ patch: { id: p._id, ifRevisionID: p._rev, ...(Object.keys(set).length ? { set } : {}), ...(unset.length ? { unset } : {}) } }))
+const mutations = [
+  ...writes.map(({ p, set, unset }) => ({ patch: { id: p._id, ifRevisionID: p._rev, ...(Object.keys(set).length ? { set } : {}), ...(unset.length ? { unset } : {}) } })),
+  ...(unpicked ? [{ patch: { id: picklist._id, ifRevisionID: picklist._rev, set: picks } }] : []),
+]
 const res = await fetch(`${base}/mutate/${ds}?returnIds=true&visibility=sync`, {
   method: 'POST',
   headers: { Authorization: `Bearer ${e.SANITY_STUDIO_READ_WRITE}`, 'Content-Type': 'application/json' },
@@ -161,5 +175,7 @@ const want = new Map(fixed.map((d) => [d._id, bare(d)]))
 const bad = []
 for (const a of after) { if (!want.has(a._id)) bad.push(`${a._id}: should not exist`); else if (stable(bare(a)) !== stable(want.get(a._id))) bad.push(`${a._id}: differs from the plan`) }
 for (const id of want.keys()) if (!after.some((a) => a._id === id)) bad.push(`${id}: missing`)
+const picklistAfter = (await read('*[_id == "filterPicklist"]'))[0]
+for (const [slice, v] of Object.entries(picks)) if (stable(picklistAfter?.[slice]) !== stable(v)) bad.push(`filterPicklist.${slice}: differs from the plan`)
 console.log(bad.length ? `VERIFY FAILED:\n  ${bad.join('\n  ')}` : `verified: ${after.length} product documents, each exactly as planned.`)
 if (bad.length) process.exit(1)
