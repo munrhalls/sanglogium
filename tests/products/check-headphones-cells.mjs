@@ -66,13 +66,12 @@ const CELLS = [
   { id: 'batteryLifeHours.ancOff', get: sub('batteryLifeHours', 'ancOff'), def: NUM, rule: battery },
   { id: 'batteryLifeHours.ancOn', get: sub('batteryLifeHours', 'ancOn'), def: NUM, rule: ancOn },
 ];
-// Keys that may sit beside the cells: `sourcing` is declared in the schema. PENDING are known strays whose removal waits for a production deploy; delete them from this list when they are gone from the data.
+// Keys that may sit beside the cells: `sourcing` is declared in the schema. Any other key is a stray.
 const ALLOWED = new Set([...CELLS.map((c) => c.id.split('.')[0]), 'sourcing']);
-const PENDING = new Set(['brand', 'requiresAmplifier', 'condition']);
 
 // ── STEP 2: judge ──────────────────────────────────────────────────
 // IN:  one product's filterAttributes (an object, possibly empty).
-// OUT: { fails: [[cell, cause], ...], strays: [key, ...], pending: [key, ...] }.
+// OUT: { fails: [[cell, cause], ...], strays: [key, ...] }.
 // TRUST: a cell that applies must hold a legal value (a number may be null); a cell that does not apply must hold exactly its n/a form;
 //        a cell whose rule input is unusable cannot be judged and fails. Nothing is skipped.
 const kindOk = (d, v) => (d.t === 'enum' ? typeof v === 'string' : d.t === 'list' ? Array.isArray(v) : d.t === 'num' ? typeof v === 'number' && Number.isFinite(v) : typeof v === 'boolean');
@@ -100,8 +99,7 @@ function judge(fa) {
     const cause = applies ? judgeApplies(cell.def, cell.get(fa)) : judgeNA(cell.def, cell.get(fa));
     if (cause) fails.push([cell.id, (applies ? '' : 'n/a: ') + cause]);
   }
-  const extra = Object.keys(fa).filter((k) => !ALLOWED.has(k));
-  return { fails, strays: extra.filter((k) => !PENDING.has(k)), pending: extra.filter((k) => PENDING.has(k)) };
+  return { fails, strays: Object.keys(fa).filter((k) => !ALLOWED.has(k)) };
 }
 
 // ── STEP 3: selfProof ──────────────────────────────────────────────
@@ -131,7 +129,7 @@ function selfProof() {
     if (cell === null ? got.length !== 0 : !got.includes(cell)) throw new Error(`selfProof: "${name}" gave ${JSON.stringify(got)}`);
   }
   if (judge({ ...ok, zzz: 1 }).strays.join() !== 'zzz') throw new Error('selfProof: a new undeclared key was not caught');
-  if (judge({ ...ok, brand: ['x'] }).pending.join() !== 'brand' || judge({ ...ok, brand: ['x'] }).strays.length) throw new Error('selfProof: a pending stray was not classed as pending');
+  if (judge({ ...ok, brand: ['x'] }).strays.join() !== 'brand') throw new Error('selfProof: the removed key brand was not caught as a stray');
 }
 
 // ── STEP 4: readLive ───────────────────────────────────────────────
@@ -163,13 +161,12 @@ async function readLive() {
 selfProof();
 console.log('self-proof: every kind of failure is caught.\n');
 const hp = await readLive();
-const bad = [], pending = {};
+const bad = [];
 let failing = 0;
 for (const p of hp) {
   const v = judge(p.fa);
   failing += v.fails.length;
   if (v.fails.length || v.strays.length) bad.push({ name: p.name, ...v });
-  for (const k of v.pending) pending[k] = (pending[k] ?? 0) + 1;
 }
 const cells = hp.length * CELLS.length;
 console.log(`${hp.length} headphones x ${CELLS.length} cells = ${cells} cells`);
@@ -180,7 +177,5 @@ for (const b of bad) {
   for (const k of b.strays) console.log(`  undeclared key: ${k}`);
   console.log('');
 }
-const pend = Object.entries(pending).map(([k, n]) => `${k} ${n}`).join(', ');
-console.log(`known strays still waiting for removal: ${pend || 'none'}\n`);
 console.log(bad.length ? `RESULT: FAIL, ${bad.length} of ${hp.length} headphones` : `RESULT: PASS, ${hp.length} of ${hp.length} headphones`);
 if (bad.length) process.exitCode = 1;
