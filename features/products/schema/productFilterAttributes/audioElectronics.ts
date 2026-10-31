@@ -30,12 +30,6 @@ export const audioElectronicsFields: any[] = [
           domainField: "deviceType",
         },
         {
-          name: "dacIncluded",
-          title: "DAC included",
-          type: "boolean",
-          description: "Legacy field, kept as-is, not migrated.",
-        },
-        {
           name: "balancedOutput",
           title: "Balanced output",
           type: "boolean",
@@ -190,14 +184,6 @@ export const audioElectronicsFields: any[] = [
               options: { list: vocabFor("streamingPlatformSupport") },
             },
           ],
-          domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
-          domainField: "deviceType",
-        },
-        {
-          name: "networkConnection",
-          title: "Network connection",
-          type: "array",
-          of: [{ type: "string", options: { list: ["wifi", "ethernet"] } }],
           domain: ["dac", "network-streamer", "cd-player-transport", "digital-audio-player"],
           domainField: "deviceType",
         },

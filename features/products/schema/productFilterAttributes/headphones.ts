@@ -148,14 +148,6 @@ export const headphonesFields: any[] = [
           ],
         },
         {
-          name: "driverConfigBucket",
-          title: "Driver configuration (bucket)",
-          type: "string",
-          options: {
-            list: ["single-dynamic", "single-ba", "multi-ba", "hybrid-config", "planar", "other"],
-          },
-        },
-        {
           name: "sourcing",
           title: "Field sourcing / citations",
           type: "array",
