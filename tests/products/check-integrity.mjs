@@ -1,34 +1,37 @@
-// Products integrity check
+// Products structural orderliness check
 //
-// Question: in the published products, is anything repeated, spelled two ways or misspelled?
+// Question: in the published products, is anything repeated, held twice, spelled two ways or misspelled?
 // Answer: PASS or NO, every finding printed. It judges the text against itself and a dictionary, never whether a value is true.
 //
-// Four checks, in this order. Each is a yes/no. PASS needs all four empty.
+// Four questions, in this order. Each is a yes/no. PASS needs all four empty.
 //   1. repeated product      two products share a name, sku or slug (case and punctuation ignored)
-//   2. value spelled twice   one field holds "Focal Utopia" on one product and "FOCAL Utopia" on another
-//   3. same value twice      one product holds the same value in two fields, or twice in one field
+//   2. unread filter field   a filter field name is not in integrity-known.json: no person has read it yet
+//   3. value stored twice    a filter field holds "Focal Utopia" on one product and "FOCAL Utopia" on another, or holds one value twice on one product
 //   4. unknown word          a word is in no dictionary and not in integrity-known.json
 //
-// Not judged, forced: a fact worded two ways, a typo that is a real word ("form" for "from"). Chosen: numbers.
-// Not read: system keys, ids, links, rich-text mechanics, sku and slug (check 1), sourcing (assumed true).
-// integrity-known.json holds the words and field pairs a person has read and accepted. The check only reads it.
+// Not judged, forced: a fact worded two ways, a typo that is a real word ("form" for "from").
+// Not judged, chosen: one value in two different fields, a display row title in two spellings ("Weight" / "Weight:"), a display row or its group label repeated. Filter fields are sets, where a repeat is a duplicate. Display rows are ordered and labelled, where a repeat is how the page is laid out.
+// Not read, chosen: overviewFields, numbers, system keys, ids, links, rich-text mechanics, sku and slug (question 1), sourcing (assumed true).
+// integrity-known.json holds the filter field names and the words a person has read and accepted. The check only reads it.
 //
 // Human-run, reads only. From the repo root:
 //   node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-integrity.mjs
 // Exit 0 = PASS. Exit 1 = NO, each finding is printed. Exit 2 = no verdict: it could not read, or the self-proof failed.
 //
 // FLOW
-//   1. selfProof  fake products          -> throws unless each check says no where it must, and nothing on clean data
-//   2. read       Sanity, dictionary, list -> every published product, the word set, the accepted words and pairs
-//   3. checks     the products           -> the findings of each check
+//   1. selfProof  fake products          -> throws unless each question says no where it must, and nothing on clean data
+//   2. read       Sanity, dictionary, list -> every published product, the word set, the signed fields and accepted words
+//   3. checks     the products           -> the findings of each question
 //   4. report     the findings           -> the screen text and the exit code
 
 import { readFileSync } from 'node:fs';
 
 const IDENTITY = ['name', 'sku', 'slug'];
-const SKIP = /^(_.*|sku|slug|url|href|sourcing|sourcedAt|catalogueLocationKeys|marks|style|listItem|level|markDefs)$/;
+const FILTER = 'filterAttributes';
+const SKIP = /^(_.*|sku|slug|url|href|sourcing|sourcedAt|catalogueLocationKeys|overviewFields|marks|style|listItem|level|markDefs)$/;
 const norm = (s) => s.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
 const tokens = (s) => (s.replace(/’/g, "'").match(/\p{L}+(?:'\p{L}+)*/gu) || []).map((w) => w.toLowerCase().replace(/'s$/, '')).filter((w) => w.length > 1);
+const short = (t) => JSON.stringify(t.length > 50 ? `${t.slice(0, 50)}…` : t);
 
 // The text cells of a product: [path, text]. An array step is []. A row with a title and a value is keyed by its title: specifications[Impedance].value
 function cells(value, path = '', out = []) {
@@ -41,6 +44,15 @@ function cells(value, path = '', out = []) {
       cells(x, base ? `${base}.${k}` : k, out);
     }
   } else if (typeof value === 'string' && norm(value).length > 1) out.push([path, value]);
+  return out;
+}
+
+// The field names under filterAttributes that a value of any type sits on.
+function filterPaths(value, path = FILTER, out = new Set()) {
+  if (Array.isArray(value)) value.forEach((x) => filterPaths(x, `${path}[]`, out));
+  else if (value && typeof value === 'object') {
+    for (const [k, x] of Object.entries(value)) if (!SKIP.test(k)) filterPaths(x, `${path}.${k}`, out);
+  } else if (value !== null && value !== undefined && value !== '') out.add(path);
   return out;
 }
 
@@ -64,38 +76,41 @@ function repeats(products) {
   return out;
 }
 
-// CHECK 2: value spelled twice
-// IN:  the products
-// OUT: one finding per field that holds two spellings of one value
-// WHY: if "Focal Utopia" and "FOCAL Utopia" are both stored, one fact is stored twice. Names are check 1.
-function twins(products) {
-  const seen = new Map();
-  for (const p of products) for (const [path, text] of cells(p)) {
-    if (path === 'name') continue;
-    const m = seen.get(path) ?? new Map();
-    m.set(norm(text), (m.get(norm(text)) ?? new Set()).add(text));
-    seen.set(path, m);
-  }
-  return [...seen].flatMap(([path, m]) => [...m.values()].filter((s) => s.size > 1).map((s) => `${path}: ${[...s].map((t) => JSON.stringify(t)).join(' / ')}`));
+// CHECK 2: unread filter field
+// IN:  the products, the signed field names
+// OUT: every filter field that a product holds and no person has signed
+// WHY: two fields can hold one fact, and only a person who knows what they mean can say they do not. The person signs each name once, so a new field is a NO until it is read.
+function unreadFields(products, ref) {
+  const all = new Set();
+  for (const p of products) filterPaths(p[FILTER]).forEach((f) => all.add(f));
+  return [...all].filter((f) => !ref.known.fields.has(f)).sort();
 }
 
-// CHECK 3: same value twice
-// IN:  the products, the accepted pairs
-// OUT: one finding per pair of fields that hold one value on a product, or the same field twice. The pair is the text before the three spaces.
-// WHY: two fields with one value may be one fact stored twice. Only a person can say they are not, so a person accepts the pair once.
-function sameValue(products, ref) {
-  const seen = new Map();
+// CHECK 3: value stored twice
+// IN:  the products
+// OUT: one finding per filter field with one value in two spellings, and per filter field and value held twice on one product
+// WHY: "Focal Utopia" and "FOCAL Utopia" in one filter are one fact stored twice. A value twice in a set is the same fact written again.
+function storedTwice(products) {
+  const spelled = new Map();
+  const doubled = new Map();
   for (const p of products) {
-    const by = new Map();
-    for (const [path, text] of cells(p)) by.set(norm(text), [...(by.get(norm(text)) ?? []), path]);
-    const pairs = new Map();
-    for (const [value, paths] of by) {
-      paths.sort();
-      for (let i = 0; i < paths.length; i++) for (let j = i + 1; j < paths.length; j++) pairs.set(`${paths[i]}  <>  ${paths[j]}`, value);
+    const here = new Map();
+    for (const [path, text] of cells(p)) {
+      if (!path.startsWith(FILTER)) continue;
+      const key = `${path}\t${norm(text)}`;
+      const at = here.get(key) ?? { path, text, n: 0 };
+      at.n++;
+      here.set(key, at);
+      const s = spelled.get(key) ?? { path, forms: new Set() };
+      s.forms.add(text);
+      spelled.set(key, s);
     }
-    for (const [pair, value] of pairs) seen.set(pair, { n: (seen.get(pair)?.n ?? 0) + 1, value });
+    for (const [key, at] of here) if (at.n > 1) doubled.set(key, { ...at, products: (doubled.get(key)?.products ?? 0) + 1 });
   }
-  return [...seen].filter(([pair]) => !ref.known.pairs.has(pair)).sort((a, b) => b[1].n - a[1].n).map(([pair, { n, value }]) => `${pair}   (${n} products, e.g. ${value.slice(0, 40)})`);
+  const out = [];
+  for (const { path, forms } of spelled.values()) if (forms.size > 1) out.push(`spelled twice, ${path}: ${[...forms].map(short).join(' / ')}`);
+  for (const { path, text, products: n } of doubled.values()) out.push(`twice in one field, ${path}: ${short(text)}   (${n} products)`);
+  return out;
 }
 
 // CHECK 4: unknown word
@@ -110,27 +125,27 @@ function unknownWords(products, ref) {
 
 const CHECKS = [
   ['repeated product', repeats, '\n'],
-  ['value spelled twice', twins, '\n'],
-  ['same value twice', sameValue, '\n'],
+  ['unread filter field', unreadFields, '\n'],
+  ['value stored twice', storedTwice, '\n'],
   ['unknown word', unknownWords, ' '],
 ];
 
 // STEP 1: selfProof
-// IN:  fake products with alien names, a tiny dictionary, one accepted word and one accepted pair
+// IN:  fake products with alien names, a tiny dictionary, two signed fields and one accepted word
 // OUT: throws unless a check says yes to its planted defect, and every check says no to clean data
-// WHY: a check that cannot say no proves nothing. One defect per check, a second for check 1 and check 3, and clean data that holds an accepted word and an accepted pair.
+// WHY: a check that cannot say no proves nothing. One defect per question, a second for question 3, and clean data that holds what is not judged: an overviewFields word, a display row title in two spellings, a display row twice, one value in two fields.
 function selfProof() {
-  const ref = { dict: new Set(['wireless', 'headphones', 'zed', 'one', 'two', 'same', 'ploof']), known: { words: new Set(['quuxo']), pairs: new Set(['kappa  <>  omega']) } };
+  const ref = { dict: new Set(['wireless', 'headphones', 'zed', 'one', 'two', 'same', 'ploof', 'weight']), known: { words: new Set(['quuxo']), fields: new Set(['filterAttributes.zing', 'filterAttributes.tags[]']) } };
   const clean = [
-    { name: 'Zed One', sku: 'Q1', t: 'wireless headphones quuxo', kappa: 'ploof', omega: 'ploof', zorb: 'same' },
-    { name: 'Zed Two', sku: 'Q2', t: 'wireless', zorb: 'same' },
+    { name: 'Zed One', sku: 'Q1', t: 'wireless headphones quuxo same', filterAttributes: { zing: 'Ploof', tags: ['one', 'two'] }, specifications: [{ title: 'Weight', value: 'same' }, { title: 'Weight', value: 'same' }], overviewFields: [{ title: 'Zorp', value: 'blorbx' }] },
+    { name: 'Zed Two', sku: 'Q2', t: 'wireless', filterAttributes: { zing: 'Ploof', tags: ['one'] }, specifications: [{ title: 'Weight:', value: 'same' }] },
   ];
   const cases = [
     [0, [{ name: 'Zed One', sku: 'Q1' }, { name: 'Zed Two', sku: 'q-1' }], 'two products, one sku'],
     [0, [{ name: 'Zed One' }, { name: 'zed-one' }], 'two products, one name'],
-    [1, [{ zorb: 'Quux Plomb' }, { zorb: 'quux-plomb' }], 'one field, two spellings'],
-    [2, [{ vexo: 'blorp', wix: 'Blorp' }], 'one value in two fields'],
-    [2, [{ vexo: ['blorp', 'blorp'] }], 'one value twice in one field'],
+    [1, [{ filterAttributes: { vexo: 'ploof' } }], 'a filter field nobody signed'],
+    [2, [{ filterAttributes: { zing: 'Quux Plomb' } }, { filterAttributes: { zing: 'quux-plomb' } }], 'one filter field, two spellings'],
+    [2, [{ filterAttributes: { tags: ['blorp', 'Blorp'] } }], 'one value twice in one filter field'],
     [3, [{ t: 'wirless headphones' }], 'a word in no dictionary'],
   ];
   for (const [i, products, what] of cases) if (!CHECKS[i][1](products, ref).length) throw new Error(`self-proof failed: check ${i + 1} missed ${what}`);
@@ -153,7 +168,7 @@ async function read() {
   const dict = new Set();
   for (const f of ['american-english', 'british-english']) for (const line of readFileSync(`/usr/share/dict/${f}`, 'utf8').split('\n')) dict.add(line.toLowerCase().replace(/'s$/, ''));
   const known = JSON.parse(readFileSync(new URL('./integrity-known.json', import.meta.url), 'utf8'));
-  return { products: result, ref: { dict, known: { words: new Set(known.words.map((w) => w.toLowerCase())), pairs: new Set(known.pairs) } } };
+  return { products: result, ref: { dict, known: { words: new Set(known.words.map((w) => w.toLowerCase())), fields: new Set(known.fields) } } };
 }
 
 // STEP 4: report
