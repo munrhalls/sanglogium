@@ -55,7 +55,7 @@ Four questions were put to the live data, in this order. One script answers all 
 picklist (CMS) + products data -> controls and options
 
 In steps:
-1. product filterAttributes fields (shared plus the slice's own), minus brand, in stock, price and lists of objects -> the picklist's choices in Studio
+1. product filterAttributes fields (shared plus the slice's own), minus brand, in stock, price, lists of objects and the free-text field `compatibility` -> the picklist's choices in Studio
 2. owner's picks -> filterPicklist document
 3. filterPicklist + products data -> the picks and the products, read together
 4. picks -> selected facets: one per pick, each with an id, a name and a group
@@ -66,7 +66,7 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. Each slice's list offers the leaf paths of the shared fields and of that slice's own fields (nested fields as `a.b`), minus brand, in stock, price and lists of objects | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `schema/filterFieldPaths.ts`, `features/products/schema/productFilterAttributes/index.ts` |
+| 1. Each slice's list offers the leaf paths of the shared fields and of that slice's own fields (nested fields as `a.b`), minus brand, in stock, price, lists of objects and the free-text field `compatibility` | `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts`, `schema/filterFieldPaths.ts`, `features/products/schema/productFilterAttributes/index.ts` |
 | 2. The owner fills three lists, one per slice | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks) | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
 | 4. Selected facets are one per distinct pick (brand, in stock and price picks are dropped). A pick's id and URL key come from its name, its name is the field name split into capitalised words, its group is "More filters" | `core/rules/buildFacetSet.ts` (`selectionFor`, `humanizeAttribute`), `core/rules/facetKey.ts` |
