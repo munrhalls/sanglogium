@@ -19,6 +19,7 @@
 // Group A applies to every product and is never null: a list may be [] and a yes/no may be false, those are real answers.
 // Group B (has a rule) applies only when its rule says so; otherwise it takes the n/a form:
 // [] for a list, false for a yes/no, null for anything else (a one-of value, a number, a text).
+// A figure (a number or a text) that applies may be null when the maker publishes none; every other cell that applies is never null.
 const DT = ['dac', 'network-streamer', 'preamplifier', 'headphone-amplifier', 'digital-audio-player', 'integrated-amplifier', 'cd-player-transport', 'power-amplifier'];
 const AMP = ['integrated-amplifier', 'power-amplifier', 'preamplifier', 'headphone-amplifier'];
 const POW = ['integrated-amplifier', 'power-amplifier', 'preamplifier'];
@@ -59,28 +60,23 @@ const CELLS = [
   { id: 'voiceAssistant', get: top('voiceAssistant'), def: LIST(['alexa', 'google-assistant']), rule: byConn },
   { id: 'multiroomSupport', get: top('multiroomSupport'), def: BOOL, rule: byConn },
 ];
-// Keys that may sit beside the cells: none. PENDING are known strays whose removal waits for a production deploy; delete them from this list when they are gone from the data.
+// Keys that may sit beside the cells: none.
 const ALLOWED = new Set(CELLS.map((c) => c.id));
-const PENDING = new Set(['brand']);
-// OPEN are cells that apply but whose value no source publishes. [product name, cell].
+// OPEN are cells that apply but whose value no source publishes and that have no gap form. [product name, cell].
 // Each is reported as open, not as a failure. Delete an entry when its cell is filled.
 const OPEN = [
-  ['iFi Audio Diablo-X DAC and Headphone Amplifier', 'maxSampleRateBitDepth'],
-  ['FiiO BTR11 Portable DAC and Headphone Amp', 'maxSampleRateBitDepth'],
-  ['Woo Audio WA23 LUNA', 'powerOutputPerChannelW'],
-  ['LADDER Chopin Desktop R2R Pre-amplifier', 'powerOutputPerChannelW'],
   ['LeeLoo Desktop Tube Headphone Amplifier', 'inputs'],
 ];
 
 // ── STEP 2: judge ──────────────────────────────────────────────────
 // IN:  one product's filterAttributes (an object, possibly empty).
-// OUT: { fails: [[cell, cause], ...], strays: [key, ...], pending: [key, ...] }.
-// TRUST: a cell that applies must hold a legal value and is never null; a cell that does not apply must hold exactly its n/a form;
+// OUT: { fails: [[cell, cause], ...], strays: [key, ...] }.
+// TRUST: a cell that applies must hold a legal value and is never null, except a figure (number or text), which may be null; a cell that does not apply must hold exactly its n/a form;
 //        a cell whose rule input is unusable cannot be judged and fails. Nothing is skipped.
 const kindOk = (d, v) => (d.t === 'enum' || d.t === 'text' ? typeof v === 'string' : d.t === 'list' ? Array.isArray(v) : d.t === 'num' ? typeof v === 'number' && Number.isFinite(v) : typeof v === 'boolean');
 function judgeApplies(d, v) {
   if (v === undefined) return 'key missing';
-  if (v === null) return d.t === 'list' ? 'null (a list is [] when empty)' : 'null where a true answer exists';
+  if (v === null) return d.t === 'num' || d.t === 'text' ? null : d.t === 'list' ? 'null (a list is [] when empty)' : 'null where a true answer exists';
   if (!kindOk(d, v)) return 'wrong form';
   if (d.t === 'enum') return d.items.includes(v) ? null : 'illegal value';
   if (d.t === 'text') return d.re.test(v) ? null : 'illegal form';
@@ -106,7 +102,7 @@ function judge(fa) {
     if (cause) fails.push([cell.id, (applies ? '' : 'n/a: ') + cause]);
   }
   const extra = Object.keys(fa).filter((k) => !ALLOWED.has(k));
-  return { fails, strays: extra.filter((k) => !PENDING.has(k)), pending: extra.filter((k) => PENDING.has(k)) };
+  return { fails, strays: extra };
 }
 
 // ── STEP 3: selfProof ──────────────────────────────────────────────
@@ -136,7 +132,8 @@ function selfProof() {
     ['illegal value', { ...dac, formFactor: 'huge' }, 'formFactor'],
     ['null where a true answer exists (one-of value)', { ...dac, dsdSupport: null }, 'dsdSupport'],
     ['null list where it applies', { ...dac, dacChipsetFamily: null }, 'dacChipsetFamily'],
-    ['null number where it applies', { ...integrated, powerOutputPerChannelW: null }, 'powerOutputPerChannelW'],
+    ['a number that applies may be null', { ...integrated, powerOutputPerChannelW: null }, null],
+    ['a text that applies may be null', { ...dac, maxSampleRateBitDepth: null }, null],
     ['string where a number is required', { ...integrated, powerOutputPerChannelW: '50' }, 'powerOutputPerChannelW'],
     ['text in the wrong form', { ...dac, maxSampleRateBitDepth: '768kHz' }, 'maxSampleRateBitDepth'],
     ['empty list where a value is required', { ...amp, outputs: [] }, 'outputs'],
@@ -154,7 +151,6 @@ function selfProof() {
     if (cell === null ? got.length !== 0 : !got.includes(cell)) throw new Error(`selfProof: "${name}" gave ${JSON.stringify(got)}`);
   }
   if (judge({ ...dac, zzz: 1 }).strays.join() !== 'zzz') throw new Error('selfProof: a new undeclared key was not caught');
-  if (judge({ ...dac, brand: ['x'] }).pending.join() !== 'brand' || judge({ ...dac, brand: ['x'] }).strays.length) throw new Error('selfProof: a pending stray was not classed as pending');
 }
 
 // ── STEP 4: readLive ───────────────────────────────────────────────
@@ -187,7 +183,7 @@ selfProof();
 console.log('self-proof: every kind of failure is caught.\n');
 const ae = await readLive();
 const isOpen = (name, cell) => OPEN.some(([n, c]) => n === name && c === cell);
-const bad = [], open = [], pending = {};
+const bad = [], open = [];
 let failing = 0;
 for (const p of ae) {
   const v = judge(p.fa);
@@ -195,7 +191,6 @@ for (const p of ae) {
   for (const [cell, cause] of v.fails) if (isOpen(p.name, cell)) open.push(`${p.name}: ${cell} (${cause})`);
   failing += fails.length;
   if (fails.length || v.strays.length) bad.push({ name: p.name, fails, strays: v.strays });
-  for (const k of v.pending) pending[k] = (pending[k] ?? 0) + 1;
 }
 const cells = ae.length * CELLS.length;
 console.log(`${ae.length} audio-electronics products x ${CELLS.length} cells = ${cells} cells`);
@@ -207,7 +202,5 @@ for (const b of bad) {
   console.log('');
 }
 if (open.length) console.log(`open cells (no source publishes the value):\n${open.map((o) => `  ${o}`).join('\n')}\n`);
-const pend = Object.entries(pending).map(([k, n]) => `${k} ${n}`).join(', ');
-console.log(`known strays still waiting for removal: ${pend || 'none'}\n`);
 console.log(bad.length ? `RESULT: FAIL, ${bad.length} of ${ae.length} products` : `RESULT: PASS, ${ae.length} of ${ae.length} products`);
 if (bad.length) process.exitCode = 1;
