@@ -51,7 +51,7 @@ const CELLS = [
 ];
 // Keys that may sit beside the cells: none. PENDING are known strays whose removal waits for a production deploy; delete them from this list when they are gone from the data.
 const ALLOWED = new Set(CELLS.map((c) => c.id));
-const PENDING = new Set(['brand']);
+const PENDING = new Set([]);
 // OPEN are cells that apply but whose value no source publishes and whose form is a list (a number may be null, a list may not). [accessory name, cell].
 // Each is reported as open, not as a failure. Delete an entry when its cell is filled.
 const OPEN = [
@@ -129,7 +129,7 @@ function selfProof() {
     if (cell === null ? got.length !== 0 : !got.includes(cell)) throw new Error(`selfProof: "${name}" gave ${JSON.stringify(got)}`);
   }
   if (judge({ ...cable, zzz: 1 }).strays.join() !== 'zzz') throw new Error('selfProof: a new undeclared key was not caught');
-  if (judge({ ...cable, brand: ['x'] }).pending.join() !== 'brand' || judge({ ...cable, brand: ['x'] }).strays.length) throw new Error('selfProof: a pending stray was not classed as pending');
+  if (judge({ ...cable, brand: ['x'] }).strays.join() !== 'brand') throw new Error('selfProof: a returning brand copy was not caught');
 }
 
 // ── STEP 4: readLive ───────────────────────────────────────────────
