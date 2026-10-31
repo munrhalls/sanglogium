@@ -59,8 +59,16 @@ export const structure: StructureResolver = (S) =>
                         .documentId("filterPicklist")
                         .title("Filter picklist")
                 ),
+            S.listItem()
+                .title("Filter labels")
+                .child(
+                    S.document()
+                        .schemaType("filterLabels")
+                        .documentId("filterLabels")
+                        .title("Filter labels")
+                ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-                (item) => item.getId() && !["catalogueItem", "homepageData", "filterPicklist"].includes(item.getId()!)
+                (item) => item.getId() && !["catalogueItem", "homepageData", "filterPicklist", "filterLabels"].includes(item.getId()!)
             ),
         ]);
