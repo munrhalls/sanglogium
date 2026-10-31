@@ -20,59 +20,7 @@
 //   3. checks     the products  -> the findings of each rule
 //   4. report     the findings  -> the screen text and the exit code
 
-const IDENTITY = ['name', 'sku', 'slug'];
-const FILTER = 'filterAttributes';
-const SKIP = /^(_.*|sku|slug|url|href|sourcing|sourcedAt|catalogueLocationKeys|overviewFields|marks|style|listItem|level|markDefs)$/;
-const norm = (s) => s.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
-const short = (t) => JSON.stringify(t.length > 50 ? `${t.slice(0, 50)}…` : t);
-
-// Every value under filterAttributes, of any type: [path, value].
-function filterLeaves(value, path = FILTER, out = []) {
-  if (Array.isArray(value)) value.forEach((x) => filterLeaves(x, `${path}[]`, out));
-  else if (value && typeof value === 'object') {
-    for (const [k, x] of Object.entries(value)) if (!SKIP.test(k)) filterLeaves(x, `${path}.${k}`, out);
-  } else if (value !== null && value !== undefined && value !== '') out.push([path, value]);
-  return out;
-}
-
-// RULE 4: no two products share a name, sku or slug
-// IN:  the products
-// OUT: one finding per name, sku or slug held by more than one product
-// WHY: a customer or an order line cannot tell two products with one identity apart
-function repeats(products) {
-  const out = [];
-  for (const key of IDENTITY) {
-    const by = new Map();
-    for (const p of products) {
-      const text = key === 'slug' ? p.slug?.current : p[key];
-      if (typeof text !== 'string' || !norm(text)) continue;
-      const at = by.get(norm(text)) ?? { text, names: [] };
-      at.names.push(p.name);
-      by.set(norm(text), at);
-    }
-    for (const { text, names } of by.values()) if (names.length > 1) out.push(`${key} ${text}: ${names.join(' | ')}`);
-  }
-  return out;
-}
-
-// RULE 5: no filter field holds one value twice on one product
-// IN:  the products
-// OUT: one finding per filter field and value that a product holds twice, with the number of products
-// WHY: a filter field is a set, so a value written twice is the same fact written again. Display rows are ordered and labelled, where a repeat is layout. Two spellings of one value are rule 3 of check-products.
-function twiceInField(products) {
-  const out = new Map();
-  for (const p of products) {
-    const here = new Map();
-    for (const [path, value] of filterLeaves(p[FILTER])) {
-      const key = `${path}\t${JSON.stringify(value)}`;
-      const at = here.get(key) ?? { path, value, n: 0 };
-      at.n++;
-      here.set(key, at);
-    }
-    for (const [key, at] of here) if (at.n > 1) out.set(key, { ...at, products: (out.get(key)?.products ?? 0) + 1 });
-  }
-  return [...out.values()].map(({ path, value, products: n }) => `${path}: ${short(String(value))}   (${n} products)`);
-}
+import { repeats, twiceInField } from '../../tools/product-rules.mjs';
 
 const CHECKS = [
   ['repeated product', repeats],

@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { TrolleyIcon } from "@sanity/icons";
 import { filterAttributesField } from "./productFilterAttributes";
+import { usedOnce } from "./orderRules";
 
 export const productType = defineType({
   name: "product",
@@ -12,7 +13,7 @@ export const productType = defineType({
       name: "name",
       title: "Product Name",
       type: "string",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => [Rule.required(), usedOnce("name")(Rule)],
     }),
     defineField({
       name: "slug",
@@ -133,7 +134,7 @@ export const productType = defineType({
       title: "SKU",
       type: "string",
       description: "Stock Keeping Unit - Unique identifier for the product",
-      validation: (Rule) => Rule.required().min(3),
+      validation: (Rule) => [Rule.required().min(3), usedOnce("sku")(Rule)],
     }),
     defineField({
       name: "image",

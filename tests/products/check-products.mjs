@@ -15,22 +15,7 @@
 //
 // FLOW  selfProof -> read -> collect -> judge -> report
 
-const NOT_READ = new Set(['overviewFields', 'filterAttributes.sourcing']);
-const spelling = (text) => text.toLowerCase().replace(/\s/g, '');
-const child = (place, key) => (place ? `${place}.${key}` : key);
-const show = (place) => place || '(product)';
-
-// A tally: what was seen -> how many times, and the first product that had it.
-function count(tally, what, who) {
-  const seen = tally.get(what) ?? { n: 0, first: who };
-  seen.n++;
-  tally.set(what, seen);
-}
-
-function inner(map, key) {
-  if (!map.has(key)) map.set(key, new Map());
-  return map.get(key);
-}
+import { collect, judge, show } from '../../tools/product-rules.mjs';
 
 // 1. selfProof: a check that cannot say no proves nothing.
 // Two fake products must give exactly the finding, or none. Alien names, so no real place can match.
@@ -78,58 +63,7 @@ async function read() {
   return result;
 }
 
-// 3. collect: file everything the products put at each place, once.
-// place -> { forms, nones, spells, names }, each a tally. spells: spelling -> tally of the values as written. names: the same for key names.
-function collect(products) {
-  const places = new Map();
-  const objects = new Map(); // place -> the key set of each object found there, to find missing keys
-
-  function visit(value, place, who) {
-    if (!places.has(place)) places.set(place, { forms: new Map(), nones: new Map(), spells: new Map(), names: new Map() });
-    const at = places.get(place);
-    if (value === null) {
-      count(at.nones, 'null', who);
-      return;
-    }
-    count(at.forms, Array.isArray(value) ? 'array' : typeof value, who);
-    if (typeof value === 'string') {
-      if (value.trim() === '') count(at.nones, 'empty text', who);
-      count(inner(at.spells, spelling(value)), value, who);
-    } else if (Array.isArray(value)) {
-      if (value.length === 0) count(at.nones, 'empty list', who);
-      for (const item of value) visit(item, `${place}[]`, who);
-    } else if (typeof value === 'object') {
-      const keys = Object.keys(value).filter((key) => !NOT_READ.has(child(place, key)));
-      if (keys.length === 0) count(at.nones, 'empty object', who);
-      if (!objects.has(place)) objects.set(place, []);
-      objects.get(place).push({ keys: new Set(keys), who });
-      for (const key of keys) {
-        count(inner(at.names, spelling(key)), key, who);
-        visit(value[key], child(place, key), who);
-      }
-    }
-  }
-
-  for (const product of products) visit(product, '', product.name ?? product._id);
-
-  for (const [place, found] of objects) {
-    const all = new Set(found.flatMap((object) => [...object.keys]));
-    for (const { keys, who } of found) for (const key of all) if (!keys.has(key)) count(places.get(child(place, key)).nones, 'missing key', who);
-  }
-  return places;
-}
-
-// 4. judge: the places that break each rule. If a place holds 7 on one product and "9" on another, null on one and no key on another,
-// or "Black" and "black", two readers of that place can read two different things.
-function judge(places) {
-  const broken = { 'one form': [], 'one way to say no value': [], 'one spelling': [] };
-  for (const [place, at] of places) {
-    if (at.forms.size > 1) broken['one form'].push([place, at.forms]);
-    if (at.nones.size > 1) broken['one way to say no value'].push([place, at.nones]);
-    for (const same of [...at.spells.values(), ...at.names.values()]) if (same.size > 1) broken['one spelling'].push([place, same]);
-  }
-  return broken;
-}
+// 3-4. collect and judge: tools/product-rules.mjs, shared with the create gate.
 
 // 5. report: the screen text and the exit code.
 function report(products, broken) {
