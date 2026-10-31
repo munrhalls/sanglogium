@@ -4,6 +4,7 @@
 // and each option one text: the owner's curated one when there is one, else the automatic one. Only the curated rows are stored.
 // Questions, all yes means done:
 //   1. the raw map holds, for every control of a slice, exactly the distinct values the slice's products hold
+//   2. the curated rows are unique on (field, value), each names a control and a value that exists, and Studio's own rule refuses the same bad rows
 //   3. the labels map has exactly the raw map's controls and options, each with a non-empty text
 //   4. each text is the curated one when a non-empty row exists, else the automatic one
 //
@@ -20,6 +21,7 @@
 import { buildRawMap } from '@/features/product-filtering/core/rules/buildRawMap';
 import { autoControlLabel, autoOptionLabel, buildLabelsMap } from '@/features/product-filtering/core/rules/buildLabelsMap';
 import type { CuratedLabel, LabelsMap, RawMap } from '@/features/product-filtering/core/types/optionMaps';
+import { checkLabelRows } from '@/features/product-filtering/schema/filterLabelsType';
 
 type Product = { _id: string; filterAttributes?: Record<string, unknown>; catalogueLocationKeys?: string[]; [key: string]: unknown };
 type Item = { _id: string; slug?: string; parent?: string };
@@ -31,6 +33,7 @@ const CATALOGUE_SLUG: Record<string, string> = { headphones: 'headphones', audio
 
 const QUESTIONS: Record<number, string> = {
   1: "the raw map holds, for every control of a slice, exactly the distinct values the slice's products hold",
+  2: 'the curated rows are unique on (field, value), and each names a control and a value that exists',
   3: "the labels map has exactly the raw map's controls and options, each with a non-empty text",
   4: 'each text is the curated one when a non-empty row exists, else the automatic one',
 };
@@ -57,6 +60,7 @@ const held = (products: Product[], root: (p: Product) => unknown) => {
 // 4. judge: the findings per question. An empty list is a yes.
 export function judge(f: Facts): Record<number, string[]> {
   const q1: string[] = [];
+  const q2: string[] = [];
   const q3: string[] = [];
   const q4: string[] = [];
 
@@ -81,6 +85,26 @@ export function judge(f: Facts): Record<number, string[]> {
     }
   }
 
+  const optionsOf = new Map<string, Set<string>>();
+  for (const controls of Object.values(f.raw)) {
+    for (const [field, values] of Object.entries(controls)) {
+      const set = optionsOf.get(field) ?? new Set<string>();
+      values.forEach((v) => set.add(String(v)));
+      optionsOf.set(field, set);
+    }
+  }
+  const named = new Set<string>();
+  f.curated.forEach((row, i) => {
+    const field = row.field ?? '';
+    const value = row.value ?? '';
+    const where = `row ${i + 1} (${field} · ${value || 'control name'})`;
+    if (named.has(`${field}\n${value}`)) q2.push(`${where}: the same field and value are named by another row`);
+    named.add(`${field}\n${value}`);
+    const options = optionsOf.get(field);
+    if (!options) q2.push(`${where}: ${field} is not a control`);
+    else if (value && !options.has(value)) q2.push(`${where}: no product holds "${value}"`);
+  });
+
   const wanted = (field: string, value: string, auto: string) =>
     f.curated.filter((r) => r.field === field && (r.value ?? '') === value && filled(r.text)).at(-1)?.text?.trim() ?? auto;
   for (const slice of Object.keys(f.labels)) if (!(slice in f.raw)) q3.push(`${slice}: labels for a slice the raw map lacks`);
@@ -103,13 +127,13 @@ export function judge(f: Facts): Record<number, string[]> {
       });
     }
   }
-  return { 1: q1, 3: q3, 4: q4 };
+  return { 1: q1, 2: q2, 3: q3, 4: q4 };
 }
 
 // 1. selfProof: a proof that cannot say no proves nothing.
 // Fake slices, products and rows in real format with alien names, holding the awkward cases: null, blank text, an empty list, a number,
 // true/false. Each planted break must make exactly its questions say NO, clean data none.
-function selfProof() {
+async function selfProof() {
   const picklist: Picklist = { alwaysOn: ['wibble', 'plink.amount'], picks: { zorb: ['quux', 'plomb.min', 'tags'], vex: ['glim'] } };
   const p1: Product = { _id: 'p1', wibble: 'Frob', plink: { amount: 3 }, filterAttributes: { quux: 'a', plomb: { min: 1 }, tags: ['x', 'y'] } };
   const p2: Product = { _id: 'p2', wibble: 'Frob', plink: { amount: 0 }, filterAttributes: { quux: 'b', plomb: { min: null }, tags: ['y'] } };
@@ -122,7 +146,6 @@ function selfProof() {
     { field: 'tags', value: 'y', text: '   ' },
     { field: 'glim', value: 'true', text: 'Glim on' },
     { field: 'plink.amount', value: '3', text: 'Three' },
-    { field: 'nowhere', value: 'x', text: 'Orphan' },
   ];
   const RAW: RawMap = {
     zorb: { wibble: ['Frob', 'Zed'], 'plink.amount': [0, 3], quux: ['a', 'b'], 'plomb.min': [1, 2], tags: ['x', 'y'] },
@@ -157,7 +180,7 @@ function selfProof() {
     ['a value dropped', (r) => { r.zorb.quux = ['a']; }, [1]],
     ['a value no product holds', (r) => { r.zorb.quux.push('q'); }, [1]],
     ['a value listed twice', (r) => { r.zorb.quux.push('a'); }, [1]],
-    ['a control dropped', (r) => { delete r.zorb.tags; }, [1]],
+    ['a control dropped, which leaves a curated row without its control', (r) => { delete r.zorb.tags; }, [1, 2]],
     ['a field that is not a control', (r) => { r.zorb.extra = []; }, [1]],
     ["another slice's value", (r) => { r.vex.wibble.push('Frob'); }, [1]],
     ['a blank text kept as an option', (r) => { r.zorb.quux.push('  '); }, [1, 3]],
@@ -191,7 +214,39 @@ function selfProof() {
     const got = noes({ ...clean, labels: broken });
     if (got.join() !== want.join()) throw new Error(`self-proof failed on "${what}": wanted NO on [${want}], got [${got}]`);
   }
-  const odd: Product = { _id: 'p5', wibble: 'Zed', plink: { amount: 1 }, filterAttributes: { quux: { a: 1 } } };
+  const curatedPlants: [string, CuratedLabel[]][] = [
+    ['a row twice', [...curated, { field: 'quux', value: 'a', text: 'Again' }]],
+    ['a control name twice', [...curated, { field: 'quux', text: 'Again' }]],
+    ['a field that is not a control', [...curated, { field: 'nowhere', text: 'N' }]],
+    ['a value no product holds', [...curated, { field: 'quux', value: 'zzz', text: 'Z' }]],
+    ['a value of another field', [...curated, { field: 'quux', value: 'x', text: 'X' }]],
+    ['a capital that differs', [...curated, { field: 'quux', value: 'B', text: 'Bee' }]],
+    ['a number written another way', [...curated, { field: 'plink.amount', value: '3.0', text: 'T' }]],
+  ];
+  for (const [what, rows] of curatedPlants) {
+    const got = noes({ ...clean, curated: rows, labels: buildLabelsMap(raw, rows) });
+    if (got.join() !== '2') throw new Error(`self-proof failed on "${what}": wanted NO on [2], got [${got}]`);
+  }
+
+  // Studio's own rule, on a fake client in real format: the clean rows pass and the same planted rows are refused.
+  const doc = { _id: 'filterPicklist', _type: 'filterPicklist', _rev: 'r', alwaysOn: picklist.alwaysOn, zorb: picklist.picks.zorb, vex: picklist.picks.vex };
+  const everyProduct = [p1, p2, p3, p4];
+  const client = {
+    fetch: async (q: string) => {
+      if (q.includes('"filterPicklist"')) return doc;
+      const expr = q.match(/\{ "v": (.+) \}$/)?.[1] ?? '';
+      const always = expr.startsWith('coalesce(');
+      const path = always ? expr.slice('coalesce('.length, expr.indexOf('->')) : expr.replace('filterAttributes.', '');
+      return everyProduct.map((p) => ({ v: path.split('.').reduce<any>((v, k) => v?.[k], always ? p : p.filterAttributes) }));
+    },
+  };
+  if ((await checkLabelRows(curated, client)) !== true) throw new Error('self-proof failed: Studio refused the clean rows');
+  if ((await checkLabelRows(undefined, client)) !== true) throw new Error('self-proof failed: Studio refused no rows');
+  for (const [what, rows] of curatedPlants) {
+    if ((await checkLabelRows(rows, client)) === true) throw new Error(`self-proof failed: Studio accepted "${what}"`);
+  }
+
+  const odd: Product ={ _id: 'p5', wibble: 'Zed', plink: { amount: 1 }, filterAttributes: { quux: { a: 1 } } };
   let threw = false;
   try { buildRawMap(picklist, { zorb: [odd], vex: [p3] }); } catch { threw = true; }
   if (!threw) throw new Error('self-proof failed: an object value did not stop the raw map');
@@ -199,8 +254,15 @@ function selfProof() {
 
 // 2. read: one request is one snapshot, from api.sanity.io (not the CDN) so nothing is stale. Published only.
 // Zero products is no verdict: a wrong dataset would pass. The brand is read as its name: that is the value a shopper picks.
-async function read() {
+async function ask(query: string): Promise<any> {
   const env = process.env;
+  const url = `https://${env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v${env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14'}/data/query/${env.NEXT_PUBLIC_SANITY_DATASET || 'production'}?query=${encodeURIComponent(query)}`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${env.SANITY_API_READ_TOKEN}` } });
+  if (!res.ok) throw new Error(`read failed: HTTP ${res.status}`);
+  return (await res.json()).result;
+}
+
+async function read() {
   const published = '!(_id in path("drafts.**")) && !(_id in path("versions.**"))';
   const query = `{
     "products": *[_type == "product" && ${published}]{ _id, "brand": brand->name, price_data, stock, filterAttributes, catalogueLocationKeys },
@@ -208,10 +270,7 @@ async function read() {
     "picklist": *[_id == "filterPicklist"][0],
     "curated": *[_id == "filterLabels"][0].labels
   }`;
-  const url = `https://${env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v${env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14'}/data/query/${env.NEXT_PUBLIC_SANITY_DATASET || 'production'}?query=${encodeURIComponent(query)}`;
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${env.SANITY_API_READ_TOKEN}` } });
-  if (!res.ok) throw new Error(`read failed: HTTP ${res.status}`);
-  const { result } = await res.json();
+  const result = await ask(query);
   if (!result?.products?.length) throw new Error('read returned no products');
   if (!result.picklist) throw new Error('read found no published picklist document');
   return result as { products: Product[]; items: Item[]; picklist: Record<string, unknown>; curated: CuratedLabel[] | null };
@@ -247,7 +306,7 @@ function report(f: Facts, found: Record<number, string[]>) {
 }
 
 try {
-  selfProof();
+  await selfProof();
   console.log('self-proof: each question says NO where it must, and yes on clean data.\n');
   const { products, items, picklist: doc, curated: rows } = await read();
   const picklist: Picklist = { alwaysOn: strings(doc.alwaysOn), picks: Object.fromEntries(Object.keys(CATALOGUE_SLUG).map((n) => [n, strings(doc[n])])) };
@@ -256,7 +315,20 @@ try {
   const curated = rows ?? [];
   const raw = buildRawMap(picklist, slices);
   const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated) };
-  process.exitCode = report(facts, judge(facts));
+  const found = judge(facts);
+  const live = { fetch: (q: string) => ask(q) };
+  const studio = await checkLabelRows(curated, live);
+  if (studio !== true) found[2].push(...studio.split('\n').map((line) => `Studio rule: ${line}`));
+  // The rule on the real data: a genuine row for every control's name and first option must pass, and a made-up value must be refused.
+  const fields = [...new Set(Object.values(raw).flatMap((controls) => Object.keys(controls)))];
+  const genuine = fields.flatMap((field): CuratedLabel[] => {
+    const first = Object.values(raw).map((controls) => controls[field]).find((values) => values?.length)?.[0];
+    return [{ field, text: 'probe' }, ...(first === undefined ? [] : [{ field, value: String(first), text: 'probe' }])];
+  });
+  const accepted = await checkLabelRows(genuine, live);
+  if (accepted !== true) found[2].push(...accepted.split('\n').map((line) => `Studio rule refused a genuine row: ${line}`));
+  if ((await checkLabelRows([{ field: 'brand', value: 'no-such-brand-zz', text: 'probe' }], live)) === true) found[2].push('Studio rule accepted a made-up brand');
+  process.exitCode = report(facts, found);
 } catch (e) {
   console.error(`NO VERDICT: ${(e as Error).message}`);
   process.exitCode = 2;

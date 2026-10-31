@@ -6,8 +6,7 @@ import { brandType } from "../features/products/schema/brandType";
 import { orderType } from "../features/order/schema/orderType";
 import { userType } from "../features/profile/schema/userType";
 import { filterPicklistType } from "../features/product-filtering/schema/filterPicklistType";
-import { makeFilterLabelsType } from "../features/product-filtering/schema/filterLabelsType";
-import { PICKABLE } from "../features/product-filtering/schema/pickableFields";
+import { filterLabelsType } from "../features/product-filtering/schema/filterLabelsType";
 
 export const schema = {
   types: [
@@ -19,6 +18,6 @@ export const schema = {
     orderType,
     userType,
     filterPicklistType,
-    makeFilterLabelsType([...new Set(Object.values(PICKABLE).flat())]),
+    filterLabelsType,
   ],
 };
