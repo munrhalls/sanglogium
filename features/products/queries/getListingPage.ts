@@ -1,12 +1,4 @@
-import {
-  sanitizeFilterState,
-  isFiltersActive,
-  resolvePriceBounds,
-  isCategory,
-  type FilterQuery,
-  type Category,
-  type CatalogueFacets,
-} from '@/features/product-filtering';
+import { scopeOf, type FilterPanelData, type FilterPanelResult } from '@/features/product-filtering';
 import { isFacetedQuery, canonicalCategoryPath } from '@/features/catalogue';
 import type { CatalogPorts } from '@/features/products/core/ports';
 import type { CategoryMetadata } from '@/features/products/core/types/productDataTypes';
@@ -26,7 +18,7 @@ export interface ListingPorts {
     getBreadcrumbLabels: (parts: string[]) => string[];
   };
   filtering: {
-    getFilterFacets: (options: { keys: string[]; query: FilterQuery; category?: Category }) => Promise<CatalogueFacets>;
+    getFilterPanel: (options: { keys: string[]; scope: ReturnType<typeof scopeOf>; query: SearchParams }) => Promise<FilterPanelResult>;
   };
   catalog: CatalogPorts;
 }
@@ -39,10 +31,7 @@ type ListingPageResult =
       overline?: string;
       breadcrumbs?: string[];
       breadcrumbLabels?: string[];
-      category?: Category;
-      facets: CatalogueFacets;
-      priceBounds: { min: number; max: number };
-      filtersActive: boolean;
+      filter: FilterPanelData;
       totalCount: number;
       totalPages: number;
       effectivePage: number;
@@ -62,39 +51,29 @@ export async function getListingPage(ports: ListingPorts, input: {
     }
 
     // slug[0] is always the top-level category (headphones/audio-electronics/
-    // accessories), including for nested category pages -- picks which slice's
-    // facets getFilterFacets derives for the sidebar (sang-logium-3rv.6).
-    const rawCategory = slug ? slug[0] : undefined;
-    const category: Category | undefined =
-      rawCategory !== undefined ? (isCategory(rawCategory) ? rawCategory : 'headphones') : undefined;
+    // accessories), including for nested category pages: it picks the slice whose
+    // picklist the filter feature reads (scopeOf); /products reads the all-products list.
+    const scope = scopeOf(slug);
 
     const keys = slug ? ports.catalogue.unrollDescendantKeys(nodeId!) : ports.catalogue.getAllLeafKeys();
 
     const pageValue = Array.isArray(query.page) ? query.page[0] : query.page;
     const page = typeof pageValue === 'string' ? Number(pageValue) : 1;
 
-    // The raw query goes to getFilterFacets, which decodes it and vets the URL
-    // filter values against this route's own facet set — a bogus deep link
-    // (?driverType=banana) is inert there, before it can touch counts or the
-    // product query (jw8.3). Brand is vetted below: its values live on
-    // brandRef, so its vocab is the counted brand set.
-    const [metadata, facets] = await Promise.all([
+    // The raw query goes to the filter feature, which decodes it under this route's
+    // own control model: a key or value the model does not know is inert there, before
+    // it can touch the counts or the products request. Its narrowing (where, order,
+    // params) is then embedded in the count and in every chunk below.
+    const [metadata, { narrowing, ...filter }] = await Promise.all([
       slug ? ports.catalog.getCategoryMetadata(nodeId!) : Promise.resolve(null),
-      ports.filtering.getFilterFacets({ keys, query, category }),
+      ports.filtering.getFilterPanel({ keys, scope, query }),
     ]);
 
     if (slug && !metadata) {
       return { notFound: true };
     }
 
-    const state = sanitizeFilterState(facets.state, facets.facetSet, {
-      brand: Object.keys(facets.brandLabels),
-    });
-
-    const filtersActive = isFiltersActive(state);
-
-    const totalCount = await ports.catalog.getProductsCount({ keys, state, facetSet: facets.facetSet });
-    const priceBounds = resolvePriceBounds(facets.priceRange); // full category span, not narrowed by filters: the max handle can always be dragged back up
+    const totalCount = await ports.catalog.getNarrowedCount({ keys, narrowing });
 
     const overline =
       slug && slug.length > 1
@@ -107,7 +86,7 @@ export async function getListingPage(ports: ListingPorts, input: {
     // unawaited — each is streamed in independently via ChunkedProductGrid's
     // own Suspense boundaries.
     const chunkPromises = chunkOffsets.map((offset) =>
-      ports.catalog.getProductsChunk({ keys, offset, limit: CHUNK_SIZE, state, facetSet: facets.facetSet }),
+      ports.catalog.getNarrowedChunk({ keys, narrowing, offset, limit: CHUNK_SIZE }),
     );
 
     return {
@@ -115,10 +94,7 @@ export async function getListingPage(ports: ListingPorts, input: {
       overline,
       breadcrumbs: slug ?? undefined,
       breadcrumbLabels: slug ? ports.catalogue.getBreadcrumbLabels(slug) : undefined,
-      category,
-      facets,
-      priceBounds: { min: priceBounds.min, max: priceBounds.max },
-      filtersActive,
+      filter,
       totalCount,
       totalPages,
       effectivePage,
