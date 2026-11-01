@@ -55,7 +55,7 @@ Four questions were put to the live data, in this order. One script answered all
 picklist (CMS) + products data -> controls and options
 
 In steps:
-1. the owner's signed closed list of product fields per slice -> the picklist's choices in Studio (brand, price and stock are the document's read-only always-on list)
+1. the owner's signed closed list of product fields per slice, and the three together for all products -> the picklist's choices in Studio (brand, price and stock are the document's read-only always-on list)
 2. owner's picks, in the owner's order (drag to reorder) -> filterPicklist document
 3. filterPicklist + products data -> the picks and the products, read together
 4. picks -> selected facets: one per pick, each with an id, a name and a group
@@ -66,15 +66,15 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. Each slice's list offers the owner's signed closed list of fields (nested fields as `a.b`), each held by a product of the slice. Brand, price and stock are the document's read-only `alwaysOn` list: never offered, never stored as picks | `schema/pickableFields.ts`, `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts` |
-| 2. The owner fills three lists, one per slice, and drags them into order. `alwaysOn` is set once by a data write | the document is data in the dataset, no file |
+| 1. Each slice's list offers the owner's signed closed list of fields (nested fields as `a.b`), each held by a product of the slice. The all-products list (the `/products` page) offers the three lists together, once each. Brand, price and stock are the document's read-only `alwaysOn` list: never offered, never stored as picks | `schema/pickableFields.ts`, `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts` |
+| 2. The owner fills the three slice lists and drags them into order; the all-products list starts empty (so `/products` has the always-on controls only) and the owner adds picks to it the same way. `alwaysOn` is set once by a data write | the document is data in the dataset, no file |
 | 3. The picklist is read with the products (cached 300 s; a failed read means no picks) | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
 | 4. Selected facets are one per distinct pick (brand, in stock and price picks are dropped). A pick's id and URL key come from its name, its name is the field name split into capitalised words, its group is "More filters" | `core/rules/buildFacetSet.ts` (`selectionFor`, `humanizeAttribute`), `core/rules/facetKey.ts` |
 | 5. For each field path the inventory holds the kinds stored (text, number, true/false, list, object), the distinct text and true/false values (sorted; spellings that differ only by case count as one), and the smallest and largest number. A list counts as its items | `core/rules/fieldInventory.ts` |
 | 6. The values decide the control: only true/false, an on/off control; only numbers, a range; only text, a checkbox with one option per value; anything else, none. An option's text is its value as readable words (the rule is in the header of `humanizeFacetValue.ts`) | `core/rules/projectFacets.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts` |
 | 7. A pick with no kind is not drawn. Brand and in stock are fixed in code with their control, because no stored field decides them: in stock is computed from the stock fields; brand has no option list, its names are counted from the products | `core/rules/buildFacetSet.ts`, `core/definitions/awaitingLaterChunks.ts` |
 | Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them; the later chunk reads brand, price and stock from the picklist's `alwaysOn` list | `core/definitions/awaitingLaterChunks.ts` |
-| Proof of steps 1 to 3, the picklist itself, passed 2026-10-31: seven questions on the live data (every offer field is held in its slice; offer and `alwaysOn` equal the signed lists; stored picks are offered, once; `alwaysOn` is held by every product, shown read-only, never offered or stored as a pick; one document with nothing else; every list reorderable in Studio), after a self-proof with planted breaks | `tests/product-filtering/picklistRealData.test.ts` |
+| Proof of steps 1 to 3, the picklist itself, passed 2026-10-31, extended for all products and passed 2026-11-01: eight questions on the live data (every offer field is held in its scope; offer and `alwaysOn` equal the signed lists, the all-products list being the three together; stored picks are offered, once; `alwaysOn` is held by every product, shown read-only, never offered or stored as a pick; one document with nothing else; every list reorderable in Studio; the all-products list starts empty), after a self-proof with planted breaks | `tests/product-filtering/picklistRealData.test.ts` |
 | Proof of steps 4 to 7: no fake-input proof. The 2026-10-28 one was deleted on 2026-10-31: it fixed brand, in stock and the wording, which later chunks replace, and cases (mixed kinds, spellings that differ only by case) that the data rules now forbid. What is checked: the control, options and bounds of every offered field against the raw products on the live data (rule "derive matches the data"). Not proven: the brand names and `wearingStyle`, which are temporary | `tests/product-filtering/cmsContractRealData.test.ts` |
 
 ## 2. controls and options + curated texts (CMS) -> labelled controls and options
