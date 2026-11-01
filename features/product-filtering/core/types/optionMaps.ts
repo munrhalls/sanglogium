@@ -37,3 +37,12 @@ export type OptionMapProduct = { _id: string; filterAttributes?: Record<string, 
 
 /** Everything the control list is computed from: the stored picklist (always-on fields, and the picks per slice), the catalogue items and the published products. */
 export type OptionMapData = { alwaysOn: string[]; picks: Picklist; sortAlwaysOn: string[]; sortPicks: SortPicklist; items: CatalogueNode[]; products: OptionMapProduct[] };
+
+/** What one route's controls are computed from: the stored picklist (always-on fields, the picks and the sort lists per scope), the curated rows and the published products on the route. No catalogue items: the route's products are already picked by its key set. A product carries the always-on fields on itself (the brand as its name) and the picks in filterAttributes. */
+export type RouteMapData = Omit<OptionMapData, 'items' | 'products'> & {
+  products: { filterAttributes?: Record<string, unknown>; [key: string]: unknown }[];
+  rows: CuratedLabel[];
+};
+
+/** One scope's controls on one route: per control (a field path as the picklist writes it) the sorted distinct values the route's products hold, and its text and the text of each option. Only controls that hold a value on the route. The keys of both maps are the same, in the owner's order. */
+export type RouteControls = { raw: RawMap[string]; labels: LabelsMap[string] };
