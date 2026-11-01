@@ -69,7 +69,7 @@ export function FilterLabelsInput(props: ArrayOfObjectsInputProps) {
             <span style={{ ...muted, fontWeight: 400, textTransform: "none" }}> · {section.controls.length} controls</span>
           </h3>
           {section.controls.map((control) => {
-            const changed = rows.filter((row) => row.field === control.field && row.text?.trim()).length;
+            const changed = ["", ...control.options.map((option) => option.value)].filter((value) => rowText(rows, control.field, value).trim()).length;
             return (
               <details key={control.field} style={{ border: edge, borderRadius: 3, padding: "8px 12px" }}>
                 <summary style={{ cursor: "pointer" }}>
