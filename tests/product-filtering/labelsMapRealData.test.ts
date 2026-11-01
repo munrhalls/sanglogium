@@ -2,13 +2,16 @@
 //
 // The raw map lists, per slice and per control, the distinct values the slice's products hold. The labels map gives each control
 // and each option one text: the owner's curated one when there is one, else the automatic one. Only the curated rows are stored.
+// A sort (a field the shopper can sort by) is named by its field's control name, the same row the filter control uses; sort names are computed apart (buildSortLabels).
 // Questions, all yes means done:
 //   1. the raw map holds, for every control of a slice, exactly the distinct values the slice's products hold
 //   2. the curated rows are unique on (field, value)
 //   3. the labels map has exactly the raw map's controls and options, each with a non-empty text
 //   4. each text is the curated one when a non-empty row exists, else the automatic one
 //   5. the list the Studio draws has one section per slice; each holds exactly that slice's controls once, with exactly that slice's options, sorted, and the automatic texts
-//   6. typing a wording at a line of that list sets the text of that line and moves no other, and emptying it returns that line to its automatic text (on every live line)
+//   6. typing a wording at a line of that list (a control name, an option or a sort name) sets the text of that line and moves no other, and emptying it returns that line to its automatic text (on every live line)
+//   7. the list gives each scope a sorting part: exactly the scope's sort fields (the always-on sorts, then the owner's sort picks, each once), each with its automatic name, apart from the filter controls
+//   8. each sort's name is the curated control-name row when a non-empty one exists, else the automatic name
 //
 // A stored row that names no control or no held value is not a failure: the labels map ignores it.
 // A scope is a slice or all products (the products of the three slices together, with the picks the owner chose for /products). The proof treats the four scopes alike.
@@ -26,14 +29,16 @@ import { buildRawMap } from '@/features/product-filtering/core/rules/buildRawMap
 import { autoControlLabel, autoOptionLabel, buildLabelsMap } from '@/features/product-filtering/core/rules/buildLabelsMap';
 import { sliceByCatalogue } from '@/features/product-filtering/core/rules/sliceByCatalogue';
 import { listControlLabels } from '@/features/product-filtering/core/rules/listControlLabels';
+import { buildSortLabels } from '@/features/product-filtering/core/rules/buildSortLabels';
+import { sortFieldsOf } from '@/features/product-filtering/core/rules/sortFields';
 import { getControlLabels } from '@/features/product-filtering/queries/getControlLabels';
 import { OPTION_MAP_QUERY, toOptionMapData } from '@/features/product-filtering/adapters/sanity/optionMapData';
-import type { CatalogueNode, ControlLabels, CuratedLabel, LabelsMap, OptionValue, RawMap, SliceControls } from '@/features/product-filtering/core/types/optionMaps';
+import type { CatalogueNode, ControlLabels, CuratedLabel, LabelsMap, OptionValue, RawMap, SliceControls, SortLabels, SortMap } from '@/features/product-filtering/core/types/optionMaps';
 import { setRowText, type LabelRow } from '@/features/product-filtering/schema/labelRows';
 
 type Product = { _id: string; filterAttributes?: Record<string, unknown>; catalogueLocationKeys?: string[]; [key: string]: unknown };
 type Picklist = { alwaysOn: string[]; picks: Record<string, string[]> };
-type Facts = { picklist: Picklist; slices: Record<string, Product[]>; raw: RawMap; curated: CuratedLabel[]; labels: LabelsMap; list: SliceControls[]; write: typeof setRowText };
+type Facts = { picklist: Picklist; slices: Record<string, Product[]>; raw: RawMap; curated: CuratedLabel[]; labels: LabelsMap; sortMap: SortMap; sortNames: SortLabels; list: SliceControls[]; write: typeof setRowText };
 
 // The slice list name in the picklist document -> the slice's slug in the catalogue. The proof keys every slice by its slug, as the list does.
 const CATALOGUE_SLUG: Record<string, string> = { headphones: 'headphones', audioElectronics: 'audio-electronics', accessories: 'accessories' };
@@ -44,7 +49,9 @@ const QUESTIONS: Record<number, string> = {
   3: "the labels map has exactly the raw map's controls and options, each with a non-empty text",
   4: 'each text is the curated one when a non-empty row exists, else the automatic one',
   5: "the Studio list has one section per slice; each holds exactly that slice's controls once, with exactly that slice's options, sorted, and the automatic texts",
-  6: "typing a wording at a line sets the text of that line and moves no other, and emptying it returns that line to its automatic text",
+  6: "typing a wording at a line (a control name, an option or a sort name) sets the text of that line and moves no other, and emptying it returns that line to its automatic text",
+  7: "the Studio list gives each scope a sorting part: exactly the scope's sort fields (the always-on sorts, then the owner's sort picks, each once), each with its automatic name, apart from the filter controls",
+  8: "each sort's name is the curated control-name row when a non-empty one exists, else the automatic name",
 };
 
 const strings = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
@@ -75,6 +82,8 @@ export function judge(f: Facts): Record<number, string[]> {
   const q4: string[] = [];
   const q5: string[] = [];
   const q6: string[] = [];
+  const q7: string[] = [];
+  const q8: string[] = [];
 
   for (const [slice, picks] of Object.entries(f.picklist.picks)) {
     const have = f.raw[slice] ?? {};
@@ -163,15 +172,46 @@ export function judge(f: Facts): Record<number, string[]> {
     }
   }
 
+  // 7. The sorting part: per scope, exactly the scope's sort fields (the always-on sorts, then the owner's sort picks, each once), each with its
+  // automatic name, apart from the filter controls.
+  for (const [scope, fields] of Object.entries(f.sortMap)) {
+    const section = f.list.find((s) => s.slice === scope);
+    if (!section) { q7.push(`${scope}: the scope has no section`); continue; }
+    const got = section.sorts.map((s) => s.field);
+    const want = [...new Set(fields)];
+    if (got.join('\n') !== want.join('\n')) q7.push(`${scope}: the sorting part lists [${got.join(', ')}], wanted [${want.join(', ')}]`);
+    for (const s of section.sorts) {
+      if (!filled(s.label)) q7.push(`${scope}: ${s.field} has an empty sort name`);
+      else if (s.label !== autoControlLabel(s.field)) q7.push(`${scope}: ${s.field} is named "${s.label}", wanted the automatic "${autoControlLabel(s.field)}"`);
+      if (!(s.field in (f.raw[scope] ?? {})) && section.controls.some((c) => c.field === s.field)) q7.push(`${scope}: ${s.field} is a sort only but is listed as a filter control`);
+    }
+  }
+  for (const s of f.list) if (!(s.slice in f.sortMap) && s.sorts.length) q7.push(`${s.slice}: sorts are listed for a scope that has none`);
+
+  // 8. A sort's name: the curated control-name row when a non-empty one exists, else the automatic name, for exactly the sort fields.
+  for (const scope of Object.keys(f.sortNames)) if (!(scope in f.sortMap)) q8.push(`${scope}: sort names for a scope that has no sorts`);
+  for (const [scope, fields] of Object.entries(f.sortMap)) {
+    const have = f.sortNames[scope];
+    if (!have) { q8.push(`${scope}: no sort names`); continue; }
+    for (const field of Object.keys(have)) if (!fields.includes(field)) q8.push(`${scope}: ${field} has a sort name but is not a sort`);
+    for (const field of fields) {
+      const text = have[field];
+      if (text === undefined) q8.push(`${scope}: ${field} has no sort name`);
+      else if (!filled(text)) q8.push(`${scope}: ${field} has an empty sort name`);
+      else if (text !== wanted(field, '', autoControlLabel(field))) q8.push(`${scope}: ${field} is named "${text}", wanted "${wanted(field, '', autoControlLabel(field))}"`);
+    }
+  }
+
   // 6. Typing at a line of the list: that line's text becomes the typed one and no other text moves, with exactly one row for the line;
   // emptying the line gives the earlier texts back and leaves no row for it. A line that several slices share is one line.
   const rows0: LabelRow[] = f.curated.map((c, i) => ({ ...c, _key: `k${i}`, _type: 'label' }));
   const before = buildLabelsMap(f.raw, rows0);
   const same = (row: LabelRow, field: string, value: string) => row.field === field && (row.value ?? '') === value;
   const seen = new Set<string>();
-  const lines = f.list
-    .flatMap((s) => s.controls)
-    .flatMap((c) => [{ field: c.field, value: '' }, ...c.options.map((o) => ({ field: c.field, value: o.value }))])
+  const lines = [
+    ...f.list.flatMap((s) => s.controls).flatMap((c) => [{ field: c.field, value: '' }, ...c.options.map((o) => ({ field: c.field, value: o.value }))]),
+    ...f.list.flatMap((s) => s.sorts).map((s) => ({ field: s.field, value: '' })),
+  ]
     .filter(({ field, value }) => {
       const key = `${field}\n${value}`;
       if (seen.has(key)) return false;
@@ -200,8 +240,16 @@ export function judge(f: Facts): Record<number, string[]> {
     const emptied = f.write(typed, field, value, '');
     if (emptied.some((r) => same(r, field, value))) q6.push(`${where}: emptying the text leaves a row for the line`);
     if (JSON.stringify(buildLabelsMap(f.raw, emptied)) !== JSON.stringify(buildLabelsMap(f.raw, rows0.filter((r) => !same(r, field, value))))) q6.push(`${where}: emptying the text does not return the line to its automatic text and leave every other text as it was`);
+    const sortAfter = buildSortLabels(f.sortMap, typed);
+    for (const [scope, names] of Object.entries(buildSortLabels(f.sortMap, rows0))) {
+      for (const [fld, text] of Object.entries(names)) {
+        const wantSort = fld === field && value === '' ? 'probe' : text;
+        if (sortAfter[scope][fld] !== wantSort) q6.push(`${where}: the sort name of ${scope} · ${fld} reads "${sortAfter[scope][fld]}", wanted "${wantSort}"`);
+      }
+    }
+    if (JSON.stringify(buildSortLabels(f.sortMap, emptied)) !== JSON.stringify(buildSortLabels(f.sortMap, rows0.filter((r) => !same(r, field, value))))) q6.push(`${where}: emptying the text does not return the sort names to their earlier texts`);
   }
-  return { 1: q1, 2: q2, 3: q3, 4: q4, 5: q5, 6: q6 };
+  return { 1: q1, 2: q2, 3: q3, 4: q4, 5: q5, 6: q6, 7: q7, 8: q8 };
 }
 
 // 1. selfProof: a proof that cannot say no proves nothing.
@@ -215,12 +263,27 @@ async function selfProof() {
   const p3: Product = { _id: 'p3', wibble: 'Zed', plink: { amount: 9 }, filterAttributes: { glim: true } };
   const p4: Product = { _id: 'p4', wibble: 'Zed', plink: { amount: 3 }, filterAttributes: { quux: '  ', plomb: { min: 2 }, tags: [] } };
   const slices = { zorb: [p1, p2, p4], vex: [p3], omni: [p1, p2, p4, p3] };
+  // The sorts: two always-on (a price-like and a name-like field, product-root paths) and the owner's picks per scope: plomb.min is a filter and a sort, heft a sort only.
+  const sortAlwaysOn = ['plink.amount', 'blorp'];
+  const sortPicks = { zorb: ['plomb.min', 'heft'], vex: [], omni: ['heft'] };
+  const sortMap = sortFieldsOf(sortAlwaysOn, sortPicks);
+  const SORT_MAP: SortMap = {
+    zorb: ['plink.amount', 'blorp', 'plomb.min', 'heft'],
+    vex: ['plink.amount', 'blorp'],
+    omni: ['plink.amount', 'blorp', 'heft'],
+  };
+  const SORT_NAMES: SortLabels = {
+    zorb: { 'plink.amount': 'Plink amount', blorp: 'Blorp', 'plomb.min': 'Plomb min', heft: 'Heaviness' },
+    vex: { 'plink.amount': 'Plink amount', blorp: 'Blorp' },
+    omni: { 'plink.amount': 'Plink amount', blorp: 'Blorp', heft: 'Heaviness' },
+  };
   const curated: CuratedLabel[] = [
     { field: 'quux', text: 'Quux control' },
     { field: 'quux', value: 'a', text: 'Alpha' },
     { field: 'tags', value: 'y', text: '   ' },
     { field: 'glim', value: 'true', text: 'Glim on' },
     { field: 'plink.amount', value: '3', text: 'Three' },
+    { field: 'heft', text: 'Heaviness' },
   ];
   const RAW: RawMap = {
     zorb: { wibble: ['Frob', 'Zed'], 'plink.amount': [0, 3], quux: ['a', 'b'], 'plomb.min': [1, 2], tags: ['x', 'y'] },
@@ -246,7 +309,7 @@ async function selfProof() {
       zing: { label: 'Zing', options: { k: 'K' } },
     },
   };
-  // The Studio list: one section per slice, each with that slice's controls and the options that slice holds, with the automatic texts (no curated row).
+  // The Studio list: one section per scope, each with that scope's controls and the options it holds, and its sorts, with the automatic texts (no curated row).
   const LIST: SliceControls[] = [
     {
       slice: 'zorb',
@@ -257,6 +320,12 @@ async function selfProof() {
         { field: 'plomb.min', label: 'Plomb min', options: [{ value: '1', text: '1' }, { value: '2', text: '2' }] },
         { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }, { value: 'y', text: 'Y' }] },
       ],
+      sorts: [
+        { field: 'plink.amount', label: 'Plink amount' },
+        { field: 'blorp', label: 'Blorp' },
+        { field: 'plomb.min', label: 'Plomb min' },
+        { field: 'heft', label: 'Heft' },
+      ],
     },
     {
       slice: 'vex',
@@ -265,6 +334,10 @@ async function selfProof() {
         { field: 'plink.amount', label: 'Plink amount', options: [{ value: '9', text: '9' }] },
         { field: 'glim', label: 'Glim', options: [{ value: 'true', text: 'Yes' }] },
       ],
+      sorts: [
+        { field: 'plink.amount', label: 'Plink amount' },
+        { field: 'blorp', label: 'Blorp' },
+      ],
     },
     {
       slice: 'omni',
@@ -272,6 +345,11 @@ async function selfProof() {
         { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
         { field: 'plink.amount', label: 'Plink amount', options: [{ value: '0', text: '0' }, { value: '3', text: '3' }, { value: '9', text: '9' }] },
         { field: 'zing', label: 'Zing', options: [{ value: 'k', text: 'K' }] },
+      ],
+      sorts: [
+        { field: 'plink.amount', label: 'Plink amount' },
+        { field: 'blorp', label: 'Blorp' },
+        { field: 'heft', label: 'Heft' },
       ],
     },
   ];
@@ -299,10 +377,13 @@ async function selfProof() {
   if (canon(raw) !== canon(RAW)) throw new Error(`self-proof failed: the raw map is ${canon(raw)}, wanted ${canon(RAW)}`);
   const labels = buildLabelsMap(raw, curated);
   if (canon(labels) !== canon(LABELS)) throw new Error(`self-proof failed: the labels map is ${canon(labels)}, wanted ${canon(LABELS)}`);
-  const list = listControlLabels(raw);
+  if (canon(sortMap) !== canon(SORT_MAP)) throw new Error(`self-proof failed: the sort fields are ${canon(sortMap)}, wanted ${canon(SORT_MAP)}`);
+  const sortNames = buildSortLabels(sortMap, curated);
+  if (canon(sortNames) !== canon(SORT_NAMES)) throw new Error(`self-proof failed: the sort names are ${canon(sortNames)}, wanted ${canon(SORT_NAMES)}`);
+  const list = listControlLabels(raw, buildSortLabels(sortMap, []));
   if (canon(list) !== canon(LIST)) throw new Error(`self-proof failed: the list is ${canon(list)}, wanted ${canon(LIST)}`);
   const noes = (f: Facts) => Object.entries(judge(f)).flatMap(([id, found]) => (found.length ? [Number(id)] : []));
-  const clean: Facts = { picklist, slices, raw, curated, labels, list, write: setRowText };
+  const clean: Facts = { picklist, slices, raw, curated, labels, sortMap, sortNames, list, write: setRowText };
   const base = noes(clean);
   if (base.length) throw new Error(`self-proof failed: clean data gave NO on question ${base.join(', ')}`);
 
@@ -320,10 +401,10 @@ async function selfProof() {
   for (const [what, plant, want] of rawPlants) {
     const broken = structuredClone(raw);
     plant(broken);
-    const got = noes({ ...clean, raw: broken, labels: buildLabelsMap(broken, curated), list: listControlLabels(broken) });
+    const got = noes({ ...clean, raw: broken, labels: buildLabelsMap(broken, curated), list: listControlLabels(broken, buildSortLabels(sortMap, [])) });
     if (got.join() !== want.join()) throw new Error(`self-proof failed on "${what}": wanted NO on [${want}], got [${got}]`);
   }
-  const listPlants: [string, (l: SliceControls[]) => void][] = [
+  const listPlants: [string, (l: SliceControls[]) => void, number[]?][] = [
     ['an option dropped', (l) => { l[0].controls[2].options.pop(); }],
     ['an option the slice does not hold', (l) => { l[0].controls[2].options.push({ value: 'q', text: 'Q' }); }],
     ['an option of another slice', (l) => { l[1].controls[0].options.push({ value: 'Frob', text: 'Frob' }); }],
@@ -332,9 +413,9 @@ async function selfProof() {
     ['a control of another slice', (l) => { l[0].controls.push(structuredClone(l[1].controls[2])); }],
     ['a control listed twice', (l) => { l[0].controls.push({ ...l[0].controls[0] }); }],
     ['a field that is not a control', (l) => { l[0].controls.push({ field: 'extra', label: 'Extra', options: [] }); }],
-    ['a slice dropped', (l) => { l.pop(); }],
+    ['a slice dropped', (l) => { l.pop(); }, [5, 7]],
     ['a slice listed twice', (l) => { l.push(structuredClone(l[0])); }],
-    ['a slice that does not exist', (l) => { l.push({ slice: 'nowhere', controls: [] }); }],
+    ['a slice that does not exist', (l) => { l.push({ slice: 'nowhere', controls: [], sorts: [] }); }],
     ['an empty option text', (l) => { l[0].controls[2].options[1].text = '  '; }],
     ['an empty control name', (l) => { l[0].controls[2].label = ''; }],
     ['a wrong automatic option text', (l) => { l[0].controls[2].options[1].text = 'Bee'; }],
@@ -343,11 +424,43 @@ async function selfProof() {
     ['numbers out of order', (l) => { l[0].controls[1].options.reverse(); }],
     ['text before numbers', (l) => { const o = l[0].controls[1].options; o.push({ value: 'x', text: 'X' }); o.unshift(o.pop()!); }],
   ];
-  for (const [what, plant] of listPlants) {
+  for (const [what, plant, want = [5]] of listPlants) {
     const broken = structuredClone(list);
     plant(broken);
     const got = noes({ ...clean, list: broken });
-    if (got.join() !== '5') throw new Error(`self-proof failed on "${what}": wanted NO on [5], got [${got}]`);
+    if (got.join() !== want.join()) throw new Error(`self-proof failed on "${what}": wanted NO on [${want}], got [${got}]`);
+  }
+  const sortPlants: [string, (l: SliceControls[]) => void, number[]][] = [
+    ['a sort dropped', (l) => { l[0].sorts.pop(); }, [7]],
+    ['a sort listed twice', (l) => { l[0].sorts.push({ ...l[0].sorts[0] }); }, [7]],
+    ['a sort of another scope', (l) => { l[1].sorts.push({ field: 'heft', label: 'Heft' }); }, [7]],
+    ['the sorts of a scope dropped', (l) => { l[1].sorts = []; }, [7]],
+    ['sorts in the wrong order', (l) => { l[0].sorts.reverse(); }, [7]],
+    ['an empty sort name', (l) => { l[0].sorts[0].label = '  '; }, [7]],
+    ['a wrong automatic sort name', (l) => { l[0].sorts[0].label = 'Cost'; }, [7]],
+    ['a curated sort name in the list', (l) => { l[0].sorts[3].label = 'Heaviness'; }, [7]],
+    ['a sort only listed as a filter control', (l) => { l[0].controls.push({ field: 'heft', label: 'Heft', options: [] }); }, [5, 7]],
+  ];
+  for (const [what, plant, want] of sortPlants) {
+    const broken = structuredClone(list);
+    plant(broken);
+    const got = noes({ ...clean, list: broken });
+    if (got.join() !== want.join()) throw new Error(`self-proof failed on "${what}": wanted NO on [${want}], got [${got}]`);
+  }
+  const sortNamePlants: [string, (n: SortLabels) => void][] = [
+    ['a curated sort name ignored', (n) => { n.zorb.heft = 'Heft'; }],
+    ['an invented sort name', (n) => { n.vex.blorp = 'Made up'; }],
+    ['a sort without a name', (n) => { delete n.vex.blorp; }],
+    ['a name for a field that is not a sort', (n) => { n.vex.extra = 'E'; }],
+    ['a scope without sort names', (n) => { delete n.omni; }],
+    ['an empty sort name', (n) => { n.zorb.blorp = '  '; }],
+    ['sort names for a scope that has no sorts', (n) => { n.nowhere = {}; }],
+  ];
+  for (const [what, plant] of sortNamePlants) {
+    const broken = structuredClone(sortNames);
+    plant(broken);
+    const got = noes({ ...clean, sortNames: broken });
+    if (got.join() !== '8') throw new Error(`self-proof failed on "${what}": wanted NO on [8], got [${got}]`);
   }
   const labelPlants: [string, (l: LabelsMap) => void, number[]][] = [
     ['an option without a text', (l) => { delete l.zorb.quux.options.b; }, [3]],
@@ -410,7 +523,7 @@ async function selfProof() {
 
   // The read path: the stored query's result in real format (the picklist document keeps camelCase list names) through the mapping and the use case.
   const result = {
-    picklist: { _id: 'filterPicklist', _type: 'filterPicklist', alwaysOn: ['wibble'], headphones: ['quux'], audioElectronics: ['tags'], accessories: [] },
+    picklist: { _id: 'filterPicklist', _type: 'filterPicklist', alwaysOn: ['wibble'], headphones: ['quux'], audioElectronics: ['tags'], accessories: [], sortAlwaysOn: ['blorp'], sortHeadphones: ['quux'], sortAudioElectronics: [], sortAccessories: [], sortAllProducts: ['tags'] },
     items: [{ _id: 'h', slug: 'headphones' }, { _id: 'h1', slug: 'zorb', parent: 'h' }, { _id: 'a', slug: 'audio-electronics' }, { _id: 'x', slug: 'accessories' }],
     products: [
       { _id: 'q1', wibble: 'Frob', filterAttributes: { quux: 'b', tags: ['y'] }, catalogueLocationKeys: ['h1'] },
@@ -426,6 +539,7 @@ async function selfProof() {
         { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }] },
         { field: 'quux', label: 'Quux', options: [{ value: 'b', text: 'B' }] },
       ],
+      sorts: [{ field: 'blorp', label: 'Blorp' }, { field: 'quux', label: 'Quux' }],
     },
     {
       slice: 'audio-electronics',
@@ -433,13 +547,22 @@ async function selfProof() {
         { field: 'wibble', label: 'Wibble', options: [{ value: 'Zed', text: 'Zed' }] },
         { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }] },
       ],
+      sorts: [{ field: 'blorp', label: 'Blorp' }],
     },
-    { slice: 'accessories', controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }] }] },
-    { slice: 'all-products', controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] }] },
+    {
+      slice: 'accessories',
+      controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }] }],
+      sorts: [{ field: 'blorp', label: 'Blorp' }],
+    },
+    {
+      slice: 'all-products',
+      controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] }],
+      sorts: [{ field: 'blorp', label: 'Blorp' }, { field: 'tags', label: 'Tags' }],
+    },
   ];
   const fromRead = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) });
   if (canon(fromRead) !== canon(READ_LIST)) throw new Error(`self-proof failed: the read path gave ${canon(fromRead)}, wanted ${canon(READ_LIST)}`);
-  // The owner picks quux for all products: its options are listed across the slices (accessories does not pick it) and q4's z stays out.
+  // The owner picks quux for all products: its options are listed across the slices (accessories does not pick it) and q4's z stays out. Its sorts are unchanged.
   const READ_PICKED: SliceControls[] = [
     ...READ_LIST.slice(0, 3),
     {
@@ -448,12 +571,13 @@ async function selfProof() {
         { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
         { field: 'quux', label: 'Quux', options: [{ value: 'a', text: 'A' }, { value: 'b', text: 'B' }, { value: 'c', text: 'C' }] },
       ],
+      sorts: [{ field: 'blorp', label: 'Blorp' }, { field: 'tags', label: 'Tags' }],
     },
   ];
   const picked = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData({ ...result, picklist: { ...result.picklist, allProducts: ['quux'] } }) });
   if (canon(picked) !== canon(READ_PICKED)) throw new Error(`self-proof failed: the read path with an all-products pick gave ${canon(picked)}, wanted ${canon(READ_PICKED)}`);
   const noDocument = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData({ ...result, picklist: null }) });
-  if (noDocument.some((s) => s.controls.length)) throw new Error('self-proof failed: a missing picklist document gave controls');
+  if (noDocument.some((s) => s.controls.length || s.sorts.length)) throw new Error('self-proof failed: a missing picklist document gave controls or sorts');
 
   const odd: Product ={ _id: 'p5', wibble: 'Zed', plink: { amount: 1 }, filterAttributes: { quux: { a: 1 } } };
   let threw = false;
@@ -483,7 +607,7 @@ async function read() {
 // 3. report: the screen text and the exit code.
 function report(f: Facts, found: Record<number, string[]>) {
   console.log(Object.entries(f.slices).map(([n, p]) => `${n}: ${p.length} products, ${Object.keys(f.raw[n]).length} controls, ${Object.values(f.raw[n]).flat().length} options`).join('\n'));
-  console.log(`Studio list: ${f.list.length} sections, ${f.list.reduce((n, s) => n + s.controls.length, 0)} controls, ${f.list.reduce((n, s) => n + s.controls.reduce((m, c) => m + c.options.length, 0), 0)} options`);
+  console.log(`Studio list: ${f.list.length} sections, ${f.list.reduce((n, s) => n + s.controls.length, 0)} controls, ${f.list.reduce((n, s) => n + s.controls.reduce((m, c) => m + c.options.length, 0), 0)} options, ${f.list.reduce((n, s) => n + s.sorts.length, 0)} sorts`);
   console.log(`curated rows: ${f.curated.length}${f.curated.length ? '' : ' (none stored yet, so the curated side is proven on the self-proof rows only)'}\n`);
   const ids = Object.keys(QUESTIONS).map(Number);
   ids.forEach((id) => {
@@ -513,7 +637,12 @@ try {
   slices['all-products'] = products.filter((p) => inSlice.has(p._id));
   const curated = rows ?? [];
   const raw = buildRawMap(picklist, slices);
-  const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }), write: setRowText };
+  // The expected sort fields, worked out by hand from the stored lists: the always-on sorts, then the scope's picks, each once.
+  const scopes: [string, string][] = [...Object.entries(CATALOGUE_SLUG).map(([name, slug]): [string, string] => [slug, name]), ['all-products', 'allProducts'] as [string, string]];
+  const sortMap: SortMap = Object.fromEntries(
+    scopes.map(([slug, name]) => [slug, [...new Set([...strings(doc.sortAlwaysOn), ...strings(doc[`sort${name[0].toUpperCase()}${name.slice(1)}`])])]]),
+  );
+  const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), sortMap, sortNames: buildSortLabels(sortMap, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }), write: setRowText };
   process.exitCode = report(facts, judge(facts));
 } catch (e) {
   console.error(`NO VERDICT: ${(e as Error).message}`);
