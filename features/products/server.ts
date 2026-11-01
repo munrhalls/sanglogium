@@ -1,6 +1,6 @@
 import 'server-only';
 // Server-only entry: wired catalog ports. Never import from client components or Node .mjs scripts.
-import { getProductsCount, getProductsChunk } from './adapters/sanity/getProductsByVfsKeys';
+import { getProductsCount, getProductsChunk, getNarrowedCount, getNarrowedChunk } from './adapters/sanity/getProductsByVfsKeys';
 import { getProductBySlug } from './adapters/sanity/getProductBySlug';
 import { getRelatedProducts } from './adapters/sanity/getRelatedProducts';
 import { getSitemapSlugs } from './adapters/sanity/getSitemapSlugs';
@@ -8,13 +8,15 @@ import { getListingPage as getListingPageQuery, getListingMetadata as getListing
 import { getProductPage as getProductPageQuery, getProductMetadata as getProductMetadataQuery } from './queries/getProductPage';
 import { getSitemapEntries as getSitemapEntriesQuery } from './queries/getSitemapEntries';
 import { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys, getCategoryMetadata, getBreadcrumbLabels } from '@/features/catalogue/server';
-import { getFilterFacets } from '@/features/product-filtering/server';
+import { getFilterPanel } from '@/features/product-filtering/server';
 import type { CatalogPorts } from './core/ports';
 import type { ListingPorts } from './queries/getListingPage';
 
 const catalog: CatalogPorts = {
   getProductsCount,
   getProductsChunk,
+  getNarrowedCount,
+  getNarrowedChunk,
   getCategoryMetadata,
   getProductBySlug,
   getRelatedProducts,
@@ -23,7 +25,7 @@ const catalog: CatalogPorts = {
 
 const listingPorts: ListingPorts = {
   catalogue: { resolveSlugToId, unrollDescendantKeys, getAllLeafKeys, getBreadcrumbLabels },
-  filtering: { getFilterFacets },
+  filtering: { getFilterPanel },
   catalog,
 };
 
