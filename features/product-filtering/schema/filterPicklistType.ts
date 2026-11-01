@@ -1,7 +1,8 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
 import { PICKABLE, SORTABLE } from "./pickableFields";
+import { SECTION_ICONS } from "./sectionIcons";
 
-// One document, two groups. Filters: which fields become filter controls. Sorting: which fields the shopper can sort by.
+// One document, three groups. Filters: which fields become filter controls. Sorting: which fields the shopper can sort by. Sections: where headings sit among the filter controls.
 // Each group has one list per slice and one for all products (the /products page). The choices sit on the items, not on the list: Studio then draws sortable rows (drag to reorder) instead of checkboxes.
 // No list has an initial value: the all-products filter list and every sorting list start empty, so /products shows only the always-on filters, and every scope only the always-on sorts (price and name), until the owner adds some.
 const SLICE_HELP = "Fields that become filter controls for this slice, in this order. Drag to reorder. The always-on fields above are controls in every slice.";
@@ -23,6 +24,41 @@ const listField = (name: string, title: string, choices: string[], group: "filte
     description,
   });
 
+// A heading is a row: a title, an optional icon and the control it is shown above. Its controls are that control and the ones below it down to the next heading, in the order of the filter list; the position is the "Shown above" choice, so the rows are not sortable.
+const SECTIONS_HELP =
+  "Each row is a heading shown above one control. The controls below it, until the next heading, belong to it. Controls above the first heading have none. The always-on controls (brand, price, stock) stay on top. A heading whose control is not picked for this slice is not shown. Rows are not reordered here: change 'Shown above' to move a heading.";
+
+const sectionsField = (name: string, title: string, choices: string[]) =>
+  defineField({
+    name,
+    title,
+    group: "sections",
+    type: "array",
+    options: { sortable: false },
+    of: [
+      defineArrayMember({
+        name: "section",
+        type: "object",
+        fields: [
+          defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
+          defineField({ name: "icon", title: "Icon", type: "string", options: { list: SECTION_ICONS.map((icon) => ({ title: icon, value: icon })) } }),
+          defineField({
+            name: "before",
+            title: "Shown above",
+            type: "string",
+            options: { list: choices.map((path) => ({ title: path, value: path })) },
+            validation: (Rule) => Rule.required(),
+          }),
+        ],
+        preview: {
+          select: { title: "title", subtitle: "before" },
+          prepare: ({ title, subtitle }: { title?: string; subtitle?: string }) => ({ title: title ?? "", subtitle: subtitle ? `above ${subtitle}` : "" }),
+        },
+      }),
+    ],
+    description: SECTIONS_HELP,
+  });
+
 export const filterPicklistType = defineType({
   name: "filterPicklist",
   title: "Filter picklist",
@@ -30,6 +66,7 @@ export const filterPicklistType = defineType({
   groups: [
     { name: "filters", title: "Filters", default: true },
     { name: "sorting", title: "Sorting" },
+    { name: "sections", title: "Sections" },
   ],
   fields: [
     defineField({
@@ -58,5 +95,9 @@ export const filterPicklistType = defineType({
     listField("sortAudioElectronics", "Audio electronics", SORTABLE.audioElectronics, "sorting", SORT_HELP),
     listField("sortAccessories", "Accessories", SORTABLE.accessories, "sorting", SORT_HELP),
     listField("sortAllProducts", "All products (/products)", SORTABLE.allProducts, "sorting", SORT_ALL_PRODUCTS_HELP),
+    sectionsField("sectionsHeadphones", "Headphones", PICKABLE.headphones),
+    sectionsField("sectionsAudioElectronics", "Audio electronics", PICKABLE.audioElectronics),
+    sectionsField("sectionsAccessories", "Accessories", PICKABLE.accessories),
+    sectionsField("sectionsAllProducts", "All products (/products)", PICKABLE.allProducts),
   ],
 });
