@@ -7,7 +7,7 @@
 //   2. the curated rows are unique on (field, value)
 //   3. the labels map has exactly the raw map's controls and options, each with a non-empty text
 //   4. each text is the curated one when a non-empty row exists, else the automatic one
-//   5. the list the Studio draws has every control of any slice once, each with exactly the options the slices hold, sorted, and the automatic texts
+//   5. the list the Studio draws has one section per slice; each holds exactly that slice's controls once, with exactly that slice's options, sorted, and the automatic texts
 //   6. typing a wording at a line of that list sets the text of that line and moves no other, and emptying it returns that line to its automatic text (on every live line)
 //
 // A stored row that names no control or no held value is not a failure: the labels map ignores it.
@@ -27,14 +27,14 @@ import { sliceByCatalogue } from '@/features/product-filtering/core/rules/sliceB
 import { listControlLabels } from '@/features/product-filtering/core/rules/listControlLabels';
 import { getControlLabels } from '@/features/product-filtering/queries/getControlLabels';
 import { OPTION_MAP_QUERY, toOptionMapData } from '@/features/product-filtering/adapters/sanity/optionMapData';
-import type { CatalogueNode, ControlLabels, CuratedLabel, LabelsMap, OptionValue, RawMap } from '@/features/product-filtering/core/types/optionMaps';
+import type { CatalogueNode, ControlLabels, CuratedLabel, LabelsMap, OptionValue, RawMap, SliceControls } from '@/features/product-filtering/core/types/optionMaps';
 import { setRowText, type LabelRow } from '@/features/product-filtering/schema/labelRows';
 
 type Product = { _id: string; filterAttributes?: Record<string, unknown>; catalogueLocationKeys?: string[]; [key: string]: unknown };
 type Picklist = { alwaysOn: string[]; picks: Record<string, string[]> };
-type Facts = { picklist: Picklist; slices: Record<string, Product[]>; raw: RawMap; curated: CuratedLabel[]; labels: LabelsMap; list: ControlLabels[]; write: typeof setRowText };
+type Facts = { picklist: Picklist; slices: Record<string, Product[]>; raw: RawMap; curated: CuratedLabel[]; labels: LabelsMap; list: SliceControls[]; write: typeof setRowText };
 
-// The slice list name in the picklist document -> the slice's slug in the catalogue.
+// The slice list name in the picklist document -> the slice's slug in the catalogue. The proof keys every slice by its slug, as the list does.
 const CATALOGUE_SLUG: Record<string, string> = { headphones: 'headphones', audioElectronics: 'audio-electronics', accessories: 'accessories' };
 
 const QUESTIONS: Record<number, string> = {
@@ -42,7 +42,7 @@ const QUESTIONS: Record<number, string> = {
   2: 'the curated rows are unique on (field, value)',
   3: "the labels map has exactly the raw map's controls and options, each with a non-empty text",
   4: 'each text is the curated one when a non-empty row exists, else the automatic one',
-  5: "the Studio list has every control of any slice once, each with exactly the options the slices hold, sorted, and the automatic texts",
+  5: "the Studio list has one section per slice; each holds exactly that slice's controls once, with exactly that slice's options, sorted, and the automatic texts",
   6: "typing a wording at a line sets the text of that line and moves no other, and emptying it returns that line to its automatic text",
 };
 
@@ -127,48 +127,56 @@ export function judge(f: Facts): Record<number, string[]> {
     }
   }
 
-  // 5. The list: every control once, the options any slice holds in the order numbers, true/false, text, each with the automatic text.
-  const typed = new Map<string, Map<string, OptionValue>>();
-  for (const controls of Object.values(f.raw)) {
-    for (const [field, values] of Object.entries(controls)) {
-      const options = typed.get(field) ?? new Map<string, OptionValue>();
-      values.forEach((v) => options.set(String(v), v));
-      typed.set(field, options);
-    }
-  }
+  // 5. The list: one section per slice; in each, the slice's controls once, each with exactly the options the slice holds in the order
+  // numbers, true/false, text, and the automatic texts.
   const plain = buildLabelsMap(f.raw, []);
-  const autoName = (field: string) => Object.values(plain).map((controls) => controls[field]?.label).find((t) => t !== undefined);
-  const autoText = (field: string, value: string) => Object.values(plain).map((controls) => controls[field]?.options[value]).find((t) => t !== undefined);
-  const listed = new Map<string, ControlLabels>();
-  for (const c of f.list) {
-    if (listed.has(c.field)) q5.push(`${c.field} is listed twice`);
-    listed.set(c.field, c);
-    if (!typed.has(c.field)) q5.push(`${c.field} is listed but is not a control of any slice`);
-  }
-  for (const [field, values] of typed) {
-    const c = listed.get(field);
-    if (!c) { q5.push(`${field} is a control but is not listed`); continue; }
-    if (!filled(c.label)) q5.push(`${field} has an empty name`);
-    else if (c.label !== autoName(field)) q5.push(`${field} is named "${c.label}", wanted the automatic "${autoName(field)}"`);
-    const want = [...values.values()].sort((a, b) => kind(a) - kind(b) || (a < b ? -1 : a > b ? 1 : 0)).map(String);
-    const got = c.options.map((o) => o.value);
-    const twice = new Set(got).size !== got.length;
-    if (twice) q5.push(`${field} lists an option twice`);
-    for (const v of want.filter((x) => !got.includes(x))) q5.push(`${field} lacks the option ${v}`);
-    for (const v of got.filter((x) => !want.includes(x))) q5.push(`${field} lists ${v}, which no slice holds`);
-    if (!twice && got.length === want.length && want.every((x) => got.includes(x)) && got.join('\n') !== want.join('\n')) q5.push(`${field}: the options are not in the order numbers, true/false, text`);
-    for (const o of c.options) {
-      if (!filled(o.text)) q5.push(`${field}: option ${o.value} has an empty text`);
-      else if (o.text !== autoText(field, o.value) && autoText(field, o.value) !== undefined) q5.push(`${field}: option ${o.value} reads "${o.text}", wanted the automatic "${autoText(field, o.value)}"`);
+  const listedSlices = f.list.map((s) => s.slice);
+  if (new Set(listedSlices).size !== listedSlices.length) q5.push('a slice is listed twice');
+  for (const name of listedSlices) if (!(name in f.raw)) q5.push(`${name} is listed but is not a slice`);
+  for (const [slice, controls] of Object.entries(f.raw)) {
+    const section = f.list.find((s) => s.slice === slice);
+    if (!section) { q5.push(`${slice}: the slice has no section`); continue; }
+    const listed = new Map<string, ControlLabels>();
+    for (const c of section.controls) {
+      if (listed.has(c.field)) q5.push(`${slice}: ${c.field} is listed twice`);
+      listed.set(c.field, c);
+      if (!(c.field in controls)) q5.push(`${slice}: ${c.field} is listed but is not a control of the slice`);
+    }
+    for (const [field, values] of Object.entries(controls)) {
+      const c = listed.get(field);
+      if (!c) { q5.push(`${slice}: ${field} is a control but is not listed`); continue; }
+      if (!filled(c.label)) q5.push(`${slice}: ${field} has an empty name`);
+      else if (c.label !== plain[slice][field].label) q5.push(`${slice}: ${field} is named "${c.label}", wanted the automatic "${plain[slice][field].label}"`);
+      const want = [...values].sort((a, b) => kind(a) - kind(b) || (a < b ? -1 : a > b ? 1 : 0)).map(String);
+      const got = c.options.map((o) => o.value);
+      const twice = new Set(got).size !== got.length;
+      if (twice) q5.push(`${slice}: ${field} lists an option twice`);
+      for (const v of want.filter((x) => !got.includes(x))) q5.push(`${slice}: ${field} lacks the option ${v}`);
+      for (const v of got.filter((x) => !want.includes(x))) q5.push(`${slice}: ${field} lists ${v}, which the slice does not hold`);
+      if (!twice && got.length === want.length && want.every((x) => got.includes(x)) && got.join('\n') !== want.join('\n')) q5.push(`${slice}: ${field}: the options are not in the order numbers, true/false, text`);
+      for (const o of c.options) {
+        const auto = plain[slice][field].options[o.value];
+        if (!filled(o.text)) q5.push(`${slice}: ${field}: option ${o.value} has an empty text`);
+        else if (auto !== undefined && o.text !== auto) q5.push(`${slice}: ${field}: option ${o.value} reads "${o.text}", wanted the automatic "${auto}"`);
+      }
     }
   }
 
   // 6. Typing at a line of the list: that line's text becomes the typed one and no other text moves, with exactly one row for the line;
-  // emptying the line gives the earlier texts back and leaves no row for it.
+  // emptying the line gives the earlier texts back and leaves no row for it. A line that several slices share is one line.
   const rows0: LabelRow[] = f.curated.map((c, i) => ({ ...c, _key: `k${i}`, _type: 'label' }));
   const before = buildLabelsMap(f.raw, rows0);
   const same = (row: LabelRow, field: string, value: string) => row.field === field && (row.value ?? '') === value;
-  const lines = f.list.flatMap((c) => [{ field: c.field, value: '' }, ...c.options.map((o) => ({ field: c.field, value: o.value }))]);
+  const seen = new Set<string>();
+  const lines = f.list
+    .flatMap((s) => s.controls)
+    .flatMap((c) => [{ field: c.field, value: '' }, ...c.options.map((o) => ({ field: c.field, value: o.value }))])
+    .filter(({ field, value }) => {
+      const key = `${field}\n${value}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   for (const { field, value } of lines) {
     if (q6.length >= 20) { q6.push('(more lines left out)'); break; }
     const where = `${field} · ${value || 'control name'}`;
@@ -230,14 +238,26 @@ async function selfProof() {
       glim: { label: 'Glim', options: { true: 'Glim on' } },
     },
   };
-  // The Studio list: the controls of both slices once each, the options of both slices, sorted, with the automatic texts (no curated row).
-  const LIST: ControlLabels[] = [
-    { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
-    { field: 'plink.amount', label: 'Plink amount', options: [{ value: '0', text: '0' }, { value: '3', text: '3' }, { value: '9', text: '9' }] },
-    { field: 'quux', label: 'Quux', options: [{ value: 'a', text: 'A' }, { value: 'b', text: 'B' }] },
-    { field: 'plomb.min', label: 'Plomb min', options: [{ value: '1', text: '1' }, { value: '2', text: '2' }] },
-    { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }, { value: 'y', text: 'Y' }] },
-    { field: 'glim', label: 'Glim', options: [{ value: 'true', text: 'Yes' }] },
+  // The Studio list: one section per slice, each with that slice's controls and the options that slice holds, with the automatic texts (no curated row).
+  const LIST: SliceControls[] = [
+    {
+      slice: 'zorb',
+      controls: [
+        { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
+        { field: 'plink.amount', label: 'Plink amount', options: [{ value: '0', text: '0' }, { value: '3', text: '3' }] },
+        { field: 'quux', label: 'Quux', options: [{ value: 'a', text: 'A' }, { value: 'b', text: 'B' }] },
+        { field: 'plomb.min', label: 'Plomb min', options: [{ value: '1', text: '1' }, { value: '2', text: '2' }] },
+        { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }, { value: 'y', text: 'Y' }] },
+      ],
+    },
+    {
+      slice: 'vex',
+      controls: [
+        { field: 'wibble', label: 'Wibble', options: [{ value: 'Zed', text: 'Zed' }] },
+        { field: 'plink.amount', label: 'Plink amount', options: [{ value: '9', text: '9' }] },
+        { field: 'glim', label: 'Glim', options: [{ value: 'true', text: 'Yes' }] },
+      ],
+    },
   ];
   const canon = (r: unknown) => JSON.stringify(r, (_k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).sort()) : v));
 
@@ -286,20 +306,25 @@ async function selfProof() {
     const got = noes({ ...clean, raw: broken, labels: buildLabelsMap(broken, curated), list: listControlLabels(broken) });
     if (got.join() !== want.join()) throw new Error(`self-proof failed on "${what}": wanted NO on [${want}], got [${got}]`);
   }
-  const listPlants: [string, (l: ControlLabels[]) => void][] = [
-    ['an option dropped', (l) => { l[2].options.pop(); }],
-    ['an option no slice holds', (l) => { l[2].options.push({ value: 'q', text: 'Q' }); }],
-    ['an option listed twice', (l) => { l[2].options.push({ ...l[2].options[0] }); }],
-    ['a control dropped', (l) => { l.pop(); }],
-    ['a control listed twice', (l) => { l.push({ ...l[0] }); }],
-    ['a field that is not a control', (l) => { l.push({ field: 'extra', label: 'Extra', options: [] }); }],
-    ['an empty option text', (l) => { l[2].options[1].text = '  '; }],
-    ['an empty control name', (l) => { l[2].label = ''; }],
-    ['a wrong automatic option text', (l) => { l[2].options[1].text = 'Bee'; }],
-    ['a wrong automatic control name', (l) => { l[2].label = 'Quux control'; }],
-    ['a curated text in the list', (l) => { l[2].options[0].text = 'Alpha'; }],
-    ['numbers out of order', (l) => { l[1].options.reverse(); }],
-    ['text before numbers', (l) => { l[1].options.push({ value: 'x', text: 'X' }); l[1].options.unshift(l[1].options.pop()!); }],
+  const listPlants: [string, (l: SliceControls[]) => void][] = [
+    ['an option dropped', (l) => { l[0].controls[2].options.pop(); }],
+    ['an option the slice does not hold', (l) => { l[0].controls[2].options.push({ value: 'q', text: 'Q' }); }],
+    ['an option of another slice', (l) => { l[1].controls[0].options.push({ value: 'Frob', text: 'Frob' }); }],
+    ['an option listed twice', (l) => { l[0].controls[2].options.push({ ...l[0].controls[2].options[0] }); }],
+    ['a control dropped', (l) => { l[0].controls.pop(); }],
+    ['a control of another slice', (l) => { l[0].controls.push(structuredClone(l[1].controls[2])); }],
+    ['a control listed twice', (l) => { l[0].controls.push({ ...l[0].controls[0] }); }],
+    ['a field that is not a control', (l) => { l[0].controls.push({ field: 'extra', label: 'Extra', options: [] }); }],
+    ['a slice dropped', (l) => { l.pop(); }],
+    ['a slice listed twice', (l) => { l.push(structuredClone(l[0])); }],
+    ['a slice that does not exist', (l) => { l.push({ slice: 'nowhere', controls: [] }); }],
+    ['an empty option text', (l) => { l[0].controls[2].options[1].text = '  '; }],
+    ['an empty control name', (l) => { l[0].controls[2].label = ''; }],
+    ['a wrong automatic option text', (l) => { l[0].controls[2].options[1].text = 'Bee'; }],
+    ['a wrong automatic control name', (l) => { l[0].controls[2].label = 'Quux control'; }],
+    ['a curated text in the list', (l) => { l[0].controls[2].options[0].text = 'Alpha'; }],
+    ['numbers out of order', (l) => { l[0].controls[1].options.reverse(); }],
+    ['text before numbers', (l) => { const o = l[0].controls[1].options; o.push({ value: 'x', text: 'X' }); o.unshift(o.pop()!); }],
   ];
   for (const [what, plant] of listPlants) {
     const broken = structuredClone(list);
@@ -376,15 +401,27 @@ async function selfProof() {
       { _id: 'q3', wibble: 'Frob', filterAttributes: { quux: 'c' }, catalogueLocationKeys: ['x'] },
     ],
   };
-  const READ_LIST: ControlLabels[] = [
-    { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
-    { field: 'quux', label: 'Quux', options: [{ value: 'b', text: 'B' }] },
-    { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }] },
+  const READ_LIST: SliceControls[] = [
+    {
+      slice: 'headphones',
+      controls: [
+        { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }] },
+        { field: 'quux', label: 'Quux', options: [{ value: 'b', text: 'B' }] },
+      ],
+    },
+    {
+      slice: 'audio-electronics',
+      controls: [
+        { field: 'wibble', label: 'Wibble', options: [{ value: 'Zed', text: 'Zed' }] },
+        { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }] },
+      ],
+    },
+    { slice: 'accessories', controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }] }] },
   ];
   const fromRead = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) });
   if (canon(fromRead) !== canon(READ_LIST)) throw new Error(`self-proof failed: the read path gave ${canon(fromRead)}, wanted ${canon(READ_LIST)}`);
   const noDocument = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData({ ...result, picklist: null }) });
-  if (noDocument.length) throw new Error('self-proof failed: a missing picklist document gave controls');
+  if (noDocument.some((s) => s.controls.length)) throw new Error('self-proof failed: a missing picklist document gave controls');
 
   const odd: Product ={ _id: 'p5', wibble: 'Zed', plink: { amount: 1 }, filterAttributes: { quux: { a: 1 } } };
   let threw = false;
@@ -414,7 +451,7 @@ async function read() {
 // 3. report: the screen text and the exit code.
 function report(f: Facts, found: Record<number, string[]>) {
   console.log(Object.entries(f.slices).map(([n, p]) => `${n}: ${p.length} products, ${Object.keys(f.raw[n]).length} controls, ${Object.values(f.raw[n]).flat().length} options`).join('\n'));
-  console.log(`Studio list: ${f.list.length} controls, ${f.list.reduce((n, c) => n + c.options.length, 0)} options`);
+  console.log(`Studio list: ${f.list.length} sections, ${f.list.reduce((n, s) => n + s.controls.length, 0)} controls, ${f.list.reduce((n, s) => n + s.controls.reduce((m, c) => m + c.options.length, 0), 0)} options`);
   console.log(`curated rows: ${f.curated.length}${f.curated.length ? '' : ' (none stored yet, so the curated side is proven on the self-proof rows only)'}\n`);
   const ids = Object.keys(QUESTIONS).map(Number);
   ids.forEach((id) => {
@@ -434,9 +471,9 @@ try {
   console.log('self-proof: each question says NO where it must, and yes on clean data.\n');
   const { result, products, items, picklist: doc, curated: rows } = await read();
   console.log(`read: ${Math.round(JSON.stringify(result).length / 1024)} KB in one query\n`);
-  const picklist: Picklist = { alwaysOn: strings(doc.alwaysOn), picks: Object.fromEntries(Object.keys(CATALOGUE_SLUG).map((n) => [n, strings(doc[n])])) };
+  const picklist: Picklist = { alwaysOn: strings(doc.alwaysOn), picks: Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [slug, strings(doc[name])])) };
   if (!picklist.alwaysOn.length) throw new Error('the picklist has no always-on fields');
-  const slices = Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [name, sliceByCatalogue(items, products, slug)]));
+  const slices = Object.fromEntries(Object.values(CATALOGUE_SLUG).map((slug) => [slug, sliceByCatalogue(items, products, slug)]));
   const curated = rows ?? [];
   const raw = buildRawMap(picklist, slices);
   const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }), write: setRowText };
