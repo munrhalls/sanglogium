@@ -363,8 +363,9 @@ async function live(): Promise<{ findings: string[]; summaries: string[] }> {
       ];
       const params: Record<string, unknown> = { keys };
       group.forEach((s, k) => {
-        const n = renamed(buildNarrowing(model, s.state, onProduct), `s${k}`);
-        for (const f of paramFindings(n)) findings.push(`1 ${scope} / ${s.name}: ${f}`);
+        const built = buildNarrowing(model, s.state, onProduct);
+        for (const f of paramFindings(built)) findings.push(`1 ${scope} / ${s.name}: ${f}`);
+        const n = renamed(built, `s${k}`);
         parts.push(`"r${k}": *[_type == "product" && ${PUBLISHED} && count(catalogueLocationKeys[@ in $keys]) > 0 && (${n.where})] | order(${n.order}) { _id }`);
         Object.assign(params, n.params);
       });
