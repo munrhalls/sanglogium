@@ -23,3 +23,17 @@ const SLICES = {
 };
 
 export const PICKABLE = { ...SLICES, allProducts: Object.values(SLICES).flat() };
+
+// The closed list of fields the owner may turn on as sorts, per slice. A field is sortable when each product holds ONE plain number for it:
+// a list or a text has no single value to order by. These are the signed fields above that do (checked on the live data by the picklist proof).
+// Price and name are not here: they are always on, in the picklist document's sortAlwaysOn. All products offers the three lists together.
+const SORT_SLICES = {
+  headphones: [
+    "impedanceOhms", "sensitivityDbMw", "freqResponseHz.min", "freqResponseHz.max", "cableLengthM",
+    "batteryLifeHours.ancOff", "batteryLifeHours.ancOn",
+  ],
+  audioElectronics: ["powerOutputPerChannelW"],
+  accessories: ["weightCapacityKg"],
+};
+
+export const SORTABLE = { ...SORT_SLICES, allProducts: Object.values(SORT_SLICES).flat() };
