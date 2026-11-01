@@ -18,7 +18,7 @@ const listField = (name: string, title: string, choices: string[], group: "filte
     title,
     group,
     type: "array",
-    of: [{ type: "string", options: { list: choices.map((path) => ({ title: path, value: path })) } }],
+    of: [{ type: "string", options: { list: choices.map((path) => ({ title: path, value: path })) }, validation: (Rule) => Rule.required() }],
     validation: (Rule) => Rule.unique(),
     description,
   });
