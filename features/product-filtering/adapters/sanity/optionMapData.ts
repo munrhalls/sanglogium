@@ -1,6 +1,6 @@
 import type { OptionMapData } from '@/features/product-filtering/core/types/optionMaps';
 
-const PUBLISHED = '!(_id in path("drafts.**")) && !(_id in path("versions.**"))';
+export const PUBLISHED = '!(_id in path("drafts.**")) && !(_id in path("versions.**"))';
 
 /**
  * One read of what the option maps are computed from: the picklist document, the catalogue items and the published products.
