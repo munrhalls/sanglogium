@@ -13,6 +13,11 @@ import {
   type GetFilterFacetsOptions,
 } from './queries/getFilterFacets';
 import { fetchOptionMapData } from './adapters/sanity/fetchOptionMapData';
+import { fetchRouteMapData } from './adapters/sanity/fetchRouteMapData';
+import { fetchSections } from './adapters/sanity/fetchSections';
+import { buildNarrowing } from './adapters/sanity/buildNarrowing';
+import { buildUrlContract } from './url/controlUrl';
+import { getFilterPanel as getFilterPanelQuery, type FilterPanelPorts } from './queries/getFilterPanel';
 import { getControlLabels as getControlLabelsQuery } from './queries/getControlLabels';
 import type { CatalogueFacets } from './core/rules/facetCounts';
 import type { SliceControls } from './core/types/optionMaps';
@@ -41,4 +46,15 @@ export const getFilterFacets = withCache(
 /** The list the Studio's Filter labels draws: one section per slice, each with its controls, their options and the automatic texts. Read through the shop's own cache. */
 export const getControlLabels = (): Promise<SliceControls[]> => getControlLabelsQuery({ fetchOptionMapData });
 
+const filterPanelPorts: FilterPanelPorts = {
+  fetchRouteMapData,
+  fetchSections,
+  decode: (model, query) => buildUrlContract(model).decode(query),
+  narrow: buildNarrowing,
+};
+
+/** Everything a listing route needs from the filter feature for one address: the panel, chips and sort the views draw, and the narrowing the products request embeds. */
+export const getFilterPanel = (options: Parameters<typeof getFilterPanelQuery>[1]) => getFilterPanelQuery(filterPanelPorts, options);
+
 export { buildProductQuery } from './adapters/sanity/buildProductQuery';
+export { CATALOGUE_FETCH_CACHE } from './adapters/sanity/catalogueCache';
