@@ -15,7 +15,7 @@ import {
 import { fetchOptionMapData } from './adapters/sanity/fetchOptionMapData';
 import { getControlLabels as getControlLabelsQuery } from './queries/getControlLabels';
 import type { CatalogueFacets } from './core/rules/facetCounts';
-import type { ControlLabels } from './core/types/optionMaps';
+import type { SliceControls } from './core/types/optionMaps';
 import type { FacetPorts } from './core/ports';
 
 // React cache is only available in React Server Components; skip it elsewhere.
@@ -38,7 +38,7 @@ export const getFilterFacets = withCache(
     getFilterFacetsQuery(facetPorts, options),
 );
 
-/** The list the Studio's Filter labels draws: every control with its options and their automatic texts. Read through the shop's own cache. */
-export const getControlLabels = (): Promise<ControlLabels[]> => getControlLabelsQuery({ fetchOptionMapData });
+/** The list the Studio's Filter labels draws: one section per slice, each with its controls, their options and the automatic texts. Read through the shop's own cache. */
+export const getControlLabels = (): Promise<SliceControls[]> => getControlLabelsQuery({ fetchOptionMapData });
 
 export { buildProductQuery } from './adapters/sanity/buildProductQuery';
