@@ -1,6 +1,6 @@
 // The maps the sidebar and the sorting will receive. Both are computed; only the owner's curated rows are stored (in the CMS).
 
-import type { Picklist } from '@/features/product-filtering/core/types/picklist';
+import type { Picklist, SortPicklist } from '@/features/product-filtering/core/types/picklist';
 
 /** A value a product holds at a field: text, a number or true/false. */
 export type OptionValue = string | number | boolean;
@@ -17,8 +17,17 @@ export type LabelsMap = Record<string, Record<string, { label: string; options: 
 /** One control of the list the Studio draws: its automatic name and, sorted, its options (value as stored, as text) with their automatic texts. */
 export type ControlLabels = { field: string; label: string; options: { value: string; text: string }[] };
 
-/** The controls of one slice (its catalogue slug), as the Studio page draws them in one section: only what that slice holds. */
-export type SliceControls = { slice: string; controls: ControlLabels[] };
+/** One sort of the list the Studio draws: the field the shopper can sort by and its automatic name. */
+export type SortName = { field: string; label: string };
+
+/** Per scope, the fields the shopper can sort by, in order: the always-on sorts, then the owner's sort picks, each once. */
+export type SortMap = Record<string, string[]>;
+
+/** The name of each sort field, per scope: the curated control-name row when a non-empty one exists, else the automatic name. */
+export type SortLabels = Record<string, Record<string, string>>;
+
+/** One section of the list the Studio draws: a scope (its catalogue slug, or 'all-products'), the controls it holds (only what that scope holds) and, apart, its sorts. */
+export type SliceControls = { slice: string; controls: ControlLabels[]; sorts: SortName[] };
 
 /** A catalogue item as the slicing needs it: `parent` is the id of the item above it. */
 export type CatalogueNode = { _id: string; slug?: string; parent?: string };
@@ -27,4 +36,4 @@ export type CatalogueNode = { _id: string; slug?: string; parent?: string };
 export type OptionMapProduct = { _id: string; filterAttributes?: Record<string, unknown>; catalogueLocationKeys?: string[]; [key: string]: unknown };
 
 /** Everything the control list is computed from: the stored picklist (always-on fields, and the picks per slice), the catalogue items and the published products. */
-export type OptionMapData = { alwaysOn: string[]; picks: Picklist; items: CatalogueNode[]; products: OptionMapProduct[] };
+export type OptionMapData = { alwaysOn: string[]; picks: Picklist; sortAlwaysOn: string[]; sortPicks: SortPicklist; items: CatalogueNode[]; products: OptionMapProduct[] };
