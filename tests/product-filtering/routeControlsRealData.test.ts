@@ -263,8 +263,8 @@ async function fixtures(): Promise<string[]> {
     console.error = original;
   }
   if (thrown) findings.push(`2 the request throws: the use case threw "${thrown}"`);
-  else {
-    for (const line of compare(answer!, { raw: {}, labels: {}, sorts: {}, products: [] })) findings.push(`2 the request throws: ${line}`);
+  else if (JSON.stringify(answer) !== JSON.stringify({ raw: {}, labels: {}, sorts: {}, products: [] })) {
+    findings.push(`2 the request throws: expected the empty answer with all four fields, got ${JSON.stringify(answer)}`);
   }
   if (errors !== 1) findings.push(`2 the request throws: console.error called ${errors} times, expected exactly 1`);
   if (typeof firstArg !== 'string' || !firstArg.startsWith('[getRouteControls]')) findings.push(`2 the request throws: console.error's first argument is not a string starting with [getRouteControls]`);
