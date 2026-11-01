@@ -6,7 +6,8 @@ type Product = { filterAttributes?: Record<string, unknown>; [key: string]: unkn
 
 const at = (object: unknown, path: string): unknown => path.split('.').reduce<any>((value, key) => value?.[key], object);
 const rank = (v: OptionValue) => (typeof v === 'number' ? 0 : typeof v === 'boolean' ? 1 : 2);
-const compare = (a: OptionValue, b: OptionValue) => rank(a) - rank(b) || (a < b ? -1 : a > b ? 1 : 0);
+/** The order of options: numbers, then true/false, then text, each ascending. */
+export const compareOptionValues = (a: OptionValue, b: OptionValue) => rank(a) - rank(b) || (a < b ? -1 : a > b ? 1 : 0);
 
 // A value is text, a number or true/false. Missing, null, blank text and an empty list are no value, so never an option. A list gives each item.
 function valuesOf(raw: unknown, where: string): OptionValue[] {
@@ -29,7 +30,7 @@ export function buildRawMap(picklist: Picklist, slices: Record<string, Product[]
       if (!products) throw new Error(`no products for slice "${slice}"`);
       const control = (path: string, root: (p: Product) => unknown): [string, OptionValue[]] => [
         path,
-        [...new Set(products.flatMap((p) => valuesOf(at(root(p), path), `${slice}: ${path}`)))].sort(compare),
+        [...new Set(products.flatMap((p) => valuesOf(at(root(p), path), `${slice}: ${path}`)))].sort(compareOptionValues),
       ];
       return [slice, Object.fromEntries([...picklist.alwaysOn.map((path) => control(path, (p) => p)), ...picks.map((path) => control(path, (p) => p.filterAttributes))])];
     }),

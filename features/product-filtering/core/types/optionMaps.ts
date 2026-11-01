@@ -11,3 +11,9 @@ export type CuratedLabel = { field?: string; value?: string; text?: string };
 
 /** The RawMap's keys with one text per control and per option (an option's key is String(value)). */
 export type LabelsMap = Record<string, Record<string, { label: string; options: Record<string, string> }>>;
+
+/** One control of the list the Studio draws: its automatic name and, sorted, its options (value as stored, as text) with their automatic texts. */
+export type ControlLabels = { field: string; label: string; options: { value: string; text: string }[] };
+
+/** A catalogue item as the slicing needs it: `parent` is the id of the item above it. */
+export type CatalogueNode = { _id: string; slug?: string; parent?: string };
