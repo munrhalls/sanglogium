@@ -5,10 +5,12 @@ import { set, unset, type ArrayOfObjectsInputProps } from "sanity";
 import { rowText, setRowText, type LabelRow } from "./labelRows";
 
 type Control = { field: string; label: string; options: { value: string; text: string }[] };
-type Section = { slice: string; controls: Control[] };
+type Sort = { field: string; label: string };
+type Section = { slice: string; controls: Control[]; sorts?: Sort[] };
 
 const edge = "1px solid color-mix(in srgb, currentColor 25%, transparent)";
 const muted = { opacity: 0.65, fontSize: 12 } as const;
+const part = { margin: "8px 0 0", fontSize: 13, fontWeight: 600, opacity: 0.8 } as const;
 
 function Line({ name, text, placeholder, disabled, onType }: { name: string; text: string; placeholder: string; disabled: boolean; onType: (text: string) => void }) {
   return (
@@ -27,9 +29,11 @@ function Line({ name, text, placeholder, disabled, onType }: { name: string; tex
 }
 
 /**
- * The Filter labels page. One section per catalogue slice, named in a heading; in it the slice's controls, each with the options that slice holds.
- * Each line shows the automatic wording as its placeholder. Typing a wording stores one row, emptying the line removes it. A row has no slice, so a
- * control or option that several slices share shows the same wording in each section. The list comes from the shop's own read, so it is what the shop will show.
+ * The Filter labels page. One section per scope (the three catalogue slices and all products), named in a heading. In it, a Filters part (the scope's
+ * controls, each with the options that scope holds) and a Sorting part (the scope's sorts: one name line each). Each line shows the automatic wording as
+ * its placeholder. Typing a wording stores one row, emptying the line removes it. A row has no scope, and a sort is named by its field's control-name row,
+ * so a control, option or sort that several scopes share shows the same wording in each section, and a field that is both a control and a sort shows one name.
+ * The list comes from the shop's own read, so it is what the shop will show.
  */
 export function FilterLabelsInput(props: ArrayOfObjectsInputProps) {
   const rows = (props.value ?? []) as unknown as LabelRow[];
@@ -66,8 +70,12 @@ export function FilterLabelsInput(props: ArrayOfObjectsInputProps) {
         <section key={section.slice} style={{ display: "grid", gap: 8 }}>
           <h3 style={{ margin: 0, paddingBottom: 6, borderBottom: edge, fontSize: 16, fontWeight: 600, textTransform: "capitalize" }}>
             {section.slice.replace(/-/g, " ")}
-            <span style={{ ...muted, fontWeight: 400, textTransform: "none" }}> · {section.controls.length} controls</span>
+            <span style={{ ...muted, fontWeight: 400, textTransform: "none" }}>
+              {" "}
+              · {section.controls.length} controls · {(section.sorts ?? []).length} sorts
+            </span>
           </h3>
+          <h4 style={part}>Filters</h4>
           {section.controls.map((control) => {
             const changed = ["", ...control.options.map((option) => option.value)].filter((value) => rowText(rows, control.field, value).trim()).length;
             return (
@@ -101,6 +109,23 @@ export function FilterLabelsInput(props: ArrayOfObjectsInputProps) {
               </details>
             );
           })}
+          {(section.sorts ?? []).length ? (
+            <>
+              <h4 style={part}>Sorting</h4>
+              <div style={{ display: "grid", gap: 6, border: edge, borderRadius: 3, padding: "8px 12px" }}>
+                {(section.sorts ?? []).map((sort) => (
+                  <Line
+                    key={sort.field}
+                    name={sort.field}
+                    text={rowText(rows, sort.field, "")}
+                    placeholder={sort.label}
+                    disabled={!!props.readOnly}
+                    onType={(text) => write(sort.field, "", text)}
+                  />
+                ))}
+              </div>
+            </>
+          ) : null}
         </section>
       ))}
     </div>
