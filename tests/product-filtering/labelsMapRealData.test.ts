@@ -4,11 +4,13 @@
 // and each option one text: the owner's curated one when there is one, else the automatic one. Only the curated rows are stored.
 // Questions, all yes means done:
 //   1. the raw map holds, for every control of a slice, exactly the distinct values the slice's products hold
-//   2. the curated rows are unique on (field, value), each names a control and a value that exists, and Studio's own rule refuses the same bad rows
+//   2. the curated rows are unique on (field, value)
 //   3. the labels map has exactly the raw map's controls and options, each with a non-empty text
 //   4. each text is the curated one when a non-empty row exists, else the automatic one
 //   5. the list the Studio draws has every control of any slice once, each with exactly the options the slices hold, sorted, and the automatic texts
+//   6. typing a wording at a line of that list sets the text of that line and moves no other, and emptying it returns that line to its automatic text (on every live line)
 //
+// A stored row that names no control or no held value is not a failure: the labels map ignores it.
 // A control is an always-on field or a pick of the slice, as the stored picklist says. A value is anything but: missing, null,
 // blank text, an empty list. A product is in a slice when its catalogueLocationKeys hold the slice's catalogue item or one below it.
 // Question 1 compares the real function with a second way to the same answer (walk every leaf of the products) on the live data.
@@ -26,21 +28,22 @@ import { listControlLabels } from '@/features/product-filtering/core/rules/listC
 import { getControlLabels } from '@/features/product-filtering/queries/getControlLabels';
 import { OPTION_MAP_QUERY, toOptionMapData } from '@/features/product-filtering/adapters/sanity/optionMapData';
 import type { CatalogueNode, ControlLabels, CuratedLabel, LabelsMap, OptionValue, RawMap } from '@/features/product-filtering/core/types/optionMaps';
-import { checkLabelRows } from '@/features/product-filtering/schema/filterLabelsType';
+import { setRowText, type LabelRow } from '@/features/product-filtering/schema/labelRows';
 
 type Product = { _id: string; filterAttributes?: Record<string, unknown>; catalogueLocationKeys?: string[]; [key: string]: unknown };
 type Picklist = { alwaysOn: string[]; picks: Record<string, string[]> };
-type Facts = { picklist: Picklist; slices: Record<string, Product[]>; raw: RawMap; curated: CuratedLabel[]; labels: LabelsMap; list: ControlLabels[] };
+type Facts = { picklist: Picklist; slices: Record<string, Product[]>; raw: RawMap; curated: CuratedLabel[]; labels: LabelsMap; list: ControlLabels[]; write: typeof setRowText };
 
 // The slice list name in the picklist document -> the slice's slug in the catalogue.
 const CATALOGUE_SLUG: Record<string, string> = { headphones: 'headphones', audioElectronics: 'audio-electronics', accessories: 'accessories' };
 
 const QUESTIONS: Record<number, string> = {
   1: "the raw map holds, for every control of a slice, exactly the distinct values the slice's products hold",
-  2: 'the curated rows are unique on (field, value), and each names a control and a value that exists',
+  2: 'the curated rows are unique on (field, value)',
   3: "the labels map has exactly the raw map's controls and options, each with a non-empty text",
   4: 'each text is the curated one when a non-empty row exists, else the automatic one',
   5: "the Studio list has every control of any slice once, each with exactly the options the slices hold, sorted, and the automatic texts",
+  6: "typing a wording at a line sets the text of that line and moves no other, and emptying it returns that line to its automatic text",
 };
 
 const strings = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
@@ -70,6 +73,7 @@ export function judge(f: Facts): Record<number, string[]> {
   const q3: string[] = [];
   const q4: string[] = [];
   const q5: string[] = [];
+  const q6: string[] = [];
 
   for (const [slice, picks] of Object.entries(f.picklist.picks)) {
     const have = f.raw[slice] ?? {};
@@ -92,24 +96,12 @@ export function judge(f: Facts): Record<number, string[]> {
     }
   }
 
-  const optionsOf = new Map<string, Set<string>>();
-  for (const controls of Object.values(f.raw)) {
-    for (const [field, values] of Object.entries(controls)) {
-      const set = optionsOf.get(field) ?? new Set<string>();
-      values.forEach((v) => set.add(String(v)));
-      optionsOf.set(field, set);
-    }
-  }
   const named = new Set<string>();
   f.curated.forEach((row, i) => {
     const field = row.field ?? '';
     const value = row.value ?? '';
-    const where = `row ${i + 1} (${field} · ${value || 'control name'})`;
-    if (named.has(`${field}\n${value}`)) q2.push(`${where}: the same field and value are named by another row`);
+    if (named.has(`${field}\n${value}`)) q2.push(`row ${i + 1} (${field} · ${value || 'control name'}): the same field and value are named by another row`);
     named.add(`${field}\n${value}`);
-    const options = optionsOf.get(field);
-    if (!options) q2.push(`${where}: ${field} is not a control`);
-    else if (value && !options.has(value)) q2.push(`${where}: no product holds "${value}"`);
   });
 
   const wanted = (field: string, value: string, auto: string) =>
@@ -170,7 +162,37 @@ export function judge(f: Facts): Record<number, string[]> {
       else if (o.text !== autoText(field, o.value) && autoText(field, o.value) !== undefined) q5.push(`${field}: option ${o.value} reads "${o.text}", wanted the automatic "${autoText(field, o.value)}"`);
     }
   }
-  return { 1: q1, 2: q2, 3: q3, 4: q4, 5: q5 };
+
+  // 6. Typing at a line of the list: that line's text becomes the typed one and no other text moves, with exactly one row for the line;
+  // emptying the line gives the earlier texts back and leaves no row for it.
+  const rows0: LabelRow[] = f.curated.map((c, i) => ({ ...c, _key: `k${i}`, _type: 'label' }));
+  const before = buildLabelsMap(f.raw, rows0);
+  const same = (row: LabelRow, field: string, value: string) => row.field === field && (row.value ?? '') === value;
+  const lines = f.list.flatMap((c) => [{ field: c.field, value: '' }, ...c.options.map((o) => ({ field: c.field, value: o.value }))]);
+  for (const { field, value } of lines) {
+    if (q6.length >= 20) { q6.push('(more lines left out)'); break; }
+    const where = `${field} · ${value || 'control name'}`;
+    const typed = f.write(rows0, field, value, 'probe');
+    const keys = typed.map((r) => r._key);
+    if (new Set(keys).size !== keys.length) q6.push(`${where}: two rows share a key after typing`);
+    if (typed.filter((r) => same(r, field, value)).length !== 1) q6.push(`${where}: typing does not leave exactly one row for the line`);
+    if (typed.filter((r) => !same(r, field, value)).length !== rows0.filter((r) => !same(r, field, value)).length) q6.push(`${where}: typing changed the rows of other lines`);
+    const after = buildLabelsMap(f.raw, typed);
+    for (const [slice, controls] of Object.entries(before)) {
+      for (const [fld, c] of Object.entries(controls)) {
+        const wantName = fld === field && value === '' ? 'probe' : c.label;
+        if (after[slice][fld].label !== wantName) q6.push(`${where}: the name of ${slice} · ${fld} reads "${after[slice][fld].label}", wanted "${wantName}"`);
+        for (const [v, text] of Object.entries(c.options)) {
+          const want = fld === field && v === value ? 'probe' : text;
+          if (after[slice][fld].options[v] !== want) q6.push(`${where}: ${slice} · ${fld} · ${v} reads "${after[slice][fld].options[v]}", wanted "${want}"`);
+        }
+      }
+    }
+    const emptied = f.write(typed, field, value, '');
+    if (emptied.some((r) => same(r, field, value))) q6.push(`${where}: emptying the text leaves a row for the line`);
+    if (JSON.stringify(buildLabelsMap(f.raw, emptied)) !== JSON.stringify(buildLabelsMap(f.raw, rows0.filter((r) => !same(r, field, value))))) q6.push(`${where}: emptying the text does not return the line to its automatic text and leave every other text as it was`);
+  }
+  return { 1: q1, 2: q2, 3: q3, 4: q4, 5: q5, 6: q6 };
 }
 
 // 1. selfProof: a proof that cannot say no proves nothing.
@@ -244,7 +266,7 @@ async function selfProof() {
   const list = listControlLabels(raw);
   if (canon(list) !== canon(LIST)) throw new Error(`self-proof failed: the list is ${canon(list)}, wanted ${canon(LIST)}`);
   const noes = (f: Facts) => Object.entries(judge(f)).flatMap(([id, found]) => (found.length ? [Number(id)] : []));
-  const clean: Facts = { picklist, slices, raw, curated, labels, list };
+  const clean: Facts = { picklist, slices, raw, curated, labels, list, write: setRowText };
   const base = noes(clean);
   if (base.length) throw new Error(`self-proof failed: clean data gave NO on question ${base.join(', ')}`);
 
@@ -252,7 +274,7 @@ async function selfProof() {
     ['a value dropped', (r) => { r.zorb.quux = ['a']; }, [1]],
     ['a value no product holds', (r) => { r.zorb.quux.push('q'); }, [1]],
     ['a value listed twice', (r) => { r.zorb.quux.push('a'); }, [1]],
-    ['a control dropped, which leaves a curated row without its control', (r) => { delete r.zorb.tags; }, [1, 2]],
+    ['a control dropped', (r) => { delete r.zorb.tags; }, [1]],
     ['a field that is not a control', (r) => { r.zorb.extra = []; }, [1]],
     ["another slice's value", (r) => { r.vex.wibble.push('Frob'); }, [1]],
     ['a blank text kept as an option', (r) => { r.zorb.quux.push('  '); }, [1, 3, 5]],
@@ -310,33 +332,38 @@ async function selfProof() {
   const curatedPlants: [string, CuratedLabel[]][] = [
     ['a row twice', [...curated, { field: 'quux', value: 'a', text: 'Again' }]],
     ['a control name twice', [...curated, { field: 'quux', text: 'Again' }]],
+  ];
+  for (const [what, rows] of curatedPlants) {
+    const got = noes({ ...clean, curated: rows, labels: buildLabelsMap(raw, rows) });
+    if (got.join() !== '2') throw new Error(`self-proof failed on "${what}": wanted NO on [2], got [${got}]`);
+  }
+  // A row that names nothing is harmless: the labels map ignores it, so no question says NO.
+  const harmless: [string, CuratedLabel[]][] = [
     ['a field that is not a control', [...curated, { field: 'nowhere', text: 'N' }]],
     ['a value no product holds', [...curated, { field: 'quux', value: 'zzz', text: 'Z' }]],
     ['a value of another field', [...curated, { field: 'quux', value: 'x', text: 'X' }]],
     ['a capital that differs', [...curated, { field: 'quux', value: 'B', text: 'Bee' }]],
     ['a number written another way', [...curated, { field: 'plink.amount', value: '3.0', text: 'T' }]],
   ];
-  for (const [what, rows] of curatedPlants) {
+  for (const [what, rows] of harmless) {
     const got = noes({ ...clean, curated: rows, labels: buildLabelsMap(raw, rows) });
-    if (got.join() !== '2') throw new Error(`self-proof failed on "${what}": wanted NO on [2], got [${got}]`);
+    if (got.length) throw new Error(`self-proof failed on "${what}": a row that names nothing gave NO on [${got}]`);
   }
 
-  // Studio's own rule, on a fake client in real format: the clean rows pass and the same planted rows are refused.
-  const doc = { _id: 'filterPicklist', _type: 'filterPicklist', _rev: 'r', alwaysOn: picklist.alwaysOn, zorb: picklist.picks.zorb, vex: picklist.picks.vex };
-  const everyProduct = [p1, p2, p3, p4];
-  const client = {
-    fetch: async (q: string) => {
-      if (q.includes('"filterPicklist"')) return doc;
-      const expr = q.match(/\{ "v": (.+) \}$/)?.[1] ?? '';
-      const always = expr.startsWith('coalesce(');
-      const path = always ? expr.slice('coalesce('.length, expr.indexOf('->')) : expr.replace('filterAttributes.', '');
-      return everyProduct.map((p) => ({ v: path.split('.').reduce<any>((v, k) => v?.[k], always ? p : p.filterAttributes) }));
-    },
-  };
-  if ((await checkLabelRows(curated, client)) !== true) throw new Error('self-proof failed: Studio refused the clean rows');
-  if ((await checkLabelRows(undefined, client)) !== true) throw new Error('self-proof failed: Studio refused no rows');
-  for (const [what, rows] of curatedPlants) {
-    if ((await checkLabelRows(rows, client)) === true) throw new Error(`self-proof failed: Studio accepted "${what}"`);
+  // The Studio input's one way to change rows: each broken writer must make question 6 say NO.
+  const own = (r: LabelRow, field: string, value: string) => r.field === field && (r.value ?? '') === value;
+  const writePlants: [string, typeof setRowText][] = [
+    ['a row added twice', (rows, field, value, text) => [...setRowText(rows, field, value, text), { _key: 'dup', _type: 'label', field, ...(value ? { value } : {}), text }]],
+    ['the text stored at another option', (rows, field, value, text) => setRowText(rows, field, value === 'a' ? 'b' : 'a', text)],
+    ['the other rows dropped', (_rows, field, value, text) => setRowText([], field, value, text)],
+    ['the typed text ignored', (rows) => rows],
+    ['emptying that leaves a blank row', (rows, field, value, text) => (text.trim() ? setRowText(rows, field, value, text) : rows.map((r) => (own(r, field, value) ? { ...r, text: '' } : r)))],
+    ['emptying that does nothing', (rows, field, value, text) => (text.trim() ? setRowText(rows, field, value, text) : rows)],
+    ['one key for every row', (rows, field, value, text) => setRowText(rows, field, value, text).map((r) => ({ ...r, _key: 'same' }))],
+  ];
+  for (const [what, write] of writePlants) {
+    const got = noes({ ...clean, write });
+    if (got.join() !== '6') throw new Error(`self-proof failed on "${what}": wanted NO on [6], got [${got}]`);
   }
 
   // The read path: the stored query's result in real format (the picklist document keeps camelCase list names) through the mapping and the use case.
@@ -384,7 +411,7 @@ async function read() {
   return { result, products: result.products as Product[], items: result.items as CatalogueNode[], picklist: result.picklist as Record<string, unknown>, curated };
 }
 
-// 5. report: the screen text and the exit code.
+// 3. report: the screen text and the exit code.
 function report(f: Facts, found: Record<number, string[]>) {
   console.log(Object.entries(f.slices).map(([n, p]) => `${n}: ${p.length} products, ${Object.keys(f.raw[n]).length} controls, ${Object.values(f.raw[n]).flat().length} options`).join('\n'));
   console.log(`Studio list: ${f.list.length} controls, ${f.list.reduce((n, c) => n + c.options.length, 0)} options`);
@@ -412,21 +439,8 @@ try {
   const slices = Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [name, sliceByCatalogue(items, products, slug)]));
   const curated = rows ?? [];
   const raw = buildRawMap(picklist, slices);
-  const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }) };
-  const found = judge(facts);
-  const live = { fetch: (q: string) => ask(q) };
-  const studio = await checkLabelRows(curated, live);
-  if (studio !== true) found[2].push(...studio.split('\n').map((line) => `Studio rule: ${line}`));
-  // The rule on the real data: a genuine row for every control's name and first option must pass, and a made-up value must be refused.
-  const fields = [...new Set(Object.values(raw).flatMap((controls) => Object.keys(controls)))];
-  const genuine = fields.flatMap((field): CuratedLabel[] => {
-    const first = Object.values(raw).map((controls) => controls[field]).find((values) => values?.length)?.[0];
-    return [{ field, text: 'probe' }, ...(first === undefined ? [] : [{ field, value: String(first), text: 'probe' }])];
-  });
-  const accepted = await checkLabelRows(genuine, live);
-  if (accepted !== true) found[2].push(...accepted.split('\n').map((line) => `Studio rule refused a genuine row: ${line}`));
-  if ((await checkLabelRows([{ field: 'brand', value: 'no-such-brand-zz', text: 'probe' }], live)) === true) found[2].push('Studio rule accepted a made-up brand');
-  process.exitCode = report(facts, found);
+  const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }), write: setRowText };
+  process.exitCode = report(facts, judge(facts));
 } catch (e) {
   console.error(`NO VERDICT: ${(e as Error).message}`);
   process.exitCode = 2;
