@@ -2,32 +2,36 @@
 //
 // The picklist is one CMS document and the one source of every field that becomes a control:
 //   alwaysOn   the fields that are controls in every slice (brand, price, stock). Not a choice: read-only in Studio.
-//   three lists, one per slice, the owner's picks in the owner's order. Studio offers a closed list per slice, signed by the owner.
-// Seven questions, all yes means done:
-//   1. every offered field has a value on a product of its slice
+//   four lists, one per slice and one for all products (the /products page): the owner's picks in the owner's order. Studio offers a closed list per slice, signed by the owner, and the three together for all products.
+// Eight questions, all yes means done:
+//   1. every offered field has a value on a product of its scope (all products: on a product of any slice)
 //   2. the offer and the stored always-on fields are exactly the signed ones (SIGNED below, written by hand)
-//   3. every stored pick is offered by its slice, once
+//   3. every stored pick is offered by its list, once
 //   4. every always-on field has a value on every product
 //   5. Studio shows the always-on list read-only, and no always-on field is offered or stored as a pick
-//   6. one picklist document, holding only the always-on list and the three slice lists
-//   7. the owner can reorder each slice list in Studio
+//   6. one picklist document, holding only the always-on list and the four lists
+//   7. the owner can reorder each list in Studio
+//   8. the all-products list starts empty: the schema gives it no initial picks
 //
 // A value is anything but: missing, null, blank text, an empty list, an empty object.
 // A product is in a slice when its catalogueLocationKeys hold the slice's catalogue item or one below it (live catalogueItem tree).
-// The offer is read from the real Studio schema (studio/schema.ts), not copied. Reads only.
+// The offer is read from the real picklist type (schema/filterPicklistType.ts, the object studio/schema.ts registers), not copied. Reads only.
 //
 // Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/picklistRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the self-proof failed.
 //
 // FLOW  selfProof -> read -> sliceProducts -> judge -> report
 
-import { schema } from '@/studio/schema';
+import { readFileSync } from 'node:fs';
+// Not '@/studio/schema': that file reaches the Filter labels input (a .tsx file), which node cannot load. The type below is the object Studio registers;
+// the registration itself is checked on the text of studio/schema.ts in studioFacts.
+import { filterPicklistType } from '@/features/product-filtering/schema/filterPicklistType';
 
 type Product = { _id: string; catalogueLocationKeys?: string[]; filterAttributes?: Record<string, unknown>; [key: string]: unknown };
 type Facts = {
   products: Product[];
   slices: Record<string, Product[]>;
-  studio: { lists: Record<string, { values: string[]; reorderable: boolean }>; alwaysOnReadOnly: boolean };
+  studio: { lists: Record<string, { values: string[]; reorderable: boolean; startsEmpty: boolean }>; alwaysOnReadOnly: boolean };
   docs: Record<string, unknown>[];
 };
 type Signed = { always: string[]; picks: Record<string, string[]> };
@@ -54,17 +58,21 @@ const SIGNED: Signed = {
   },
 };
 
+// All products offers the three slice lists together, once each (decided 2026-11-01). It is written from the hand-written lists above, so the sign-off stays one fact.
+SIGNED.picks.allProducts = Object.values(SIGNED.picks).flat();
+
 // The slice list name in the picklist document -> the slice's slug in the catalogue.
 const CATALOGUE_SLUG: Record<string, string> = { headphones: 'headphones', audioElectronics: 'audio-electronics', accessories: 'accessories' };
 
 const QUESTIONS = [
-  'every offered field has a value on a product of its slice',
+  'every offered field has a value on a product of its scope',
   'the offer and the stored always-on fields are exactly the signed ones',
-  'every stored pick is offered by its slice, once',
+  'every stored pick is offered by its list, once',
   'every always-on field has a value on every product',
   'Studio shows the always-on list read-only, and no always-on field is offered or stored as a pick',
-  'one picklist document, holding only the always-on list and the three slice lists',
-  'the owner can reorder each slice list in Studio',
+  'one picklist document, holding only the always-on list and the four lists',
+  'the owner can reorder each list in Studio',
+  'the all-products list starts empty: the schema gives it no initial picks',
 ];
 
 const SYSTEM_KEYS = new Set(['_id', '_type', '_rev', '_createdAt', '_updatedAt', '_system']);
@@ -127,22 +135,29 @@ export function judge(f: Facts, signed: Signed = SIGNED): string[][] {
 
   if (f.docs.length !== 1 || !doc) found[5].push(`${f.docs.length} published documents, ids: ${f.docs.map((d) => d._id).join(', ') || 'none'}`);
   for (const key of Object.keys(doc ?? {})) if (!SYSTEM_KEYS.has(key) && key !== 'alwaysOn' && !names.includes(key)) found[5].push(`the document holds ${key}`);
+  const allProducts = f.studio.lists.allProducts;
+  if (!allProducts) found[7].push('Studio has no all-products list');
+  else if (!allProducts.startsEmpty) found[7].push('allProducts: the schema gives it initial picks');
   return found;
 }
 
 // 1. selfProof: a proof that cannot say no proves nothing.
 // Fake slices and products in real format with alien names. Each planted break must make exactly its questions say NO, clean data none.
 function selfProof() {
-  const alien: Signed = { always: ['wibble', 'plink.amount'], picks: { zorb: ['quux', 'plomb.min'], vex: ['glim'] } };
+  const alien: Signed = { always: ['wibble', 'plink.amount'], picks: { zorb: ['quux', 'plomb.min'], vex: ['glim'], allProducts: ['quux', 'plomb.min', 'glim'] } };
   const clean = (): Facts => {
     const p1: Product = { _id: 'p1', wibble: { _ref: 'x' }, plink: { amount: 3 }, filterAttributes: { quux: 'a', plomb: { min: 1 } } };
     const p2: Product = { _id: 'p2', wibble: { _ref: 'y' }, plink: { amount: 0 }, filterAttributes: { quux: 'b', plomb: { min: 2 } } };
     const p3: Product = { _id: 'p3', wibble: { _ref: 'z' }, plink: { amount: 9 }, filterAttributes: { glim: true } };
     return {
       products: [p1, p2, p3],
-      slices: { zorb: [p1, p2], vex: [p3] },
+      slices: { zorb: [p1, p2], vex: [p3], allProducts: [p1, p2, p3] },
       studio: {
-        lists: { zorb: { values: ['quux', 'plomb.min'], reorderable: true }, vex: { values: ['glim'], reorderable: true } },
+        lists: {
+          zorb: { values: ['quux', 'plomb.min'], reorderable: true, startsEmpty: true },
+          vex: { values: ['glim'], reorderable: true, startsEmpty: true },
+          allProducts: { values: ['quux', 'plomb.min', 'glim'], reorderable: true, startsEmpty: true },
+        },
         alwaysOnReadOnly: true,
       },
       docs: [{ _id: 'filterPicklist', _type: 'filterPicklist', _rev: 'r', alwaysOn: ['wibble', 'plink.amount'], zorb: ['quux'], vex: [] }],
@@ -167,6 +182,11 @@ function selfProof() {
     ['a second document', (f) => { f.docs.push({ _id: 'other', _type: 'filterPicklist' }); }, [6]],
     ['an extra field in the document', (f) => { doc(f).zorbExtra = []; }, [6]],
     ['no document', (f) => { f.docs = []; }, [2, 6]],
+    ['Studio lacks the all-products list', (f) => { delete f.studio.lists.allProducts; }, [2, 7, 8]],
+    ['the all-products list starts with picks', (f) => { f.studio.lists.allProducts.startsEmpty = false; }, [8]],
+    ['all products offers a field no slice offers', (f) => { f.studio.lists.allProducts.values.push('frob'); f.slices.zorb[0].filterAttributes!.frob = 'z'; }, [2]],
+    ['all products leaves out a signed field', (f) => { f.studio.lists.allProducts.values = ['quux', 'plomb.min']; }, [2]],
+    ['a stored all-products pick is not offered', (f) => { doc(f).allProducts = ['frob']; }, [3]],
   ];
   const noes = (f: Facts) => judge(f, alien).flatMap((found, i) => (found.length ? [i + 1] : []));
   const base = noes(clean());
@@ -212,14 +232,15 @@ function sliceProducts(items: { _id: string; slug?: string; parent?: string }[],
 // What the real picklist type offers. A list is reorderable when Sanity draws it as sortable rows: its choices sit on the items,
 // not on the list itself (that draws checkboxes), and sorting is not turned off. (Read from Sanity's own array input resolver.)
 function studioFacts(): Facts['studio'] {
-  const type: any = schema.types.find((t: any) => t.name === 'filterPicklist');
-  if (!type) throw new Error('Studio has no filterPicklist type');
+  const type: any = filterPicklistType;
+  if (!/^\s*filterPicklistType,/m.test(readFileSync('studio/schema.ts', 'utf8'))) throw new Error('Studio does not register the filterPicklist type');
   const lists: Facts['studio']['lists'] = {};
   for (const f of type.fields.filter((x: any) => x.name !== 'alwaysOn')) {
     const itemChoices = f.of?.[0]?.options?.list;
     lists[f.name] = {
       values: ((f.options?.list ?? itemChoices ?? []) as any[]).map((o) => o.value),
       reorderable: !f.options?.list && Array.isArray(itemChoices) && itemChoices.length > 0 && f.options?.sortable !== false,
+      startsEmpty: f.initialValue === undefined && type.initialValue === undefined,
     };
   }
   const always = type.fields.find((x: any) => x.name === 'alwaysOn');
@@ -246,6 +267,8 @@ try {
   console.log('self-proof: each question says NO where it must, and yes on clean data.\n');
   const { products, items, docs } = await read();
   const slices = Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [name, sliceProducts(items, products, slug)]));
+  const inSlice = new Set(Object.values(slices).flat().map((p) => p._id));
+  slices.allProducts = products.filter((p) => inSlice.has(p._id));
   const facts: Facts = { products, slices, studio: studioFacts(), docs };
   process.exitCode = report(facts, judge(facts));
 } catch (e) {
