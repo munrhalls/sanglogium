@@ -23,6 +23,8 @@ import { buildRawMap } from '@/features/product-filtering/core/rules/buildRawMap
 import { autoControlLabel, autoOptionLabel, buildLabelsMap } from '@/features/product-filtering/core/rules/buildLabelsMap';
 import { sliceByCatalogue } from '@/features/product-filtering/core/rules/sliceByCatalogue';
 import { listControlLabels } from '@/features/product-filtering/core/rules/listControlLabels';
+import { getControlLabels } from '@/features/product-filtering/queries/getControlLabels';
+import { OPTION_MAP_QUERY, toOptionMapData } from '@/features/product-filtering/adapters/sanity/optionMapData';
 import type { CatalogueNode, ControlLabels, CuratedLabel, LabelsMap, OptionValue, RawMap } from '@/features/product-filtering/core/types/optionMaps';
 import { checkLabelRows } from '@/features/product-filtering/schema/filterLabelsType';
 
@@ -337,6 +339,26 @@ async function selfProof() {
     if ((await checkLabelRows(rows, client)) === true) throw new Error(`self-proof failed: Studio accepted "${what}"`);
   }
 
+  // The read path: the stored query's result in real format (the picklist document keeps camelCase list names) through the mapping and the use case.
+  const result = {
+    picklist: { _id: 'filterPicklist', _type: 'filterPicklist', alwaysOn: ['wibble'], headphones: ['quux'], audioElectronics: ['tags'], accessories: [] },
+    items: [{ _id: 'h', slug: 'headphones' }, { _id: 'h1', slug: 'zorb', parent: 'h' }, { _id: 'a', slug: 'audio-electronics' }, { _id: 'x', slug: 'accessories' }],
+    products: [
+      { _id: 'q1', wibble: 'Frob', filterAttributes: { quux: 'b', tags: ['y'] }, catalogueLocationKeys: ['h1'] },
+      { _id: 'q2', wibble: 'Zed', filterAttributes: { quux: 'a', tags: ['x'] }, catalogueLocationKeys: ['a'] },
+      { _id: 'q3', wibble: 'Frob', filterAttributes: { quux: 'c' }, catalogueLocationKeys: ['x'] },
+    ],
+  };
+  const READ_LIST: ControlLabels[] = [
+    { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
+    { field: 'quux', label: 'Quux', options: [{ value: 'b', text: 'B' }] },
+    { field: 'tags', label: 'Tags', options: [{ value: 'x', text: 'X' }] },
+  ];
+  const fromRead = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) });
+  if (canon(fromRead) !== canon(READ_LIST)) throw new Error(`self-proof failed: the read path gave ${canon(fromRead)}, wanted ${canon(READ_LIST)}`);
+  const noDocument = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData({ ...result, picklist: null }) });
+  if (noDocument.length) throw new Error('self-proof failed: a missing picklist document gave controls');
+
   const odd: Product ={ _id: 'p5', wibble: 'Zed', plink: { amount: 1 }, filterAttributes: { quux: { a: 1 } } };
   let threw = false;
   try { buildRawMap(picklist, { zorb: [odd], vex: [p3] }); } catch { threw = true; }
@@ -353,18 +375,13 @@ async function ask(query: string): Promise<any> {
   return (await res.json()).result;
 }
 
+// The shop's own query (the one the page is read with) and the stored curated rows.
 async function read() {
-  const published = '!(_id in path("drafts.**")) && !(_id in path("versions.**"))';
-  const query = `{
-    "products": *[_type == "product" && ${published}]{ _id, "brand": brand->name, price_data, stock, filterAttributes, catalogueLocationKeys },
-    "items": *[_type == "catalogueItem" && ${published}]{ _id, "slug": slug.current, "parent": parent._ref },
-    "picklist": *[_id == "filterPicklist"][0],
-    "curated": *[_id == "filterLabels"][0].labels
-  }`;
-  const result = await ask(query);
+  const result = await ask(OPTION_MAP_QUERY);
   if (!result?.products?.length) throw new Error('read returned no products');
   if (!result.picklist) throw new Error('read found no published picklist document');
-  return result as { products: Product[]; items: CatalogueNode[]; picklist: Record<string, unknown>; curated: CuratedLabel[] | null };
+  const curated: CuratedLabel[] | null = await ask('*[_id == "filterLabels"][0].labels');
+  return { result, products: result.products as Product[], items: result.items as CatalogueNode[], picklist: result.picklist as Record<string, unknown>, curated };
 }
 
 // 5. report: the screen text and the exit code.
@@ -388,13 +405,14 @@ function report(f: Facts, found: Record<number, string[]>) {
 try {
   await selfProof();
   console.log('self-proof: each question says NO where it must, and yes on clean data.\n');
-  const { products, items, picklist: doc, curated: rows } = await read();
+  const { result, products, items, picklist: doc, curated: rows } = await read();
+  console.log(`read: ${Math.round(JSON.stringify(result).length / 1024)} KB in one query\n`);
   const picklist: Picklist = { alwaysOn: strings(doc.alwaysOn), picks: Object.fromEntries(Object.keys(CATALOGUE_SLUG).map((n) => [n, strings(doc[n])])) };
   if (!picklist.alwaysOn.length) throw new Error('the picklist has no always-on fields');
   const slices = Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [name, sliceByCatalogue(items, products, slug)]));
   const curated = rows ?? [];
   const raw = buildRawMap(picklist, slices);
-  const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: listControlLabels(raw) };
+  const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }) };
   const found = judge(facts);
   const live = { fetch: (q: string) => ask(q) };
   const studio = await checkLabelRows(curated, live);

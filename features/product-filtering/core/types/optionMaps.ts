@@ -1,5 +1,7 @@
 // The maps the sidebar and the sorting will receive. Both are computed; only the owner's curated rows are stored (in the CMS).
 
+import type { Picklist } from '@/features/product-filtering/core/types/picklist';
+
 /** A value a product holds at a field: text, a number or true/false. */
 export type OptionValue = string | number | boolean;
 
@@ -17,3 +19,9 @@ export type ControlLabels = { field: string; label: string; options: { value: st
 
 /** A catalogue item as the slicing needs it: `parent` is the id of the item above it. */
 export type CatalogueNode = { _id: string; slug?: string; parent?: string };
+
+/** A published product as the maps need it: always-on fields on the product (the brand as its name), picks in filterAttributes, the slice by catalogueLocationKeys. */
+export type OptionMapProduct = { _id: string; filterAttributes?: Record<string, unknown>; catalogueLocationKeys?: string[]; [key: string]: unknown };
+
+/** Everything the control list is computed from: the stored picklist (always-on fields, and the picks per slice), the catalogue items and the published products. */
+export type OptionMapData = { alwaysOn: string[]; picks: Picklist; items: CatalogueNode[]; products: OptionMapProduct[] };

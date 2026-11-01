@@ -4,6 +4,7 @@
 import type { RawProduct, ProductQueryState, FilterQuery } from './types/filterTypes';
 import type { Picklist } from './types/picklist';
 import type { FacetSet } from './types/facetProjection';
+import type { OptionMapData } from './types/optionMaps';
 
 /** Fetch the facet-relevant product projection for a route's VFS key set. */
 export type FacetSource = (options: { keys: string[] }) => Promise<RawProduct[]>;
@@ -18,4 +19,11 @@ export interface FacetPorts {
   fetchProducts: FacetSource;
   fetchPicklist: PicklistSource;
   loadState: LoadFilterState;
+}
+
+/** Fetch what the option maps are computed from: the stored picklist, the catalogue items and the published products. */
+export type OptionMapSource = () => Promise<OptionMapData>;
+
+export interface OptionMapPorts {
+  fetchOptionMapData: OptionMapSource;
 }
