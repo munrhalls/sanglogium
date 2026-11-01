@@ -1,8 +1,8 @@
 // Route controls proof: does the shop's request for a route's controls and the use case that reads its answer work? PASS or NO. It tells the truth and nothing else.
 //
 // Two questions. All yes means done:
-//   1. on one real catalogue route, the use case's answer (controls, sorts, products) equals the answer derived independently from the same snapshot
-//   2. the happy path, a control with no value, absent rows, a sort field no route product holds, a sort pick that is also an always-on sort and a failing request give the written answer
+//   1. on one real catalogue route, the use case's answer (controls, sorts, products, onProduct) equals the answer derived independently from the same snapshot
+//   2. the happy path, a control with no value, absent rows, a sort field no route product holds, a sort pick that is also an always-on sort, the always-on sorts that are not always-on controls and a failing request give the written answer
 // No flakiness: one atomic request holds both the snapshot and the shop's request; no clock, no randomness in a verdict; a read that fails is no verdict.
 //
 // Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/routeControlsRealData.test.ts
@@ -50,6 +50,9 @@ function compare(actual: RouteControls, expected: RouteControls): string[] {
   for (const field of [...new Set([...expectedSorts, ...actualSorts])]) {
     if (actual.sorts?.[field] !== expected.sorts?.[field]) findings.push(`sorts.${field}: expected ${JSON.stringify(expected.sorts?.[field])}, got ${JSON.stringify(actual.sorts?.[field])}`);
   }
+  if (JSON.stringify(actual.onProduct) !== JSON.stringify(expected.onProduct)) {
+    findings.push(`onProduct: expected ${JSON.stringify(expected.onProduct)}, got ${JSON.stringify(actual.onProduct)}`);
+  }
   const actualNames = namesOf(actual);
   const expectedNames = namesOf(expected);
   if (actualNames.join('|') !== expectedNames.join('|')) {
@@ -58,7 +61,7 @@ function compare(actual: RouteControls, expected: RouteControls): string[] {
   return findings;
 }
 
-// The proof can say no: a clean copy passes; an extra option, a swapped control order, an extra sort, a swapped sort order and a missing product must not.
+// The proof can say no: a clean copy passes; an extra option, a swapped control order, an extra sort, a swapped sort order, an extra onProduct path, a swapped onProduct order and a missing product must not.
 function proofCanFail(): string[] {
   const base: RouteControls = {
     raw: { brand: ['A', 'B'], level: [1, 2, 3] },
@@ -68,6 +71,7 @@ function proofCanFail(): string[] {
     },
     sorts: { level: 'Level', brand: 'Brand' },
     products: [{ name: 'Alpha' }, { name: 'Beta' }],
+    onProduct: ['brand', 'level'],
   };
   const problems: string[] = [];
   const clone = (): RouteControls => JSON.parse(JSON.stringify(base));
@@ -85,6 +89,12 @@ function proofCanFail(): string[] {
   const swappedSorts = clone();
   swappedSorts.sorts = { brand: swappedSorts.sorts.brand, level: swappedSorts.sorts.level };
   if (!compare(swappedSorts, base).length) problems.push('the comparison does not say NO on a swapped sort order');
+  const extraPath = clone();
+  extraPath.onProduct.push('ghost');
+  if (!compare(extraPath, base).length) problems.push('the comparison does not say NO on an extra onProduct path');
+  const swappedPaths = clone();
+  swappedPaths.onProduct.reverse();
+  if (!compare(swappedPaths, base).length) problems.push('the comparison does not say NO on a swapped onProduct order');
   const fewer = clone();
   fewer.products.pop();
   if (!compare(fewer, base).length) problems.push('the comparison does not say NO on a missing product');
@@ -174,7 +184,7 @@ async function live(): Promise<{ findings: string[]; route: { id: string; scope:
   };
   const heldFields = [...new Set([...sortAlwaysOn, ...sortPicks[scope]])].filter((field) => products.some((p: unknown) => holds(p, field)));
   const sorts = buildSortLabels({ [scope]: heldFields }, snap?.rows ?? [])[scope];
-  const expected: RouteControls = { raw, labels, sorts, products };
+  const expected: RouteControls = { raw, labels, sorts, products, onProduct: [...new Set([...alwaysOn, ...sortAlwaysOn])] };
 
   const actual = await getRouteControls({ fetchRouteMapData: async () => toRouteMapData(route) }, { keys, scope });
   return {
@@ -210,7 +220,7 @@ async function fixtures(): Promise<string[]> {
     'blipMode.low': [false, true],
   });
   const baseSorts = (): RouteControls['sorts'] => ({ zinkLevel: 'Zink level', plinkRate: 'Plink rate' });
-  const answerOf = (raw: RouteControls['raw'], labels: RouteControls['labels'], sorts: RouteControls['sorts']): RouteControls => ({ raw, labels, sorts, products });
+  const answerOf = (raw: RouteControls['raw'], labels: RouteControls['labels'], sorts: RouteControls['sorts'], onProduct: RouteControls['onProduct'] = ['brand', 'zinkLevel']): RouteControls => ({ raw, labels, sorts, products, onProduct });
   const findings: string[] = [];
   const call = async (name: string, result: unknown, expected: RouteControls) => {
     const actual = await getRouteControls({ fetchRouteMapData: async () => toRouteMapData(result) }, { keys: ['k1'], scope: 'audio-electronics' });
@@ -246,6 +256,12 @@ async function fixtures(): Promise<string[]> {
 
   await call('a sort pick that is also an always-on sort is listed once and read from the product', { picklist: { ...picklist, sortAudioElectronics: ['zinkLevel', 'plinkRate'] }, rows: [], products }, answerOf(baseRaw(), autoLabels(), baseSorts()));
 
+  await call(
+    'onProduct is the always-on controls then the always-on sorts, each once',
+    { picklist: { ...picklist, sortAlwaysOn: ['zinkLevel', 'wumpusName'] }, rows: [], products },
+    answerOf(baseRaw(), autoLabels(), baseSorts(), ['brand', 'zinkLevel', 'wumpusName']),
+  );
+
   let thrown: string | undefined;
   let errors = 0;
   let firstArg: unknown;
@@ -263,8 +279,8 @@ async function fixtures(): Promise<string[]> {
     console.error = original;
   }
   if (thrown) findings.push(`2 the request throws: the use case threw "${thrown}"`);
-  else if (JSON.stringify(answer) !== JSON.stringify({ raw: {}, labels: {}, sorts: {}, products: [] })) {
-    findings.push(`2 the request throws: expected the empty answer with all four fields, got ${JSON.stringify(answer)}`);
+  else if (JSON.stringify(answer) !== JSON.stringify({ raw: {}, labels: {}, sorts: {}, products: [], onProduct: [] })) {
+    findings.push(`2 the request throws: expected the empty answer with all five fields, got ${JSON.stringify(answer)}`);
   }
   if (errors !== 1) findings.push(`2 the request throws: console.error called ${errors} times, expected exactly 1`);
   if (typeof firstArg !== 'string' || !firstArg.startsWith('[getRouteControls]')) findings.push(`2 the request throws: console.error's first argument is not a string starting with [getRouteControls]`);
@@ -272,8 +288,8 @@ async function fixtures(): Promise<string[]> {
 }
 
 const QUESTIONS: Record<number, string> = {
-  1: "on a real route, the use case's answer (controls, sorts, products) equals the answer derived from the same snapshot",
-  2: 'the happy path, a control with no value, absent rows, a sort field no route product holds, a sort pick that is also an always-on sort and a failing request give the written answer',
+  1: "on a real route, the use case's answer (controls, sorts, products, onProduct) equals the answer derived from the same snapshot",
+  2: 'the happy path, a control with no value, absent rows, a sort field no route product holds, a sort pick that is also an always-on sort, the always-on sorts that are not always-on controls and a failing request give the written answer',
 };
 
 function report(route: { id: string; scope: string; keys: number; products: number; controls: number; sorts: number } | undefined, found: Record<number, string[]>) {
@@ -294,7 +310,7 @@ try {
     console.error(`NO VERDICT: the proof itself is broken\n${broken.map((l) => `  ${l}`).join('\n')}`);
     process.exit(2);
   }
-  console.log('Self-check: the comparison says NO to an extra option, a swapped control order, an extra sort, a swapped sort order and a missing product.\n');
+  console.log('Self-check: the comparison says NO to an extra option, a swapped control order, an extra sort, a swapped sort order, an extra onProduct path and a swapped onProduct order and a missing product.\n');
   const { findings: liveFindings, route } = await live();
   const fixtureFindings = await fixtures();
   process.exit(report(route, { 1: liveFindings, 2: fixtureFindings }));

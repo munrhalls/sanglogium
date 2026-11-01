@@ -3,8 +3,9 @@
 // shopper can sort by on this route, each with its name: the scope's sort fields are the always-on sorts first, then the scope's sort picks, each once,
 // and a field no route product holds is dropped, as a control with no value is. A sort is named like the filter control of the same field.
 // Takes its port as the first parameter. A control no product on the route holds is dropped: a control with no value cannot be drawn, and the raw map
-// keeps it as an empty list. The whole read-and-build is one try/catch because one request has one failure mode; on failure it logs once and returns
-// the empty answer.
+// keeps it as an empty list. The answer also names `onProduct`, the paths read from the product itself (the always-on controls then the always-on
+// sorts, each once), because the steps after it need to know where a control's value sits. The whole read-and-build is one try/catch because one
+// request has one failure mode; on failure it logs once and returns the empty answer.
 
 import { buildRawMap } from '@/features/product-filtering/core/rules/buildRawMap';
 import { buildLabelsMap } from '@/features/product-filtering/core/rules/buildLabelsMap';
@@ -32,9 +33,9 @@ export async function getRouteControls(
     )[scope];
     const sorts = buildSortLabels({ [scope]: sortFields.filter((field) => held[field].length > 0) }, rows)[scope];
 
-    return { raw, labels, sorts, products };
+    return { raw, labels, sorts, products, onProduct: [...new Set([...alwaysOn, ...sortAlwaysOn])] };
   } catch (error) {
     console.error(`[getRouteControls] failed for ${keys.length} keys, scope "${scope}"`, error);
-    return { raw: {}, labels: {}, sorts: {}, products: [] };
+    return { raw: {}, labels: {}, sorts: {}, products: [], onProduct: [] };
   }
 }
