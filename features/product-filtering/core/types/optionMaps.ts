@@ -17,6 +17,9 @@ export type LabelsMap = Record<string, Record<string, { label: string; options: 
 /** One control of the list the Studio draws: its automatic name and, sorted, its options (value as stored, as text) with their automatic texts. */
 export type ControlLabels = { field: string; label: string; options: { value: string; text: string }[] };
 
+/** The controls of one slice (its catalogue slug), as the Studio page draws them in one section: only what that slice holds. */
+export type SliceControls = { slice: string; controls: ControlLabels[] };
+
 /** A catalogue item as the slicing needs it: `parent` is the id of the item above it. */
 export type CatalogueNode = { _id: string; slug?: string; parent?: string };
 
