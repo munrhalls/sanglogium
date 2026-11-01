@@ -11,6 +11,7 @@
 //   6. typing a wording at a line of that list sets the text of that line and moves no other, and emptying it returns that line to its automatic text (on every live line)
 //
 // A stored row that names no control or no held value is not a failure: the labels map ignores it.
+// A scope is a slice or all products (the products of the three slices together, with the picks the owner chose for /products). The proof treats the four scopes alike.
 // A control is an always-on field or a pick of the slice, as the stored picklist says. A value is anything but: missing, null,
 // blank text, an empty list. A product is in a slice when its catalogueLocationKeys hold the slice's catalogue item or one below it.
 // Question 1 compares the real function with a second way to the same answer (walk every leaf of the products) on the live data.
@@ -207,12 +208,13 @@ export function judge(f: Facts): Record<number, string[]> {
 // Fake slices, products and rows in real format with alien names, holding the awkward cases: null, blank text, an empty list, a number,
 // true/false. Each planted break must make exactly its questions say NO, clean data none.
 async function selfProof() {
-  const picklist: Picklist = { alwaysOn: ['wibble', 'plink.amount'], picks: { zorb: ['quux', 'plomb.min', 'tags'], vex: ['glim'] } };
-  const p1: Product = { _id: 'p1', wibble: 'Frob', plink: { amount: 3 }, filterAttributes: { quux: 'a', plomb: { min: 1 }, tags: ['x', 'y'] } };
+  // omni stands for all products: it picks zing, a field no slice picks.
+  const picklist: Picklist = { alwaysOn: ['wibble', 'plink.amount'], picks: { zorb: ['quux', 'plomb.min', 'tags'], vex: ['glim'], omni: ['zing'] } };
+  const p1: Product = { _id: 'p1', wibble: 'Frob', plink: { amount: 3 }, filterAttributes: { quux: 'a', plomb: { min: 1 }, tags: ['x', 'y'], zing: 'k' } };
   const p2: Product = { _id: 'p2', wibble: 'Frob', plink: { amount: 0 }, filterAttributes: { quux: 'b', plomb: { min: null }, tags: ['y'] } };
   const p3: Product = { _id: 'p3', wibble: 'Zed', plink: { amount: 9 }, filterAttributes: { glim: true } };
   const p4: Product = { _id: 'p4', wibble: 'Zed', plink: { amount: 3 }, filterAttributes: { quux: '  ', plomb: { min: 2 }, tags: [] } };
-  const slices = { zorb: [p1, p2, p4], vex: [p3] };
+  const slices = { zorb: [p1, p2, p4], vex: [p3], omni: [p1, p2, p4, p3] };
   const curated: CuratedLabel[] = [
     { field: 'quux', text: 'Quux control' },
     { field: 'quux', value: 'a', text: 'Alpha' },
@@ -223,6 +225,7 @@ async function selfProof() {
   const RAW: RawMap = {
     zorb: { wibble: ['Frob', 'Zed'], 'plink.amount': [0, 3], quux: ['a', 'b'], 'plomb.min': [1, 2], tags: ['x', 'y'] },
     vex: { wibble: ['Zed'], 'plink.amount': [9], glim: [true] },
+    omni: { wibble: ['Frob', 'Zed'], 'plink.amount': [0, 3, 9], zing: ['k'] },
   };
   const LABELS: LabelsMap = {
     zorb: {
@@ -236,6 +239,11 @@ async function selfProof() {
       wibble: { label: 'Wibble', options: { Zed: 'Zed' } },
       'plink.amount': { label: 'Plink amount', options: { 9: '9' } },
       glim: { label: 'Glim', options: { true: 'Glim on' } },
+    },
+    omni: {
+      wibble: { label: 'Wibble', options: { Frob: 'Frob', Zed: 'Zed' } },
+      'plink.amount': { label: 'Plink amount', options: { 0: '0', 3: 'Three', 9: '9' } },
+      zing: { label: 'Zing', options: { k: 'K' } },
     },
   };
   // The Studio list: one section per slice, each with that slice's controls and the options that slice holds, with the automatic texts (no curated row).
@@ -256,6 +264,14 @@ async function selfProof() {
         { field: 'wibble', label: 'Wibble', options: [{ value: 'Zed', text: 'Zed' }] },
         { field: 'plink.amount', label: 'Plink amount', options: [{ value: '9', text: '9' }] },
         { field: 'glim', label: 'Glim', options: [{ value: 'true', text: 'Yes' }] },
+      ],
+    },
+    {
+      slice: 'omni',
+      controls: [
+        { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
+        { field: 'plink.amount', label: 'Plink amount', options: [{ value: '0', text: '0' }, { value: '3', text: '3' }, { value: '9', text: '9' }] },
+        { field: 'zing', label: 'Zing', options: [{ value: 'k', text: 'K' }] },
       ],
     },
   ];
@@ -400,6 +416,7 @@ async function selfProof() {
       { _id: 'q1', wibble: 'Frob', filterAttributes: { quux: 'b', tags: ['y'] }, catalogueLocationKeys: ['h1'] },
       { _id: 'q2', wibble: 'Zed', filterAttributes: { quux: 'a', tags: ['x'] }, catalogueLocationKeys: ['a'] },
       { _id: 'q3', wibble: 'Frob', filterAttributes: { quux: 'c' }, catalogueLocationKeys: ['x'] },
+      { _id: 'q4', wibble: 'Nope', filterAttributes: { quux: 'z' }, catalogueLocationKeys: [] },
     ],
   };
   const READ_LIST: SliceControls[] = [
@@ -418,15 +435,29 @@ async function selfProof() {
       ],
     },
     { slice: 'accessories', controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }] }] },
+    { slice: 'all-products', controls: [{ field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] }] },
   ];
   const fromRead = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) });
   if (canon(fromRead) !== canon(READ_LIST)) throw new Error(`self-proof failed: the read path gave ${canon(fromRead)}, wanted ${canon(READ_LIST)}`);
+  // The owner picks quux for all products: its options are listed across the slices (accessories does not pick it) and q4's z stays out.
+  const READ_PICKED: SliceControls[] = [
+    ...READ_LIST.slice(0, 3),
+    {
+      slice: 'all-products',
+      controls: [
+        { field: 'wibble', label: 'Wibble', options: [{ value: 'Frob', text: 'Frob' }, { value: 'Zed', text: 'Zed' }] },
+        { field: 'quux', label: 'Quux', options: [{ value: 'a', text: 'A' }, { value: 'b', text: 'B' }, { value: 'c', text: 'C' }] },
+      ],
+    },
+  ];
+  const picked = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData({ ...result, picklist: { ...result.picklist, allProducts: ['quux'] } }) });
+  if (canon(picked) !== canon(READ_PICKED)) throw new Error(`self-proof failed: the read path with an all-products pick gave ${canon(picked)}, wanted ${canon(READ_PICKED)}`);
   const noDocument = await getControlLabels({ fetchOptionMapData: async () => toOptionMapData({ ...result, picklist: null }) });
   if (noDocument.some((s) => s.controls.length)) throw new Error('self-proof failed: a missing picklist document gave controls');
 
   const odd: Product ={ _id: 'p5', wibble: 'Zed', plink: { amount: 1 }, filterAttributes: { quux: { a: 1 } } };
   let threw = false;
-  try { buildRawMap(picklist, { zorb: [odd], vex: [p3] }); } catch { threw = true; }
+  try { buildRawMap(picklist, { zorb: [odd], vex: [p3], omni: [odd] }); } catch { threw = true; }
   if (!threw) throw new Error('self-proof failed: an object value did not stop the raw map');
 }
 
@@ -472,9 +503,14 @@ try {
   console.log('self-proof: each question says NO where it must, and yes on clean data.\n');
   const { result, products, items, picklist: doc, curated: rows } = await read();
   console.log(`read: ${Math.round(JSON.stringify(result).length / 1024)} KB in one query\n`);
-  const picklist: Picklist = { alwaysOn: strings(doc.alwaysOn), picks: Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [slug, strings(doc[name])])) };
+  const picklist: Picklist = {
+    alwaysOn: strings(doc.alwaysOn),
+    picks: { ...Object.fromEntries(Object.entries(CATALOGUE_SLUG).map(([name, slug]) => [slug, strings(doc[name])])), 'all-products': strings(doc.allProducts) },
+  };
   if (!picklist.alwaysOn.length) throw new Error('the picklist has no always-on fields');
   const slices = Object.fromEntries(Object.values(CATALOGUE_SLUG).map((slug) => [slug, sliceByCatalogue(items, products, slug)]));
+  const inSlice = new Set(Object.values(slices).flat().map((p) => p._id));
+  slices['all-products'] = products.filter((p) => inSlice.has(p._id));
   const curated = rows ?? [];
   const raw = buildRawMap(picklist, slices);
   const facts: Facts = { picklist, slices, raw, curated, labels: buildLabelsMap(raw, curated), list: await getControlLabels({ fetchOptionMapData: async () => toOptionMapData(result) }), write: setRowText };
