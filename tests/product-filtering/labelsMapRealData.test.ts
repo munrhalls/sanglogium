@@ -290,13 +290,14 @@ async function selfProof() {
   const base = noes(clean);
   if (base.length) throw new Error(`self-proof failed: clean data gave NO on question ${base.join(', ')}`);
 
+  // The list copies the raw map, so a break that leaves a value twice or out of order also reaches the list: question 5 says NO there too.
   const rawPlants: [string, (r: RawMap) => void, number[]][] = [
     ['a value dropped', (r) => { r.zorb.quux = ['a']; }, [1]],
     ['a value no product holds', (r) => { r.zorb.quux.push('q'); }, [1]],
-    ['a value listed twice', (r) => { r.zorb.quux.push('a'); }, [1]],
+    ['a value listed twice', (r) => { r.zorb.quux.push('a'); }, [1, 5]],
     ['a control dropped', (r) => { delete r.zorb.tags; }, [1]],
     ['a field that is not a control', (r) => { r.zorb.extra = []; }, [1]],
-    ["another slice's value", (r) => { r.vex.wibble.push('Frob'); }, [1]],
+    ["another slice's value", (r) => { r.vex.wibble.push('Frob'); }, [1, 5]],
     ['a blank text kept as an option', (r) => { r.zorb.quux.push('  '); }, [1, 3, 5]],
     ['a null kept as an option', (r) => { r.zorb['plomb.min'].push(null as never); }, [1, 3, 5]],
   ];
