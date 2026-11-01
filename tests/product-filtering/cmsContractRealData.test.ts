@@ -4,7 +4,7 @@
 // node --conditions=react-server --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/cmsContractRealData.test.ts
 //
 // Not here, because it is proven elsewhere: that products agree on kinds and spellings (tests/products), and that the picklist
-// offers, stores and shows the right fields (picklistRealData.test.ts).
+// offers and stores valid fields, and that the labels follow the products (picklistLabelsRealData.test.ts).
 //
 // Plain node cannot load `next-sanity` (it imports next/dynamic) and has no `server-only` package, so those imports are
 // swapped. Every query, and all the code that shapes the result, is the real one; only the transport differs.

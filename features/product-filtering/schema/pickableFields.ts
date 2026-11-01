@@ -2,7 +2,7 @@
 // Each is held by a product of its slice. The fields that are controls in every slice (brand, price, stock) are not here:
 // they live in the picklist document itself, in its alwaysOn list.
 // The all-products list (the /products page) offers the three slice lists together, once each. Nothing else is signed for it.
-// Proof: tests/product-filtering/picklistRealData.test.ts holds the same lists written by hand and says NO when they differ.
+// Proof: tests/product-filtering/picklistLabelsRealData.test.ts checks that every field offered here is held by a product of its scope, and that every offered sort field is a plain number.
 
 const SLICES = {
   headphones: [
