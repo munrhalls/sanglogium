@@ -1,4 +1,4 @@
-import type { FacetSet, ProductQueryState } from '@/features/product-filtering';
+import type { FacetSet, Narrowing, ProductQueryState } from '@/features/product-filtering';
 import type { Product } from './productTypes';
 
 export interface GetProductsCountOptions {
@@ -22,6 +22,19 @@ export interface GetProductsChunkOptions {
   // The facets of this route the state may narrow by — required when `state`
   // carries facet selections.
   facetSet?: FacetSet;
+}
+
+// The shopper's selections as the filter feature narrows the products request: its `where` and `order` and the named parameters both use.
+export interface GetNarrowedCountOptions {
+  keys: string[];
+  narrowing: Narrowing;
+}
+
+export interface GetNarrowedChunkOptions {
+  keys: string[];
+  narrowing: Narrowing;
+  offset: number;
+  limit: number;
 }
 
 export type { CategoryMetadata } from '@/features/catalogue';
