@@ -14,16 +14,23 @@ export const OPTION_MAP_QUERY = `{
 
 const strings = (value: unknown): string[] => (Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : []);
 
-/** The result of OPTION_MAP_QUERY as the maps' input. The picklist document keeps its lists under camelCase names; the slices are the category slugs, and the list `allProducts` is the scope 'all-products' (the /products page; empty until the owner fills it). A missing document means no controls. */
+/** The result of OPTION_MAP_QUERY as the maps' input. The picklist document keeps its lists under camelCase names; the slices are the category slugs, and the list `allProducts` is the scope 'all-products' (the /products page; empty until the owner fills it). The sorting lists are `sortAlwaysOn` and `sortHeadphones`, `sortAudioElectronics`, `sortAccessories`, `sortAllProducts`, mapped the same way. A missing document means no controls and no sorts. */
 export function toOptionMapData(result: any): OptionMapData {
   const doc = result?.picklist;
   return {
     alwaysOn: strings(doc?.alwaysOn),
+    sortAlwaysOn: strings(doc?.sortAlwaysOn),
     picks: {
       headphones: strings(doc?.headphones),
       'audio-electronics': strings(doc?.audioElectronics),
       accessories: strings(doc?.accessories),
       'all-products': strings(doc?.allProducts),
+    },
+    sortPicks: {
+      headphones: strings(doc?.sortHeadphones),
+      'audio-electronics': strings(doc?.sortAudioElectronics),
+      accessories: strings(doc?.sortAccessories),
+      'all-products': strings(doc?.sortAllProducts),
     },
     items: result?.items ?? [],
     products: result?.products ?? [],
