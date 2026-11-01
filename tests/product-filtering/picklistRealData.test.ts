@@ -15,14 +15,17 @@
 //
 // A value is anything but: missing, null, blank text, an empty list, an empty object.
 // A product is in a slice when its catalogueLocationKeys hold the slice's catalogue item or one below it (live catalogueItem tree).
-// The offer is read from the real Studio schema (studio/schema.ts), not copied. Reads only.
+// The offer is read from the real picklist type (schema/filterPicklistType.ts, the object studio/schema.ts registers), not copied. Reads only.
 //
 // Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/picklistRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the self-proof failed.
 //
 // FLOW  selfProof -> read -> sliceProducts -> judge -> report
 
-import { schema } from '@/studio/schema';
+import { readFileSync } from 'node:fs';
+// Not '@/studio/schema': that file reaches the Filter labels input (a .tsx file), which node cannot load. The type below is the object Studio registers;
+// the registration itself is checked on the text of studio/schema.ts in studioFacts.
+import { filterPicklistType } from '@/features/product-filtering/schema/filterPicklistType';
 
 type Product = { _id: string; catalogueLocationKeys?: string[]; filterAttributes?: Record<string, unknown>; [key: string]: unknown };
 type Facts = {
@@ -229,8 +232,8 @@ function sliceProducts(items: { _id: string; slug?: string; parent?: string }[],
 // What the real picklist type offers. A list is reorderable when Sanity draws it as sortable rows: its choices sit on the items,
 // not on the list itself (that draws checkboxes), and sorting is not turned off. (Read from Sanity's own array input resolver.)
 function studioFacts(): Facts['studio'] {
-  const type: any = schema.types.find((t: any) => t.name === 'filterPicklist');
-  if (!type) throw new Error('Studio has no filterPicklist type');
+  const type: any = filterPicklistType;
+  if (!/^\s*filterPicklistType,/m.test(readFileSync('studio/schema.ts', 'utf8'))) throw new Error('Studio does not register the filterPicklist type');
   const lists: Facts['studio']['lists'] = {};
   for (const f of type.fields.filter((x: any) => x.name !== 'alwaysOn')) {
     const itemChoices = f.of?.[0]?.options?.list;
