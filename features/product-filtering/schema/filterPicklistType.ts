@@ -1,5 +1,5 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
-import { PICKABLE, SORTABLE } from "./pickableFields";
+import { PICKABLE, SORTABLE, ALWAYS_ON } from "./pickableFields";
 import { SECTION_ICONS } from "./sectionIcons";
 
 // One document, three groups. Filters: which fields become filter controls. Sorting: which fields the shopper can sort by. Sections: where headings sit among the filter controls.
@@ -26,7 +26,7 @@ const listField = (name: string, title: string, choices: string[], group: "filte
 
 // A heading is a row: a title, an optional icon and the control it is shown above. Its controls are that control and the ones below it down to the next heading, in the order of the filter list; the position is the "Shown above" choice, so the rows are not sortable.
 const SECTIONS_HELP =
-  "Each row is a heading shown above one control. The controls below it, until the next heading, belong to it. Controls above the first heading have none. The always-on controls (brand, price, stock) stay on top. A heading whose control is not picked for this slice is not shown. Rows are not reordered here: change 'Shown above' to move a heading.";
+  "Each row is a heading shown above one control. The controls below it, until the next heading, belong to it. Controls above the first heading have none. A heading may sit above any control, the always-on ones included; without one they stay on top. A heading whose control is not on the route is not shown. Rows are not reordered here: change 'Shown above' to move a heading.";
 
 const sectionsField = (name: string, title: string, choices: string[]) =>
   defineField({
@@ -46,7 +46,7 @@ const sectionsField = (name: string, title: string, choices: string[]) =>
             name: "before",
             title: "Shown above",
             type: "string",
-            options: { list: choices.map((path) => ({ title: path, value: path })) },
+            options: { list: [...ALWAYS_ON, ...choices].map((path) => ({ title: path, value: path })) },
             validation: (Rule) => Rule.required(),
           }),
         ],

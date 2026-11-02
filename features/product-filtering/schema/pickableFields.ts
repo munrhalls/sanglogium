@@ -1,6 +1,6 @@
 // The closed list of fields the owner may turn on as controls, per slice. Signed by the owner on 2026-10-31. Studio plane: no imports.
-// Each is held by a product of its slice. The fields that are controls in every slice (brand, price, stock) are not here:
-// they live in the picklist document itself, in its alwaysOn list.
+// Each is held by a product of its slice. The fields that are controls in every slice are not picks: they are ALWAYS_ON
+// below, the same paths the picklist document's read-only alwaysOn list holds (set once by a data write).
 // The all-products list (the /products page) offers the three slice lists together, once each. Nothing else is signed for it.
 // Proof: tests/product-filtering/picklistLabelsRealData.test.ts checks that every field offered here is held by a product of its scope, and that every offered sort field is a plain number.
 
@@ -23,6 +23,9 @@ const SLICES = {
 };
 
 export const PICKABLE = { ...SLICES, allProducts: Object.values(SLICES).flat() };
+
+// The controls every route always has. Never picks; the sections lists offer them so a heading can sit above one.
+export const ALWAYS_ON = ["brand", "price_data.unit_amount", "stock"];
 
 // The closed list of fields the owner may turn on as sorts, per slice. A field is sortable when each product holds ONE plain number for it:
 // a list or a text has no single value to order by. These are the signed fields above that do (checked on the live data by the picklist proof).
