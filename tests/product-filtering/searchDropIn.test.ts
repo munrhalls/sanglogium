@@ -10,22 +10,56 @@
 // No flakiness: questions 2, 4, 5, 6 are literal; 1 and 3 read live data and a failed read is no verdict, not a no.
 //
 // Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --conditions=react-server --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/searchDropIn.test.ts
-// (it imports nuqs and the server doors, so node_modules must be reachable and --conditions=react-server is needed)
+// (it imports nuqs and the server doors, so node_modules must be reachable and --conditions=react-server is needed; `server-only`, `next-sanity` and the filter client door are swapped in the file)
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail(static mutants) -> live (1, 3) -> pure (2, 4, 5, 6) -> report
 
 import fs from 'node:fs';
 import { execSync } from 'node:child_process';
-import { PUBLISHED } from '@/features/product-filtering/adapters/sanity/optionMapData';
-import { ROUTE_MAP_QUERY, toRouteMapData } from '@/features/product-filtering/adapters/sanity/routeMapData';
-import { buildUrlContract } from '@/features/product-filtering/url/controlUrl';
-import { getFilterPanel, getFilterPanelOver } from '@/features/product-filtering/server';
-import { scopeToCategory, toFeatureProducts, buildSearchResult } from '@/features/product-search/core/rules/searchResults';
-import { ROOT_CATEGORIES } from '@/features/product-search/core/rules/searchScoring';
-import { deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
-import { countSearchMatches, fetchMatchedProducts, fetchNarrowedIds } from '@/features/product-search/adapters/sanity/searchProducts';
-import { getCategoryLookup } from '@/features/catalogue/server';
+import { createClient } from '@sanity/client';
+import { registerHooks } from 'node:module';
+
+// Plain node cannot load `next-sanity` (it imports next/dynamic), has no `server-only` package, and cannot load the .tsx components the filter door re-exports,
+// so those imports are swapped. Every query and all the code that shapes the result is the real one; only the transport differs.
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-11-14',
+  useCdn: false,
+  perspective: 'published',
+});
+(globalThis as any).__snapshotFetch = (query: string, params: object) => client.fetch(query, params);
+const stub = (source: string) => ({ url: `data:text/javascript,${encodeURIComponent(source)}`, shortCircuit: true });
+registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (specifier === 'server-only') return stub('');
+    if (specifier === 'next-sanity') return stub('export const groq = (s, ...v) => s.reduce((a, c, i) => a + c + (v[i] ?? ""), "");');
+    if (specifier === '@/platform/sanity/client') return stub('export const sanityFetch = ({ query, params }) => globalThis.__snapshotFetch(query, params ?? {});');
+    // The client door re-exports React components; the search rules read only the category list from it.
+    if (specifier === '@/features/product-filtering') return nextResolve('@/features/product-filtering/core/definitions/category', context);
+    return nextResolve(specifier, context);
+  },
+});
+
+const { PUBLISHED } = await import('@/features/product-filtering/adapters/sanity/optionMapData');
+const { ROUTE_MAP_QUERY, toRouteMapData } = await import('@/features/product-filtering/adapters/sanity/routeMapData');
+const { buildUrlContract } = await import('@/features/product-filtering/url/controlUrl');
+const { getFilterPanel, getFilterPanelOver } = await import('@/features/product-filtering/server');
+const { scopeToCategory, toFeatureProducts, buildSearchResult } = await import('@/features/product-search/core/rules/searchResults');
+const { ROOT_CATEGORIES } = await import('@/features/product-search/core/rules/searchScoring');
+const { deriveSpacedQuery } = await import('@/features/product-search/core/rules/searchText');
+const { countSearchMatches, fetchMatchedProducts, fetchNarrowedIds } = await import('@/features/product-search/adapters/sanity/searchProducts');
+
+// The same walk as getCategoryLookup in features/catalogue/adapters/catalogue-index/catalogueIndex.ts, on the same JSON (that module cannot be loaded in plain node).
+const catalogueIndex = JSON.parse(fs.readFileSync('data/catalogue-index.json', 'utf8'));
+const getCategoryLookup = (): CategoryLookup => {
+  const parentById: Record<string, string> = {};
+  for (const [parentId, meta] of Object.entries(catalogueIndex.slotMetadataMap as Record<string, { children: string[] }>)) {
+    for (const childId of meta.children) parentById[childId] = parentId;
+  }
+  return { parentById, idBySlug: catalogueIndex.slugToIdMap };
+};
 import type { Control, ControlModel } from '@/features/product-filtering/core/types/controlModel';
 import type { FeatureProduct, SearchProduct } from '@/features/product-search/core/types/searchTypes';
 import type { CategoryLookup } from '@/features/catalogue';
