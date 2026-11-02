@@ -11,7 +11,7 @@ import { buildNarrowing } from './adapters/sanity/buildNarrowing';
 import { buildUrlContract } from './url/controlUrl';
 import { getFilterPanel as getFilterPanelQuery, type FilterPanelPorts } from './queries/getFilterPanel';
 import { getControlLabels as getControlLabelsQuery } from './queries/getControlLabels';
-import type { SliceControls } from './core/types/optionMaps';
+import type { RouteMapData, SliceControls } from './core/types/optionMaps';
 
 /** The list the Studio's Filter labels draws: one section per slice, each with its controls, their options and the automatic texts. Read through the shop's own cache. */
 export const getControlLabels = (): Promise<SliceControls[]> => getControlLabelsQuery({ fetchOptionMapData });
@@ -25,5 +25,15 @@ const filterPanelPorts: FilterPanelPorts = {
 
 /** Everything a listing route needs from the filter feature for one address: the panel, chips and sort the views draw, and the narrowing the products request embeds. */
 export const getFilterPanel = (options: Parameters<typeof getFilterPanelQuery>[1]) => getFilterPanelQuery(filterPanelPorts, options);
+
+/** The same panel over products the host supplies, for a host whose product set is not a route (Search). The controls, labels and sections are read as for a route; only the products come from the host. */
+export const getFilterPanelOver = (
+  products: RouteMapData['products'],
+  options: { scope: Parameters<typeof getFilterPanelQuery>[1]['scope']; query: Parameters<typeof getFilterPanelQuery>[1]['query'] },
+) =>
+  getFilterPanelQuery(
+    { ...filterPanelPorts, fetchRouteMapData: async () => ({ ...(await fetchRouteMapData({ keys: [] })), products }) },
+    { keys: [], ...options },
+  );
 
 export { CATALOGUE_FETCH_CACHE } from './adapters/sanity/catalogueCache';
