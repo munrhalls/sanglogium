@@ -40,7 +40,7 @@ Not in this document yet: search results (they reuse chunks 1–4 through the fi
 
 ## 0. CMS data -> what filtering and sorting read
 
-Four questions were put to the live data, in this order. One script answered all four. On 2026-10-31 it was cut to what no other proof covers: `tests/product-filtering/cmsContractRealData.test.ts` (human-run, reads only, prints each rule with why the code needs it and how many products break it; exit code 1 when any rule is broken) now holds the product rules of question a and the derive check of question c. Questions b and d are answered by `tests/product-filtering/picklistLabelsRealData.test.ts` (chunk 1 below), and one kind and one spelling per field by `tests/products`. Two runs on unchanged data print the same text.
+Four questions were put to the live data, in this order. One script answered all four. Questions b and d are answered by `tests/product-filtering/picklistLabelsRealData.test.ts` (chunk 1 below), and one kind and one spelling per field by `tests/products`. Two runs on unchanged data print the same text.
 
 | # | question (the owner's words, 2026-10-29) | answer and what proves it |
 |---|---|---|
@@ -69,14 +69,12 @@ In steps:
 | 1. Each slice's list offers the owner's signed closed list of fields (nested fields as `a.b`), each held by a product of the slice. The all-products list (the `/products` page) offers the three lists together, once each. Brand, price and stock are the document's read-only `alwaysOn` list: never offered, never stored as picks | `schema/pickableFields.ts`, `schema/filterPicklistType.ts`, `studio/schema.ts`, `studio/structure.ts` |
 | 2. The owner fills the three slice lists and drags them into order; the all-products list starts empty (so `/products` has the always-on controls only) and the owner adds picks to it the same way. `alwaysOn` is set once by a data write | the document is data in the dataset, no file |
 | Sorting lives in the same document, in its own Studio group "Sorting" next to "Filters": `sortAlwaysOn` (price and name, read-only, set once by a data write) and one list per scope (`sortHeadphones`, `sortAudioElectronics`, `sortAccessories`, `sortAllProducts`), the owner's sort picks in the owner's order. Each list offers only the signed fields that hold one plain number per product (a list or a text has no single value to order by); all products offers the three together. The lists start empty. A field may be a filter, a sort, both or neither. The shop does not read the sorting lists yet: chunk 7 still fixes the sort list in code | `schema/pickableFields.ts` (`SORTABLE`), `schema/filterPicklistType.ts` |
-| 3. The picklist is read with the products (cached 300 s; a failed read means no picks) | `adapters/sanity/fetchPicklist.ts`, `queries/getFilterFacets.ts` |
 | 4. Selected facets are one per distinct pick (brand, in stock and price picks are dropped). A pick's id and URL key come from its name, its name is the field name split into capitalised words, its group is "More filters" | `core/rules/buildFacetSet.ts` (`selectionFor`, `humanizeAttribute`), `core/rules/facetKey.ts` |
 | 5. For each field path the inventory holds the kinds stored (text, number, true/false, list, object), the distinct text and true/false values (sorted; spellings that differ only by case count as one), and the smallest and largest number. A list counts as its items | `core/rules/fieldInventory.ts` |
 | 6. The values decide the control: only true/false, an on/off control; only numbers, a range; only text, a checkbox with one option per value; anything else, none. An option's text is its value as readable words (the rule is in the header of `humanizeFacetValue.ts`) | `core/rules/projectFacets.ts`, `core/rules/deriveControl.ts`, `core/rules/deriveOptions.ts`, `core/rules/humanizeFacetValue.ts` |
 | 7. A pick with no kind is not drawn. Brand and in stock are fixed in code with their control, because no stored field decides them: in stock is computed from the stock fields; brand has no option list, its names are counted from the products | `core/rules/buildFacetSet.ts`, `core/definitions/awaitingLaterChunks.ts` |
 | Temporary: brand, in stock, the two groups and `wearingStyle` stay until later chunks own them; the later chunk reads brand, price and stock from the picklist's `alwaysOn` list | `core/definitions/awaitingLaterChunks.ts` |
 | Proof of steps 1 to 3, the picklist itself, redesigned and passed 2026-11-01 (one script with the proof of chunk 2, one snapshot of the live data): the stored picklist is valid (both always-on lists hold names; every stored pick is a name, offered for its list, once); every offered field, filter or sort, is held by a product of its scope and offered once; every always-on field is held by every product; every offered sort field is a plain number wherever a product holds it; every product is in a slice. Left out on purpose: what the Studio form shows (read-only lists, groups, sortable rows: a hand check; "starts empty" cannot matter, an initial value only applies when a document is created), a second copy of the offer lists (the offer is the code), and "one document" (readers use the fixed id) | `tests/product-filtering/picklistLabelsRealData.test.ts` |
-| Proof of steps 4 to 7: no fake-input proof. The 2026-10-28 one was deleted on 2026-10-31: it fixed brand, in stock and the wording, which later chunks replace, and cases (mixed kinds, spellings that differ only by case) that the data rules now forbid. What is checked: the control, options and bounds of every offered field against the raw products on the live data (rule "derive matches the data"). Not proven: the brand names and `wearingStyle`, which are temporary | `tests/product-filtering/cmsContractRealData.test.ts` |
 
 ## 2. controls and options + curated texts (CMS) -> labelled controls and options
 
@@ -109,7 +107,7 @@ In steps:
 |---|---|
 | 1. A checkbox is a list, an on/off control is a flag, a range is `<id>Min` and `<id>Max`. Fixed keys: sort, minPrice, maxPrice, inStock, brand | `url/filterSortParams.ts` |
 | 2. An unknown key is ignored, a bad sort falls back to the default, a price that is not a whole number is none | `url/filterSortParams.ts` |
-| 3. A checkbox value that matches no option is dropped | `core/rules/sanitizeFilterState.ts`, `queries/getFilterFacets.ts` |
+| 3. A checkbox value that matches no option is dropped | `core/rules/sanitizeFilterState.ts` |
 | Temporary: brand values are checked later, against the counted brands, so this chunk is finished after chunk 4 | `features/products/queries/getListingPage.ts` |
 | Proof: not written. The 2026-10-28 proof was deleted on 2026-10-31, because its input format is chunk 2's to change; it is written again when this chunk is rebuilt | not written |
 
@@ -129,7 +127,6 @@ In steps:
 | 1. A product counts for an option when it matches every other choice, so the shopper sees what the option would give | `core/rules/facetCounts.ts` |
 | 2. A range's bounds are never narrowed by the current choices, so its handle can always move back | `core/rules/facetCounts.ts` |
 | 3. The price span, and brand names from the products' brands | `core/rules/facetCounts.ts` |
-| The result is `CatalogueFacets`, returned by | `queries/getFilterFacets.ts` |
 | Proof: not written. The 2026-10-28 proof was deleted on 2026-10-31, because its input format is chunk 2's to change; it is written again when this chunk is rebuilt | not written |
 
 ## 5. filter state + labelled controls -> the page's products and their total
@@ -145,7 +142,6 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. Price, in stock and one test per selected control narrow the products; the sort picks the order | `adapters/sanity/buildProductQuery.ts` |
 | 2. The total counts the products that pass | `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
 | 3. A page that is not a whole number from 1 up is page 1; a page past the end becomes the last page; the window is cut into chunks | `features/products/core/rules/pageWindow.ts`, `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
 | Proof: not written. The 2026-10-28 proof was deleted on 2026-10-31, because its input format is chunk 2's to change; it is written again when this chunk is rebuilt | not written |
@@ -180,7 +176,7 @@ In steps:
 
 | step | file |
 |---|---|
-| 1. The sort list is fixed in code, because the data cannot provide it | `core/definitions/sortOptions.ts`, `ui/SortBar.tsx`, `ui/SortDropdown.tsx` |
+| 1. The sort list is fixed in code, because the data cannot provide it | `core/definitions/sortOptions.ts` |
 | 2. Page links come from the total and the page | `features/products/ui/listing/Pagination.tsx` |
 | Proof: not written. Code not yet read | not written |
 
