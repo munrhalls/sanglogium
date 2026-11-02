@@ -1,6 +1,6 @@
 import 'server-only';
 // Server-only entry: wired catalog ports. Never import from client components or Node .mjs scripts.
-import { getProductsCount, getProductsChunk, getNarrowedCount, getNarrowedChunk } from './adapters/sanity/getProductsByVfsKeys';
+import { getNarrowedCount, getNarrowedChunk } from './adapters/sanity/getProductsByVfsKeys';
 import { getProductBySlug } from './adapters/sanity/getProductBySlug';
 import { getRelatedProducts } from './adapters/sanity/getRelatedProducts';
 import { getSitemapSlugs } from './adapters/sanity/getSitemapSlugs';
@@ -13,8 +13,6 @@ import type { CatalogPorts } from './core/ports';
 import type { ListingPorts } from './queries/getListingPage';
 
 const catalog: CatalogPorts = {
-  getProductsCount,
-  getProductsChunk,
   getNarrowedCount,
   getNarrowedChunk,
   getCategoryMetadata,
