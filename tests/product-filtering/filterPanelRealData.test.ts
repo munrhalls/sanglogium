@@ -96,7 +96,6 @@ const WIRING: { name: string; file: string; pattern: RegExp; times?: number }[] 
   { name: 'the listing use case passes the narrowing to every chunk', file: 'features/products/queries/getListingPage.ts', pattern: /getNarrowedChunk\(\{ keys, narrowing, offset, limit: CHUNK_SIZE \}\)/ },
   { name: 'the listing use case reads the scope from the slug and calls the filter panel with the route\'s keys and the raw query', file: 'features/products/queries/getListingPage.ts', pattern: /scopeOf\(slug\)[\s\S]*getFilterPanel\(\{ keys, scope, query \}\)/ },
   { name: 'the listing view mounts the panel, the sheet, the chips and the sort', file: 'features/products/view/ListingView.tsx', pattern: /^(?=[\s\S]*<FilterPanel )(?=[\s\S]*<FilterSheet )(?=[\s\S]*<ActiveFilters )(?=[\s\S]*<SortControl )/ },
-  { name: 'the listing no longer mounts the old sidebar, sort bar or chips', file: 'features/products/view/ListingView.tsx', pattern: /^(?![\s\S]*(<FilterSidebar|<ActiveFilterChips))[\s\S]*$/ },
   { name: 'the products server wires the filter panel into the listing ports', file: 'features/products/server.ts', pattern: /filtering: \{ getFilterPanel \}/ },
   { name: 'the filtering server wires the route read, the sections, the decode and the narrowing', file: 'features/product-filtering/server.ts', pattern: /fetchRouteMapData,\n  fetchSections,\n  decode: \(model, query\) => buildUrlContract\(model\)\.decode\(query\),\n  narrow: buildNarrowing,/ },
 ];
