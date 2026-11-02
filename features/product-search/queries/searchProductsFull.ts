@@ -1,8 +1,7 @@
 import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
-import { buildSearchResult } from '@/features/product-search/core/rules/searchResults';
+import { buildSearchResult, scopeToCategory, toFeatureProducts } from '@/features/product-search/core/rules/searchResults';
 import type { SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
-import type { FilterQuery } from '@/features/product-filtering';
 
 const MIN_QUERY_LENGTH = 2;
 const DEFAULT_PER_PAGE = 24;
@@ -14,7 +13,7 @@ export async function searchProductsFullQuery(
   sort?: string,
   page: number = 1,
   perPage: number = DEFAULT_PER_PAGE,
-  filterQuery?: FilterQuery,
+  filterQuery?: Record<string, string | string[] | undefined>,
   category?: string
 ): Promise<SearchResult> {
   if (!query || query.trim().length < MIN_QUERY_LENGTH || normalizeText(query).length < MIN_QUERY_LENGTH) {
@@ -41,16 +40,24 @@ export async function searchProductsFullQuery(
 
     const matched = matchedProducts ?? [];
 
+    const lookup = source.getCategoryLookup();
+    const { category: activeCategory, scoped } = scopeToCategory({ matched, category, lookup });
+    const { narrowing, ...filter } = await source.getFilterPanel(toFeatureProducts(scoped), filterQuery ?? {});
+    const narrowedIds = await source.fetchNarrowedIds(searchTerm, spacedTerm, narrowing);
+    if (narrowedIds === null) throw new Error('narrowed ids read failed');
+
     return buildSearchResult({
       matched,
+      scoped,
+      category: activeCategory,
+      narrowedIds,
+      filter,
       unfilteredCount,
       rawQuery,
       sort,
       page: safePage,
       perPage: effectivePerPage,
-      filterQuery,
-      category,
-      lookup: source.getCategoryLookup(),
+      lookup,
     });
   } catch (error) {
     console.error(`[searchProductsFull] Failed for query "${query}", sort "${sort}", page ${page}:`, error);
