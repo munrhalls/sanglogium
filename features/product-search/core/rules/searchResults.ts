@@ -1,14 +1,7 @@
 import { scoreProduct, ROOT_CATEGORIES, rootCategoriesOf } from './searchScoring';
 import type { CategoryLookup } from '@/features/catalogue';
-import { buildFacetSet, computeCatalogueFacets, loadFacetFilterState, productMatchesState, sanitizeFilterState } from '@/features/product-filtering';
-import type { AutocompleteProduct, SearchProduct, SearchResult } from '@/features/product-search/core/types/searchTypes';
-import type {
-  CatalogueFacets,
-  FilterQuery,
-  ProductQueryState,
-  PriceRangeData,
-  RawProduct,
-} from '@/features/product-filtering';
+import type { FilterPanelData } from '@/features/product-filtering';
+import type { AutocompleteProduct, FeatureProduct, SearchProduct, SearchResult } from '@/features/product-search/core/types/searchTypes';
 
 const MAX_AUTOCOMPLETE = 6;
 
@@ -24,74 +17,68 @@ export function rankAutocomplete(
     .map(({ product }) => product);
 }
 
+export function scopeToCategory(input: {
+  matched: SearchProduct[];
+  category?: string;
+  lookup: CategoryLookup;
+}): { category: SearchResult['category']; scoped: SearchProduct[] } {
+  const { matched, category, lookup } = input;
+  const activeCategory = ROOT_CATEGORIES.find((c) => c.id === category)?.id;
+  const scoped = activeCategory
+    ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(activeCategory))
+    : matched;
+  return { category: activeCategory, scoped };
+}
+
+export function toFeatureProducts(scoped: SearchProduct[]): FeatureProduct[] {
+  return scoped.map((p) => ({
+    brand: p.brand?.name ?? null,
+    name: p.name,
+    price_data: p.price_data,
+    stock: p.stock,
+    filterAttributes: p.filterAttributes,
+  }));
+}
+
 export function buildSearchResult(input: {
   matched: SearchProduct[];
+  scoped: SearchProduct[];
+  category: SearchResult['category'];
+  narrowedIds: string[];
+  filter?: FilterPanelData;
   unfilteredCount: number;
   rawQuery: string;
   sort?: string;
   page: number;
   perPage: number;
-  filterQuery?: FilterQuery;
-  category?: string;
   lookup: CategoryLookup;
 }): SearchResult {
   const {
     matched,
+    scoped,
+    category,
+    narrowedIds,
+    filter,
     unfilteredCount,
     rawQuery,
     sort,
     page: safePage,
     perPage: effectivePerPage,
-    filterQuery,
-    category,
     lookup,
   } = input;
 
-  // Filters: counts, price range and the filtered list all come from this one
-  // matched set, so the sidebar's counts can never disagree with the results.
-  let facets: CatalogueFacets | undefined;
-  let priceRange: PriceRangeData | undefined;
-  let appliedState: ProductQueryState | undefined;
-  let filtered = matched;
-  let categoryCounts: SearchResult['categoryCounts'];
-  let allCategoriesCount: number | undefined;
-  const activeCategory = ROOT_CATEGORIES.find((c) => c.id === category)?.id;
-  // Category narrowing scopes the counts, price range and list; the category
-  // chips themselves are counted below over the un-narrowed set.
-  const scoped = activeCategory
-    ? matched.filter((p) => rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(activeCategory))
-    : matched;
-  if (filterQuery) {
-    // Results span every category, so the facet set is the category-agnostic one (brand, in stock),
-    // built from every matched product so it does not change with the category chip.
-    const facetSet = buildFacetSet(matched as unknown as RawProduct[]);
-    const state = loadFacetFilterState(filterQuery, facetSet);
-    const vetted = sanitizeFilterState(state, facetSet);
-    facets = computeCatalogueFacets(scoped as unknown as RawProduct[], vetted, facetSet);
-    appliedState = sanitizeFilterState(vetted, facetSet, { brand: Object.keys(facets.brandLabels) });
-    const activeState = appliedState;
-    filtered = scoped.filter((p) => productMatchesState(p as unknown as RawProduct, activeState, facetSet));
-    const acrossCategories = matched.filter((p) =>
-      productMatchesState(p as unknown as RawProduct, activeState, facetSet)
-    );
-    allCategoriesCount = acrossCategories.length;
-    categoryCounts = ROOT_CATEGORIES.map((c) => ({
-      id: c.id,
-      label: c.label,
-      count: acrossCategories.filter((p) =>
-        rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(c.id)
-      ).length,
-    }));
-    const prices = scoped
-      .map((p) => p.price_data?.unit_amount)
-      .filter((n): n is number => Number.isFinite(n));
-    priceRange = {
-      minPrice: prices.length ? Math.min(...prices) : null,
-      maxPrice: prices.length ? Math.max(...prices) : null,
-      prices,
-    };
-  }
-  const resultCount = filterQuery ? filtered.length : unfilteredCount;
+  const narrowed = new Set(narrowedIds);
+  const inWindow = matched.filter((p) => narrowed.has(p._id));
+  const filtered = scoped.filter((p) => narrowed.has(p._id));
+  const allCategoriesCount = inWindow.length;
+  const categoryCounts = ROOT_CATEGORIES.map((c) => ({
+    id: c.id,
+    label: c.label,
+    count: inWindow.filter((p) =>
+      rootCategoriesOf(p.catalogueLocationKeys, lookup).includes(c.id)
+    ).length,
+  }));
+  const totalCount = filtered.length;
 
   const byRelevance = (a: SearchProduct, b: SearchProduct) => {
     const scoreA = scoreProduct(a, rawQuery, lookup);
@@ -114,7 +101,7 @@ export function buildSearchResult(input: {
 
   const products = filtered.slice().sort(comparator);
 
-  const totalPages = Math.max(1, Math.ceil(resultCount / effectivePerPage));
+  const totalPages = Math.max(1, Math.ceil(totalCount / effectivePerPage));
   const effectivePage = Math.min(safePage, totalPages);
   const offset = (effectivePage - 1) * effectivePerPage;
 
@@ -125,12 +112,10 @@ export function buildSearchResult(input: {
 
   return {
     products: pageProducts,
-    totalCount: resultCount,
+    totalCount,
     unfilteredCount,
-    facets,
-    priceRange,
-    state: appliedState,
-    category: activeCategory,
+    filter,
+    category,
     categoryCounts,
     allCategoriesCount,
   };

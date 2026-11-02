@@ -3,6 +3,7 @@ import "server-only";
 import { sanityFetch } from '@/platform/sanity/client';
 import groq from 'groq';
 import type { AutocompleteProduct, SearchProduct } from '@/features/product-search/core/types/searchTypes';
+import type { Narrowing } from '@/features/product-filtering';
 
 const MAX_SORT_WINDOW = 2000;
 
@@ -73,5 +74,16 @@ export async function fetchMatchedProducts(
       "price": price_data.unit_amount
     } | order(_id asc) [0...${sortWindow}]`,
     params: { query: searchTerm, spacedQuery: spacedTerm },
+  });
+}
+
+export async function fetchNarrowedIds(
+  searchTerm: string,
+  spacedTerm: string,
+  narrowing: Narrowing
+): Promise<string[] | null> {
+  return sanityFetch<string[]>({
+    query: groq`*[${SEARCH_MATCH} && (${narrowing.where})]._id`,
+    params: { query: searchTerm, spacedQuery: spacedTerm, ...narrowing.params },
   });
 }

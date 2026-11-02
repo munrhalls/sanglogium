@@ -1,7 +1,9 @@
 import "server-only";
 
-import { fetchAutocompleteCandidates, countSearchMatches, fetchMatchedProducts } from './adapters/sanity/searchProducts';
+import { fetchAutocompleteCandidates, countSearchMatches, fetchMatchedProducts, fetchNarrowedIds } from './adapters/sanity/searchProducts';
 import { getCategoryLookup } from '@/features/catalogue/server';
+import { getFilterPanelOver } from '@/features/product-filtering/server';
+import { scopeOf } from '@/features/product-filtering';
 import { getSearchSuggestions } from './queries/searchSuggestions';
 import { getSearchPage as getSearchPageQuery, type SearchParams } from './queries/getSearchPage';
 import type { SearchSource } from './core/ports';
@@ -12,6 +14,8 @@ const searchSource: SearchSource = {
   fetchAutocompleteCandidates,
   countSearchMatches,
   fetchMatchedProducts,
+  fetchNarrowedIds,
+  getFilterPanel: (products, query) => getFilterPanelOver(products, { scope: scopeOf(null), query }),
 };
 
 export function getSuggestions(query: string): Promise<AutocompleteProduct[]> {

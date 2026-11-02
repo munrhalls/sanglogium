@@ -1,9 +1,5 @@
 import type { RootCategory } from '@/features/product-search/core/rules/searchScoring';
-import type {
-  CatalogueFacets,
-  ProductQueryState,
-  PriceRangeData,
-} from '@/features/product-filtering';
+import type { FilterPanelData } from '@/features/product-filtering';
 
 export interface AutocompleteProduct {
   _id: string;
@@ -39,10 +35,8 @@ export interface SearchResult {
   totalCount: number;
   /** Products matching the words alone, before any filter is applied. */
   unfilteredCount: number;
-  facets?: CatalogueFacets;
-  priceRange?: PriceRangeData;
-  /** The filter state actually applied (junk brand values dropped). */
-  state?: ProductQueryState;
+  /** The filter feature's panel, chips and sort for these results. */
+  filter?: FilterPanelData;
   /** Root category the results are narrowed to, when a valid one was requested. */
   category?: RootCategory;
   /** Per-category counts under the active filters (ignoring the category itself). */
@@ -50,3 +44,11 @@ export interface SearchResult {
   /** Products matching the active filters across all categories. */
   allCategoriesCount?: number;
 }
+
+export type FeatureProduct = {
+  brand: string | null;
+  name: string;
+  price_data: SearchProduct['price_data'];
+  stock: number;
+  filterAttributes?: Record<string, unknown>;
+};
