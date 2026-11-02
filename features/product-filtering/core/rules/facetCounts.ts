@@ -1,6 +1,6 @@
 // Pure facet-count logic: in-memory matching engine and aggregation over an
 // already-fetched product set. No Sanity, no fetch, no cache — those live in
-// queries/getFilterFacets.ts, which calls this module. Which facets exist and
+// the Search results rule, which calls this module. Which facets exist and
 // how each one behaves (checkbox, boolean, range) comes from the FacetSet the
 // caller passes in (core/rules/buildFacetSet.ts), not from a declared list.
 
@@ -123,7 +123,7 @@ export function productMatchesState(
 
     // sang-logium-3rv.5 -- additive: an active range-facet selection must
     // narrow every OTHER facet's disjunctive count too, same as price/inStock
-    // already do above. Mirrors buildProductQuery.ts's GROQ range predicate,
+    // already do above. Mirrors the GROQ range predicate of the products request,
     // in-memory.
     if (facet.control === 'range') {
       const minVal = state[`${facet.id}Min` as keyof ProductQueryState];
@@ -208,7 +208,7 @@ export function computeCatalogueFacets(
     const baseProducts = products.filter((p) => productMatchesState(p, state, facetSet, facet.id));
 
     if (facet.control === 'boolean') {
-      // In stock is special: it counts by the stock fields, the same as buildProductQuery.
+      // In stock is special: it counts by the stock fields, the same as the products request.
       booleans[facet.id] = baseProducts.filter(
         facet.id === 'inStock' ? isInStock : (p) =>
           valuesForFacet(p, facet).some((v) => v === 'true'),

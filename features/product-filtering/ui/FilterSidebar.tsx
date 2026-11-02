@@ -28,7 +28,7 @@ import { CheckboxGroup, BooleanToggle, RangeControl, PriceControl } from './Filt
  * useFilterParam; nothing here is optimistic about a fetch in flight.
  *
  * The groups and facets to draw arrive as the `facetSet` prop (derived
- * from product data by getFilterFacets); URL params go through the shared
+ * from the matched products); URL params go through the shared
  * useFilterParam/useClearAllFilters hooks. The rail icon for a group is
  * GROUP_ICONS[group.id], or the neutral fallback for groups without a
  * bespoke icon. Groups with nothing

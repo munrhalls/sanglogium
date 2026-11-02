@@ -1,28 +1,5 @@
-import type { FacetSet, Narrowing, ProductQueryState } from '@/features/product-filtering';
+import type { Narrowing } from '@/features/product-filtering';
 import type { Product } from './productTypes';
-
-export interface GetProductsCountOptions {
-  keys: string[];
-  // S1 (buildProductQuery): the active filter/sort state; clauses are built
-  // here from it. Omitted = unfiltered count, exactly as before.
-  state?: ProductQueryState;
-  // The facets of this route the state may narrow by — required when `state`
-  // carries facet selections, else no facet predicates are emitted.
-  facetSet?: FacetSet;
-}
-
-export interface GetProductsChunkOptions {
-  keys: string[];
-  offset: number;
-  limit: number;
-  // S1 (buildProductQuery): the active filter/sort state; order/where clauses
-  // and their named params are built here from it. Omitted = no clauses — the
-  // raw slice order is Sanity's default, matching prior behaviour.
-  state?: ProductQueryState;
-  // The facets of this route the state may narrow by — required when `state`
-  // carries facet selections.
-  facetSet?: FacetSet;
-}
 
 // The shopper's selections as the filter feature narrows the products request: its `where` and `order` and the named parameters both use.
 export interface GetNarrowedCountOptions {

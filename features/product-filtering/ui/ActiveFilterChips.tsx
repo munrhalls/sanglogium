@@ -13,7 +13,7 @@ import { formatPriceMajor } from '@/platform/utils/price';
  * shared hook. Never imports or reacts to the product grid, product data,
  * result counts or streaming.
  *
- * The facet set to make chips for arrives as the `facetSet` prop (derived from product data by getFilterFacets); useFilterParam and useClearAllFilters are the shared hooks imported above, so a chip's URL param always matches the sidebar control that set it.
+ * The facet set to make chips for arrives as the `facetSet` prop (derived from the matched products); useFilterParam and useClearAllFilters are the shared hooks imported above, so a chip's URL param always matches the sidebar control that set it.
  */
 
 interface ActiveFilterChipsProps {
