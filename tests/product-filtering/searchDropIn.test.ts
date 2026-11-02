@@ -220,7 +220,7 @@ function checkResult(featOf: (scoped: SearchProduct[]) => FeatureProduct[], buil
   const featShape = ['brand', 'filterAttributes', 'name', 'price_data', 'stock'];
   if (feat.length !== SCOPED.length) found.push(`2 toFeatureProducts gives ${feat.length} products, the category holds ${SCOPED.length}`);
   for (const f of feat) {
-    if (canon(Object.keys(f)) !== canon(featShape)) found.push(`2 a feature product has keys ${canon(Object.keys(f))}`);
+    if (canon([...Object.keys(f)].sort()) !== canon(featShape)) found.push(`2 a feature product has keys ${canon([...Object.keys(f)].sort())}`);
     if (!SCOPED.some((p) => p.name === f.name)) found.push(`2 feature product "${f.name}" is not in the category`);
   }
   const res = build({ ...baseInput });
@@ -317,7 +317,7 @@ const DELETED: Record<string, string> = {
   FacetSet: 'features/product-filtering/core/types/facetProjection.ts',
   ProductQueryState: 'features/product-filtering/core/types/filterTypes.ts',
 };
-const GONE_PATHS = 'features app platform docs tests tools scripts studio CLAUDE.md :(exclude)tests/product-filtering/searchDropIn.test.ts';
+const GONE_PATHS = 'features app platform docs tests tools scripts studio CLAUDE.md ":(exclude)tests/product-filtering/searchDropIn.test.ts"';
 
 function question6(): { findings: string[]; searched: string[] } {
   const searched = Object.keys(DELETED).filter((name) => !fs.existsSync(DELETED[name]));
