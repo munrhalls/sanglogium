@@ -64,7 +64,7 @@
 // changing any filter/sort sends the user back to page 1.
 
 // Import parsers + loader/serializer from `nuqs/server`: this module is consumed
-// by both the catalogue RSC pages (via `loadFilterSort`) and the client controls
+// by both the catalogue RSC pages (via the facet loader) and the client controls
 // (via `filterSortParsers`). `nuqs/server` re-exports every parser and carries no
 // "use client" boundary, so the shared parser map is safe on both sides. The
 // client hooks (`useQueryState` etc.) still come from `nuqs` in state/useFilterParam.ts.
@@ -107,7 +107,7 @@ const SORT_VALUES = SORT_MAP.map((o) => o.urlValue) as SortValue[];
 
 /**
  * The parser map — the single source of truth. Imported by both the server
- * `loadFilterSort` loader and every client control, so a deep link and the
+ * loader and every client control, so a deep link and the
  * control that reads it can never disagree.
  */
 // parseAsInteger is parseInt: it reads "1.2.3" as 1. Prices accept whole numbers only.
@@ -180,13 +180,6 @@ export const FILTER_SORT_URL_OPTIONS = {
 
 /** The pagination param a filter/sort change must reset. */
 export const PAGE_PARAM_KEY = "page";
-
-/**
- * Server loader: parse the catalogue filter/sort state out of a Next.js
- * `searchParams` object (or a URLSearchParams / query string). Matches
- * `filterSortParsers` exactly, so SSR and the first client render agree.
- */
-export const loadFilterSort = createLoader(filterSortParsers);
 
 /**
  * Serialize a (partial) filter/sort state back to a query string, honouring the

@@ -160,7 +160,7 @@ export function RangeControl({
 }: {
   category: Category;
   facet: RenderedFacet;
-  /** Real category span from getFilterFacets; falls back to the facet's
+  /** Real category span from the matched products; falls back to the facet's
    *  own min/max from the product data when a bound is missing --
    *  e.g. zero matching products, or a route this prop was not threaded to
    *  yet -- same "always have a usable slider" fallback PriceControl gets

@@ -2,7 +2,7 @@ import type { Option } from './option';
 
 // Canonical sort allowlist: `urlValue` is the `sort=` URL vocabulary, `label`
 // the human-facing name. App-defined — product data cannot provide it. The
-// comparator per value is in adapters/sanity/buildProductQuery.ts.
+// comparator per value is applied by the products request.
 export const SORT_OPTIONS = [
   { label: 'Featured', urlValue: 'featured' },
   { label: 'Best selling', urlValue: 'best-selling' },
