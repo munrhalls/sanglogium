@@ -13,7 +13,7 @@
 // FLOW  proofCanFail -> live -> fixtures -> report
 
 import { CATEGORIES } from '@/features/product-filtering/core/definitions/category';
-import { PICKABLE } from '@/features/product-filtering/schema/pickableFields';
+import { ALWAYS_ON, PICKABLE } from '@/features/product-filtering/schema/pickableFields';
 import { SECTION_ICONS } from '@/features/product-filtering/schema/sectionIcons';
 import { PUBLISHED } from '@/features/product-filtering/adapters/sanity/optionMapData';
 import { ROUTE_MAP_QUERY, toRouteMapData } from '@/features/product-filtering/adapters/sanity/routeMapData';
@@ -56,11 +56,12 @@ const portOf = (data: SectionData) => ({ fetchSections: async () => data });
 
 // ---- Question 1: the stored rows -------------------------------------------------------------------------------------------------
 
+// What "shown above" offers each list: the always-on fields plus the slice's pickable ones — the set the Studio dropdown is built from.
 const LISTS = [
-  { list: 'sectionsHeadphones', offer: PICKABLE.headphones },
-  { list: 'sectionsAudioElectronics', offer: PICKABLE.audioElectronics },
-  { list: 'sectionsAccessories', offer: PICKABLE.accessories },
-  { list: 'sectionsAllProducts', offer: PICKABLE.allProducts },
+  { list: 'sectionsHeadphones', offer: [...ALWAYS_ON, ...PICKABLE.headphones] },
+  { list: 'sectionsAudioElectronics', offer: [...ALWAYS_ON, ...PICKABLE.audioElectronics] },
+  { list: 'sectionsAccessories', offer: [...ALWAYS_ON, ...PICKABLE.accessories] },
+  { list: 'sectionsAllProducts', offer: [...ALWAYS_ON, ...PICKABLE.allProducts] },
 ];
 
 // The findings on one picklist document, as the shop's query returns it. A list the owner has not filled is fine.
@@ -258,6 +259,15 @@ const READS: { name: string; run: () => Promise<unknown>; expected: unknown }[] 
     expected: [LEAD(['zed', 'quux.lo', 'glorp']), S('nix', 'Ap', '', ['nix', 'blip'])],
   },
   {
+    name: 'a heading above an always-on control',
+    run: () =>
+      getRouteSections(portOf(toSectionData({ ...DOC, sectionsHeadphones: [{ _key: 'k9', _type: 'section', title: 'Top', before: 'zed' }] })), {
+        scope: 'headphones',
+        controlPaths: ['zed', 'quux.lo', 'blip', 'wumpus'],
+      }),
+    expected: [S('zed', 'Top', '', ['zed', 'quux.lo', 'blip', 'wumpus'])],
+  },
+  {
     name: 'a scope with no heading has the leading block alone',
     run: () => getRouteSections(portOf(toSectionData(DOC)), { scope: 'audio-electronics', controlPaths: ['zed', 'quux.lo', 'frob'] }),
     expected: [LEAD(['zed', 'quux.lo', 'frob'])],
@@ -338,6 +348,8 @@ async function live(): Promise<{ q1: string[]; q2: string[]; summaries: string[]
     if (!r.result?.sections) throw new Error(`scope ${scope}: the picklist document is missing`);
     if (first) {
       q1.push(...judgeStored(r.result.sections).map((f) => `1 ${f}`));
+      const storedAlways = (r.result.sections as Record<string, unknown> | null)?.alwaysOn;
+      if (canon(storedAlways) !== canon(ALWAYS_ON)) q1.push(`1 the document's alwaysOn is ${canon(storedAlways)} but the sections offer ${canon(ALWAYS_ON)}`);
       first = false;
     }
     const answer = await getRouteControls({ fetchRouteMapData: async () => toRouteMapData(r.result.route) }, { keys, scope });
