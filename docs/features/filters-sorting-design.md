@@ -100,7 +100,7 @@ In steps:
 | step | file |
 |---|---|
 | Temporary: brand values are checked later, against the counted brands, so this chunk is finished after chunk 4 | `features/products/queries/getListingPage.ts` |
-| Proof: not written. The 2026-10-28 proof was deleted on 2026-10-31, because its input format is chunk 2's to change; it is written again when this chunk is rebuilt | not written |
+| Proof: `buildUrlContract` decodes the real URL into filter state and encodes it back | `tests/product-filtering/urlContractRealData.test.ts` |
 
 ## 4. labelled controls + filter state -> counts and bounds
 
@@ -115,7 +115,7 @@ In steps:
 
 | step | file |
 |---|---|
-| Proof: not written. The 2026-10-28 proof was deleted on 2026-10-31, because its input format is chunk 2's to change; it is written again when this chunk is rebuilt | not written |
+| Proof: `buildCounts` derives each option's count and the ranges' bounds, checked against the real narrowing | `tests/product-filtering/countsRealData.test.ts` |
 
 ## 5. filter state + labelled controls -> the page's products and their total
 
@@ -132,7 +132,7 @@ In steps:
 |---|---|
 | 2. The total counts the products that pass | `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
 | 3. A page that is not a whole number from 1 up is page 1; a page past the end becomes the last page; the window is cut into chunks | `features/products/core/rules/pageWindow.ts`, `features/products/queries/getListingPage.ts`, `features/products/adapters/sanity/getProductsByVfsKeys.ts` |
-| Proof: not written. The 2026-10-28 proof was deleted on 2026-10-31, because its input format is chunk 2's to change; it is written again when this chunk is rebuilt | not written |
+| Proof: `buildNarrowing` turns filter state into the real where/order clauses and page params | `tests/product-filtering/narrowingRealData.test.ts` |
 
 ## 6. counts and bounds -> sidebar and chips on screen
 
