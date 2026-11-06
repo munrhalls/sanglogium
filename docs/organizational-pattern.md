@@ -142,3 +142,22 @@ slice -> slice only through index.ts / server.ts, never in a cycle
 inside a slice every import points inward, toward core/
 every CMS document has one owning slice
 ```
+
+## PATTERN BLOCK
+
+Copy the block below verbatim at the top of every task brief that creates, moves or edits code. It is a digest of this document (the single source of truth); `node tools/check-turn.mjs` enforces it.
+
+```text
+ORGANIZATIONAL PATTERN (binding). Source of truth: docs/organizational-pattern.md. Read its sections 2 and 3 before placing or importing anything.
+1. Every file has exactly one home (section 3). If no home fits, STOP and say so in your report. Never invent a folder, root file or slice part.
+2. A slice is features/<slice>/ built only from: index.ts (client door), server.ts (server door), ui/, state/, url/, view/, queries/, commands/, actions/, core/definitions/, core/rules/, core/types/, core/ports.ts, adapters/<system>/, schema/. Omit the parts a slice does not need.
+3. Inside a slice, imports follow the archetype table in section 2. core/ imports only its own core/, another slice's index.ts and platform/utils/; never a vendor package, sanity.types.ts or data/.
+4. Code outside a slice reaches it only through its index.ts or server.ts. Slice-to-slice imports never form a cycle.
+5. server.ts wires adapters into ports and never imports a 'use server' file.
+6. app/ holds Next route files only. A route imports slice doors, platform/, next, next/* and react, and only composes them.
+7. platform/ (design, sanity, email, analytics, utils) imports only platform/. Client-safe code (ui/, state/, url/, core/, index.ts, platform/design/ui/, any 'use client' file) never imports a file containing import "server-only"; every server.ts contains it.
+8. No '..' in runtime files (app/, features/, platform/), except studio-plane files: use './x' for the same directory and '@/...' for everything else.
+9. view/ components end in View and get data as props; ui/ names never end in View, Client, Server or Page; every Server Action is actions/<name>Action.ts; every CMS document type has one owning slice that holds its schema and every write (section 4).
+10. If the task seems to require breaking a rule, do not work around it: stop and report it.
+11. Never edit tools/check-turn.mjs, tools/check-imports.mjs, tools/check-org-pattern.mjs, tools/git-hooks/, docs/organizational-pattern.md or this block to make a change pass.
+```
