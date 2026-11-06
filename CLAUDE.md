@@ -1,3 +1,8 @@
+**Top goal: minimize token cost but only where it loses zero work effectiveness.**
+
+## Cost rules - claude code only, executors exempt
+Cap: 10 calls/turn — state your count, ask to exceed. One `write` over many `edit`s; batch reads + questions; `git diff` over re-reading; Whatever a devin executor can do for you while losing 0 work effectiveness/0 certainty - do via devin executor. 
+
 ## Hard Limits
 
 **Verification exists only twice: the human's live check on `localhost:3000`, or their GitHub PR review.** Every agent-run check of its own work — any build/typecheck/lint/test/dev-server command and any browser attach/load/poll — is banned; nothing overrides it; the sole lift is the human asking live, now. Diff/rebase ≠ verification. Violation = serious defect (highest-priority rule). Handoff = summarize changes + the one minimal `localhost:3000` check.
@@ -8,10 +13,9 @@ Never `$(...)` or backticks in terminal commands — hardcoded CLI permission bl
 
 Ask before heavy commands (`npm install`, whole-project lint, crawls). Never run a command and a fallback/duplicate in parallel — check once (`which`/`--version`), run one, wait.
 
-## Output and cadence
+## Chat
 
-1–3 sentence blocks, blank lines between; bullets for 3+ parallel items; headings only across 2+ topics. Never a wall of text.
-
+1–3 sentence blocks; 3+ parallel items - bullets; 2+ topics - headings. Never - a wall of text.
 Plan ≤3 lines before multi-step work; checkpoint each unit — never 3+ silent tool calls or an end-dump; confirm long steps started within ~1 min; sample one before a batch. NEVER longer chat output than 3/4 page. 
 
 ## Pointers

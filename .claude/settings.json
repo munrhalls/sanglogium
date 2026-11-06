@@ -1,18 +1,5 @@
 {
   "claudeMdExcludes": ["**/AGENTS.md"],
-  "hooks": {
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "bash .claude/hooks/feedback-gate.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Edit",
