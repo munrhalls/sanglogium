@@ -1,3 +1,4 @@
+// Which homepage section owns what data/state: docs/features/homepage-structure.md — read it before changing composition.
 import { HOME_12 } from "@/features/homepage";
 import { getHomepage, getIemProductsBySlugs, HomepageView } from "@/features/homepage/server";
 

@@ -11,8 +11,10 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import * as imports from "./check-imports.mjs";
 import * as orgPattern from "./check-org-pattern.mjs";
+import * as reviewGate from "./check-review-gate.mjs";
+import * as guard from "./check-guard.mjs";
 
-const CHECKS = [imports, orgPattern];
+const CHECKS = [imports, orgPattern, reviewGate, guard];
 const CODE = /\.(ts|tsx|mts|mjs|js|jsx)$/;
 const EXTS = [".ts", ".tsx", ".mts", ".mjs", ".js", ".jsx", ".d.ts", ".json", ".css"];
 // import/export statements, dynamic import() and require(); group 1 = `type` modifier, 2 = import clause, 3-5 = specifier
@@ -32,16 +34,32 @@ const base = all ? "" : git(["merge-base", baseArg, "HEAD"])[0];
 // changed too: a new file the executor has not staged yet must not escape the gate.
 const changed = [];
 const deleted = [];
+const untracked = all ? [] : git(["ls-files", "--others", "--exclude-standard"]);
+const newFiles = new Set(untracked);
 if (all) changed.push(...git(["ls-files"]));
 else {
   for (const line of git(["diff", "--name-status", "-M", base])) {
     const [status, from, to] = line.split("\t");
     if (status.startsWith("D")) deleted.push(from);
     else if (status.startsWith("R")) { deleted.push(from); changed.push(to); }
-    else changed.push(from);
+    else { changed.push(from); if (status === "A") newFiles.add(from); }
   }
-  changed.push(...git(["ls-files", "--others", "--exclude-standard"]));
+  changed.push(...untracked);
 }
+// Added/deleted line content per changed file, for checks that must see the edit
+// itself rather than the whole file. New/untracked files count as fully added.
+const lineDiff = new Map();
+if (!all) {
+  let cur = null;
+  for (const l of git(["diff", "-U0", base])) {
+    if (l.startsWith("diff --git ")) cur = null;
+    else if (l.startsWith("+++ b/")) { cur = l.slice(6); if (!lineDiff.has(cur)) lineDiff.set(cur, { add: [], del: [] }); }
+    else if (cur && l.startsWith("+") && !l.startsWith("+++")) lineDiff.get(cur).add.push(l.slice(1));
+    else if (cur && l.startsWith("-") && !l.startsWith("---")) lineDiff.get(cur).del.push(l.slice(1));
+  }
+}
+for (const f of changed)
+  if (!lineDiff.has(f) && exists(f) && CODE.test(f)) lineDiff.set(f, { add: read(f).split("\n"), del: [] });
 const files = changed.filter(exists);
 
 const specCache = new Map();
@@ -259,6 +277,12 @@ function moduleExports(file) {
 const ctx = {
   changed: files,
   deleted,
+  // Newly added paths this turn (status A + untracked); empty under --all.
+  newFiles: [...newFiles].filter(exists),
+  // Tracked paths matching .gitignore — must always be empty (secrets/logs/caches).
+  ignored: git(["ls-files", "-ci", "--exclude-standard"]),
+  // { add, del } line arrays of the file's diff vs base; untracked files = all lines added.
+  diffLines: (f) => lineDiff.get(f) ?? { add: [], del: [] },
   tracked: () => git(["ls-files"]).filter((f) => CODE.test(f) && exists(f)),
   // True when the file has a line starting with import "server-only" (either quote style).
   serverOnly: (file) => flags(file).serverOnly,
@@ -323,8 +347,12 @@ const ctx = {
 };
 
 const lines = CHECKS.flatMap((check) => check.run(ctx).map((v) => `[${check.name}] ${v}`));
-if (lines.length) {
-  console.log(lines.join("\n"));
+const fails = lines.filter((l) => !l.includes("] WARN: "));
+const warns = lines.filter((l) => l.includes("] WARN: "));
+if (warns.length) console.log(`WARNINGS — act on these, they do not block:\n${warns.join("\n")}`);
+if (fails.length) {
+  console.log(fails.join("\n"));
+  console.log("Fix by moving or re-pointing code, then re-run once. Never edit a check, the git hook, docs/organizational-pattern.md or the PATTERN BLOCK to pass, and never push --no-verify. If a violation cannot be removed without breaking the task's goal, stop and report it.");
   process.exit(1);
 }
 console.log(`clean · ${files.length} files · ${CHECKS.map((c) => c.name).join(", ")}`);
