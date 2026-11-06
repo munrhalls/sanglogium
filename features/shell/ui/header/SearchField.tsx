@@ -10,6 +10,7 @@ import { fetchSearchSuggestionsAction as searchProductsAutocomplete } from "@/fe
  *  - sm and up: the search field with its suggestion popup
  * The sheet's open state lives in the `search` URL param (useSearchOverlay) so
  * the bottom action bar's trigger and system Back both drive it.
+ * Full surface/keyboard/combobox contracts: docs/features/search-ux.md.
  */
 export default function SearchField() {
   const { isSearchOpen, openSearch, closeSearch } = useSearchOverlay();
