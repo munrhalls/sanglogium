@@ -3,6 +3,18 @@
 ## Cost rules - claude code only, executors exempt
 Cap: 10 calls/turn — state your count, ask to exceed. One `write` over many `edit`s; batch reads + questions; `git diff` over re-reading; Whatever a devin executor can do for you while losing 0 work effectiveness/0 certainty - do via devin executor. 
 
+## Rules
+- 0 subagents (Agent/Task tool). Do the work directly for chat output. Any implementation - only via devin executors. 
+- Build only what NOW needs; no future/invented requirements, 0 fat.
+- Truth = physics, first principles logic, math. Docs, code, artifacts, past decisions, earlier agent claims = mere recommendations/decisions. Never trust them. Trust only your own direct checks. 
+- Proof before work: write the fewest yes/no questions, each answered by a test/proof script, all-yes = objective done; complete (every failure makes a no), minimal (no duplicates); who runs them: per Hard Limits. Types only organize; work is on concretes: one real item, specific acts, specific outcome. A reason counts only if logic/physics forces it; merely chosen = delete.
+- Print paths as `file://` URIs.
+- Never edit auto-generated files.
+- Prefer quality/simplicity/robustness/maintainability over dev cost. One-off work: simplest direct path; no wrappers, control planes, policy layers, custom verifiers or automation without a concrete blocker or repeated need.
+- GitHub: `npx -y gh-axi <cmd>`, not raw `gh`. Reason: cheaper. 
+- Terminals are Herdr: `herdr tab|pane|workspace|agent`; never `wezterm cli`.
+- Never re-read or re-search what you already have; correctness is never skipped.
+
 ## Hard Limits
 
 **Verification exists only twice: the human's live check on `localhost:3000`, or their GitHub PR review.** Every agent-run check of its own work — any build/typecheck/lint/test/dev-server command and any browser attach/load/poll — is banned; nothing overrides it; the sole lift is the human asking live, now. Diff/rebase ≠ verification. Violation = serious defect (highest-priority rule). Handoff = summarize changes + the one minimal `localhost:3000` check.
@@ -27,15 +39,9 @@ Plan ≤3 lines before multi-step work; checkpoint each unit — never 3+ silent
 
 ## Process (MANDATORY)
 
-PR checkboxes -> `/architect` -> runner -> human verify, all on the PR's own branch. The owner pastes a PR's unchecked
-boxes to the architect, which writes one task file per executor into `_project/working-memory/` (gitignored, never
-committed), named `<wave><letter>-<name>.md`: tasks of the same wave run in parallel, waves run in order. From a checkout
-of the PR's branch the owner runs `node ~/work/global/workflow/run.mjs <PR> --check "node tools/check-turn.mjs --all"`
-(add `--dry` first to check the plan). The runner is plain code and its executors are not subagents. Subagents ban holds - but devin executors, run via shell, are not subagents. Executors run on free unlimited tokens: the token-minimization rules in this file do not apply to them — they may re-read and re-check freely for correctness, bounded only by wall-clock and the 45-minute task timeout. Default to executor-first: anything a free-meter executor can do — file reading, iterate/check/fix loops, script writing — goes in a task brief; the paid conversation keeps only decisions, plan, judgment and verification. For each task the runner cuts a branch from the PR branch, runs a fresh executor on
-it (executors never commit, push or branch), merges it back into the PR branch when there is no conflict and the check
-passes, pushes, and adds a `human verify` checkbox under the matching box in the PR body. The owner verifies, then merges
-the PR into `main`.
 A PR that waits for the runner is opened as a draft; the owner marks it ready after the runner's last task lands, so GitHub refuses an early merge.
+The runner is plain code and its executors are not subagents. Subagents ban holds - but devin executors, run via shell, are not subagents.
+Runner check: `--check "node tools/check-turn.mjs --all"`.
 
 ## PATTERN BLOCK
 

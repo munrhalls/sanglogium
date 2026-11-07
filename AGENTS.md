@@ -7,9 +7,8 @@ Every agent working in this repo MUST follow these rules. They exist so multiple
 PR checkboxes -> `/architect` -> runner -> human verify, all on the PR's own branch. The owner pastes a PR's unchecked
 boxes to the architect, which writes one task file per executor into `_project/working-memory/` (gitignored, never
 committed), named `<wave><letter>-<name>.md`: tasks of the same wave run in parallel, waves run in order. From a checkout
-of the PR's branch the owner or an agent working the PR runs `node ~/work/global/workflow/run.mjs <PR> --check "node tools/check-turn.mjs --all"`
-(add `--dry` first to check the plan). An agent runs it itself, `--dry` first, then the real run, in the background (a task can
-take 45 minutes). The runner is plain code and its executors are not subagents, so the subagent bans do not apply to it. For each task the runner cuts a branch from the PR branch, runs a fresh executor on
+of the PR's branch the owner runs `node ~/work/global/workflow/run.mjs <PR> --check "node tools/check-turn.mjs --all"`
+(add `--dry` first to check the plan). The runner is plain code and its executors are not subagents. Subagents ban holds - but devin executors, run via shell, are not subagents. For each task the runner cuts a branch from the PR branch, runs a fresh executor on
 it (executors never commit, push or branch), merges it back into the PR branch when there is no conflict and the check
 passes, pushes, and adds a `human verify` checkbox under the matching box in the PR body. The owner verifies, then merges
 the PR into `main`.
