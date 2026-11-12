@@ -52,7 +52,7 @@ export default async function HeroView({ heroData }: HeroProps) {
 
   const desktopPosition = getPosition(heroData.backgroundImage);
   const mobilePosition = getPosition(mobileBackgroundImage);
-  const ctaLink = heroData.ctaLink || "/products";
+  const ctaLink = heroData.ctaLink || "/products/headphones";
 
   return (
     <section
