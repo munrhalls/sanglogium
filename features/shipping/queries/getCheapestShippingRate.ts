@@ -134,32 +134,6 @@ export async function getCheapestShippingRate(
       toZip: '02-001', // Warsaw - Polish domestic shipping uses flat rates
       packages: packages,
     });
-  } else if (countryCode === 'GB') {
-    // TODO: GB API integration (Task 6)
-    const mockShippingOptions: ShippingOption[] = [
-      {
-        provider: 'Mock GB Carrier',
-        servicelevel: { name: 'Standard' },
-        rateId: 'gb_mock_1',
-        amount: 20.00,
-        currency: 'GBP',
-        estimatedDays: 3,
-      },
-    ];
-    shippingOptions = mockShippingOptions;
-  } else if (countryCode === 'DE') {
-    // TODO: DE API integration (Task 8)
-    const mockShippingOptions: ShippingOption[] = [
-      {
-        provider: 'Mock DE Carrier',
-        servicelevel: { name: 'Standard' },
-        rateId: 'de_mock_1',
-        amount: 18.00,
-        currency: 'EUR',
-        estimatedDays: 2,
-      },
-    ];
-    shippingOptions = mockShippingOptions;
   }
 
   // Select cheapest rate
