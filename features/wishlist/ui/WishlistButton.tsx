@@ -11,6 +11,7 @@ interface WishlistButtonProps {
   productId: string;
   initiallyInWishlist?: boolean;
   className?: string;
+  onChange?: (next: boolean) => void;
   /**
    * "default" = the PDP appearance (filled chip, border). "quiet" = a chrome-less
    * corner mark for listing cards: plain heart, no fill/border, but a >= 44px
@@ -37,6 +38,7 @@ export function WishlistButton({
   productId,
   initiallyInWishlist = false,
   className = "",
+  onChange,
   variant = "default",
 }: WishlistButtonProps) {
   const isSignedIn = useIsSignedIn();
@@ -59,6 +61,7 @@ export function WishlistButton({
       const result = next ? await addToWishlistAction(productId) : await removeFromWishlistAction(productId);
       if (result && "success" in result && result.success) {
         setInWishlist(next);
+        onChange?.(next);
       }
     });
   }
