@@ -16,6 +16,26 @@ export default async function middleware(request: NextRequest) {
     }
   }
 
+  // The faceted route is internal: a direct request goes to the public URL, query kept.
+  if (pathname === "/products-faceted" || pathname.startsWith("/products-faceted/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace("/products-faceted", "/products");
+    return NextResponse.redirect(url, 308);
+  }
+
+  // Filtered, sorted or paged category listings render per request: serve them from the dynamic route.
+  // The URL stays /products/<path>. Next's internal _rsc parameter alone does not count as a query.
+  if (
+    pathname.startsWith("/products/") &&
+    Array.from(request.nextUrl.searchParams.keys()).some((key) => key !== "_rsc")
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace("/products/", "/products-faceted/");
+    const rewritten = NextResponse.rewrite(url);
+    rewritten.headers.set("x-show-modal", "0");
+    return rewritten;
+  }
+
   const isAccountRoute = pathname.endsWith("/account");
   response.headers.set("x-show-modal", isAccountRoute ? "1" : "0");
   return response;

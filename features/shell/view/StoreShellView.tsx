@@ -13,10 +13,9 @@ import type { ComponentProps, ReactNode } from "react";
 interface StoreShellProps {
   children: ReactNode;
   catalogueDataRaw: ComponentProps<typeof CatalogueNavbarView>["catalogueDataRaw"];
-  isAuthenticated: boolean;
 }
 
-export default function StoreShellView({ children, catalogueDataRaw, isAuthenticated }: StoreShellProps) {
+export default function StoreShellView({ children, catalogueDataRaw }: StoreShellProps) {
   return (
     <NuqsAdapter>
       <div
@@ -27,7 +26,7 @@ export default function StoreShellView({ children, catalogueDataRaw, isAuthentic
           "shadow-[0_0_40px_rgba(246,227,213,0.015)]"
         )}
       >
-        <HeaderView isAuthenticated={isAuthenticated} />
+        <HeaderView />
         <CatalogueNavbarView catalogueDataRaw={catalogueDataRaw} />
         <main
           className={cn(
@@ -44,7 +43,7 @@ export default function StoreShellView({ children, catalogueDataRaw, isAuthentic
 
         <Suspense fallback={null}>
           <DrawersManager catalogueDataRaw={catalogueDataRaw} />
-          <ActionBar isAuthenticated={isAuthenticated} />
+          <ActionBar />
           <WebVitals />
           <SpeedInsights />
         </Suspense>

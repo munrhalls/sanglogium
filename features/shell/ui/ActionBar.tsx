@@ -7,14 +7,10 @@ import { useDrawer } from "@/features/shell/state/useDrawer";
 import { useSearchOverlay } from "@/features/product-search";
 import { cn } from "@/platform/utils/tailwind";
 import { useBasketStore, selectTotalItemsCount, selectHasHydrated } from "@/features/basket";
+import { useIsSignedIn } from "@/features/auth";
 
-
-
-interface ActionButtonsProps {
-  isAuthenticated: boolean;
-}
-
-function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
+function ActionButtons() {
+  const isAuthenticated = useIsSignedIn();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
   const { isSearchOpen, openSearch, closeSearch } = useSearchOverlay();
   const basketCount = useBasketStore(selectTotalItemsCount);
@@ -111,7 +107,7 @@ function ActionButtons({ isAuthenticated }: ActionButtonsProps) {
   );
 }
 
-export default function ActionBar({ isAuthenticated }: ActionButtonsProps) {
+export default function ActionBar() {
   return (
     <div
       className={cn(
@@ -120,7 +116,7 @@ export default function ActionBar({ isAuthenticated }: ActionButtonsProps) {
         "lg-touch:hidden lg-desktop:hidden"
       )}
     >
-      <ActionButtons isAuthenticated={isAuthenticated} />
+      <ActionButtons />
     </div>
   );
 }

@@ -9,6 +9,7 @@ const catalogueIndex: CatalogueIndex = catalogueIndexAdapter;
 export const resolveSlugToId = catalogueIndex.resolveSlugToId;
 export const unrollDescendantKeys = catalogueIndex.unrollDescendantKeys;
 export const getAllLeafKeys = catalogueIndex.getAllLeafKeys;
+export const getAllCategoryPaths = catalogueIndex.getAllCategoryPaths;
 export const getCatalogueForNavigation = catalogueIndex.getCatalogueForNavigation;
 export const getCategoryLookup = catalogueIndex.getCategoryLookup;
 export const getCategoryMetadata = catalogueIndex.getCategoryMetadata;

@@ -34,6 +34,11 @@ Sanity returns products with matching catalogueLocationKeys
 Render ProductGrid with products
 ```
 
+- A request without a query string, or with only Next's internal `_rsc` parameter, is served by the pre-rendered page `app/(store)/products/[...slug]/page.tsx`. `generateStaticParams` builds one path per catalogue node with a slug from `getAllCategoryPaths()` (`features/catalogue/server.ts`); other URLs that resolve today (leaf aliases) are rendered on first request. The page revalidates every 300 s (the literal in `export const revalidate = 300` equals `FACET_REVALIDATE_SECONDS` in `features/product-filtering/adapters/sanity/catalogueCache.ts`) and immediately on a publish, through the `catalogue-index` tag that `app/api/revalidate/route.ts` revalidates.
+- A request with any other query parameter (filters, sort, page) is rewritten by `middleware.ts` to `app/(store)/products-faceted/[...slug]/page.tsx`, which renders per request from the search params. The browser URL does not change.
+- A direct request to `/products-faceted/<path>` is redirected (308) to `/products/<path>`, query kept.
+- The static page reads no cookies, headers or session: wishlist hearts are filled in the browser by a client store loaded once from `getWishlistIdsAction`, and the signed-in state of the header comes from the client hook `useIsSignedIn`.
+
 ## Key Files
 
 ### VFS Data Layer
