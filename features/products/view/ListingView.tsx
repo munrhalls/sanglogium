@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import CategoryBreadcrumbsView from './CategoryBreadcrumbsView';
 import { ShopHeader } from '@/features/products/ui/listing/ShopHeader';
 import { NoResults } from '@/features/products/ui/listing/NoResults';
@@ -52,24 +52,34 @@ export default function ListingView({
             className="hidden w-96 shrink-0 self-start sticky top-0 pt-6 pb-6 h-[calc(100dvh-var(--desktop-header-h)-var(--desktop-catalogue-nav-h))] lg-touch:flex lg-desktop:flex flex-col"
           >
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border-secondary bg-surface-elevated">
-              <FilterPanel key={filter.scope} model={filter.model} panel={filter.panel} />
+              <Suspense fallback={null}>
+                <FilterPanel key={filter.scope} model={filter.model} panel={filter.panel} />
+              </Suspense>
             </div>
           </aside>
         )}
         <div className="min-w-0 flex-1">
           {filtersActive && (
             <div className="mb-4">
-              <ActiveFilters key={filter.scope} model={filter.model} chips={filter.chips} />
+              <Suspense fallback={null}>
+                <ActiveFilters key={filter.scope} model={filter.model} chips={filter.chips} />
+              </Suspense>
             </div>
           )}
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              {hasPanel && <FilterSheet key={filter.scope} model={filter.model} panel={filter.panel} />}
+              {hasPanel && (
+                <Suspense fallback={null}>
+                  <FilterSheet key={filter.scope} model={filter.model} panel={filter.panel} />
+                </Suspense>
+              )}
               <span className="type-caption text-text-caption" aria-live="polite">
                 {totalCount} {totalCount === 1 ? 'product' : 'products'}
               </span>
             </div>
-            <SortControl key={filter.scope} model={filter.model} sort={filter.sort} />
+            <Suspense fallback={null}>
+              <SortControl key={filter.scope} model={filter.model} sort={filter.sort} />
+            </Suspense>
           </div>
           {totalCount === 0 ? (
             <NoResults filtersActive={filtersActive} />
@@ -85,12 +95,14 @@ export default function ListingView({
                   />
                 ))}
               />
-              <Pagination
-                currentPage={effectivePage}
-                totalPages={totalPages}
-                totalCount={totalCount}
-                perPage={perPage}
-              />
+              <Suspense fallback={null}>
+                <Pagination
+                  currentPage={effectivePage}
+                  totalPages={totalPages}
+                  totalCount={totalCount}
+                  perPage={perPage}
+                />
+              </Suspense>
             </>
           )}
         </div>
