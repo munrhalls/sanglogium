@@ -5,7 +5,7 @@
 //   2. hand-written products sent through the real query engine give the written ids in the written order
 // No flakiness: live, the snapshot and every compared result come from one request, so nothing can change between them; fixtures, the products are literal and sent with the query, so no stored data is read; no clock, no randomness.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/narrowingRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/narrowingRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail -> live -> fixtures -> report

@@ -9,7 +9,7 @@
 //      (a text check of five files: it fails if a part is left out; it cannot say the page looks right, that is the hand check)
 // No flakiness: per scope the sections, the route answer and every count come from one request, so nothing can change between them (a change between the two reads is no verdict, not a verdict); the rest is literal.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/filterPanelRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/filterPanelRealData.test.ts
 // (it imports nuqs, so node_modules must be reachable)
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //

@@ -80,12 +80,12 @@ A part may group its files in one level of sub-folders named after a screen regi
 | Behaviour laws and tests (test plane: may import the runtime, nothing imports them) | `tests/<feature>/<module>.laws.ts`, `tests/<feature>/<module>.test.ts` |
 | Static asset | `public/` |
 | Living reference doc | `docs/features/<topic>.md` |
-| Architecture decision record | `docs/adr/ADR-NNN-<topic>.md` (append-only: a decision is superseded by a new ADR, never deleted) |
+| Architecture decision record | `adr/ADR-NNN-<topic>.md` (append-only: a decision is superseded by a new ADR, never deleted) |
 | Process and entry docs | `_project/`, root `README.md`, `CLAUDE.md`, `AGENTS.md`, this document (`docs/organizational-pattern.md`) |
 | Agent and automation configuration | `.github/`, `.claude/`, `.codex/`, `.devin/`, `vercel.json`, `.no-mistakes.yaml`, `skills-lock.json` (one folder per agent tool; each tool reads its own, so overlap between them is intended) |
 | Ephemeral: logs, caches, env files, task files | nowhere in git |
 
-**Root allowlist.** Files: `package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `tailwind.config.ts`, `eslint.config.mjs`, `.prettierrc`, `.prettierignore`, `sanity.config.ts`, `sanity.cli.ts`, `sentry.*.config.ts`, `instrumentation*.ts`, `middleware.ts`, `vercel.json`, `.node-version`, `.gitignore`, `.codeiumignore`, `.no-mistakes.yaml`, `.env.example`; tool-generated `schema.json`, `sanity.types.ts`, `skills-lock.json`; entry docs `README.md`, `CLAUDE.md`, `AGENTS.md`. Folders: `app/ features/ platform/ studio/ scripts/ tools/ tests/ docs/ data/ public/ _project/ .github/ .claude/ .codex/ .devin/`. Nothing else at the root.
+**Root allowlist.** Files: `package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `tailwind.config.ts`, `eslint.config.mjs`, `.prettierrc`, `.prettierignore`, `sanity.config.ts`, `sanity.cli.ts`, `sentry.*.config.ts`, `instrumentation*.ts`, `middleware.ts`, `vercel.json`, `.node-version`, `.gitignore`, `.codeiumignore`, `.no-mistakes.yaml`, `.env.example`; tool-generated `schema.json`, `sanity.types.ts`, `skills-lock.json`; entry docs `README.md`, `CLAUDE.md`, `AGENTS.md`. Folders: `app/ adr/ features/ platform/ studio/ scripts/ tools/ tests/ docs/ data/ public/ _project/ .github/ .claude/ .codex/ .devin/`. Nothing else at the root.
 
 **Vendor packages** (A6: `core/` never imports one): `stripe`, `@stripe/*`, `better-auth` and its subpaths, `@better-auth/*`, `kysely`, `kysely-libsql`, `next-sanity` and its subpaths, `@sanity/*`, `sanity`, `groq`, `resend`, `iron-session`, `@vercel/*`, `@sentry/*`, `web-vitals`. A new vendor is added here and in the gate in the same change.
 
@@ -93,7 +93,7 @@ A part may group its files in one level of sub-folders named after a screen regi
 
 - Every CMS document type has one owning slice: its `schema/` and every write path live there. Another slice writes through the owner's `server.ts`. Owners: `userProfile` is owned by profile; `order` by order; `product` and `brand` by products; `catalogueItem` by catalogue; `hero` and `homepageData` by homepage.
 - Reads are free: a slice reads the documents it needs.
-- A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in order, see `docs/adr/ADR-002-checkout-inventory-concurrency.md`).
+- A write that must touch several documents atomically stays in one adapter of the slice that owns the operation (order placement in order, see `adr/ADR-002-checkout-inventory-concurrency.md`).
 - `sanity.types.ts` is imported only by `adapters/sanity/` and `platform/`; contracts in `core/` and `view/` use the slice's own types.
 
 ## 5. Conventions (review-enforced unless section 6 names a rule)

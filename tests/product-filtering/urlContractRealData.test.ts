@@ -6,7 +6,7 @@
 //   3. hand-written writes give the written address: foreign keys kept, 'page' removed, a default writes nothing, options in the model's order
 // No flakiness: each real model is judged against itself, no clock, no randomness, nothing is compared across two reads.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/urlContractRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/urlContractRealData.test.ts
 // (it imports nuqs, so node_modules must be reachable)
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //

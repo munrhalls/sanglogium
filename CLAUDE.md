@@ -1,10 +1,11 @@
 **Top goal: minimize token cost but only where it loses zero work effectiveness.**
 
 ## Cost rules - claude code only, executors exempt
+Rule: pre-calculate budget and burn least tokens possible.
 Cap: 10 calls/turn — state your count, ask to exceed. One `write` over many `edit`s; batch reads + questions; `git diff` over re-reading; Whatever a devin executor can do for you while losing 0 work effectiveness/0 certainty - do via devin executor. 
 
 ## Rules
-- 0 subagents (Agent/Task tool). Do the work directly for chat output. Any implementation - only via devin executors. 
+- 0 subagents (Agent/Task tool). Do the work directly for chat output. Any implementation - only via devin: multi-file/parallel > architect-runner; trivial (1 file, obvious edit) > brief file + devin --prompt-file F --permission-mode dangerous --model swe-2-medium -p in a worktree, I commit+PR.
 - Build only what NOW needs; no future/invented requirements, 0 fat.
 - Truth = physics, first principles logic, math. Docs, code, artifacts, past decisions, earlier agent claims = mere recommendations/decisions. Never trust them. Trust only your own direct checks. 
 - Proof before work: write the fewest yes/no questions, each answered by a test/proof script, all-yes = objective done; complete (every failure makes a no), minimal (no duplicates); who runs them: per Hard Limits. Types only organize; work is on concretes: one real item, specific acts, specific outcome. A reason counts only if logic/physics forces it; merely chosen = delete.
@@ -45,7 +46,8 @@ Runner check: `--check "node tools/check-turn.mjs --all"`.
 
 ## PATTERN BLOCK
 
-Every task brief that creates, moves or edits code must start with the PATTERN BLOCK, copied
-verbatim from `docs/organizational-pattern.md` (the single source of truth; the block lives
-there under `## PATTERN BLOCK`). `node tools/check-turn.mjs` enforces it. Before placing or
-importing anything, read the doc's sections 2 and 3.
+Every code-editing brief starts with one line: read `docs/organizational-pattern.md` section `## PATTERN BLOCK` and sections 2-3, and obey them. Never paste the block.
+
+## Deferred work
+
+Out-of-Scope finds during PR work: not fixed in the PR, not a PR box. Add one line to `/home/jan/work/sanglogium-todo.md` under a `## <theme>` heading (reuse one; new ones go above `## Inbox`): `- [ ] <what>. Why: <reason>. Seen: PR <n>.` Never `_project/todo_later.md`. Done = `[x]`.

@@ -1,0 +1,144 @@
+<!doctype html><meta charset="utf-8"><style>
+*{box-sizing:border-box}
+body{margin:0;padding:12px 20px;font:14px/1.35 system-ui,sans-serif;color:#111;background:#fff}
+.cap{font-size:13px;color:#444;margin-bottom:14px}
+#w{position:relative}
+#e{position:absolute;left:0;top:0;pointer-events:none;z-index:1}
+.nd{position:absolute;border:2px solid var(--c,#111);background:color-mix(in srgb,var(--c,#111) 9%,#fff);padding:7px 10px;border-radius:8px;z-index:2}
+.nd .t{font-weight:700;font-size:13px}
+.nd .x{font-size:12.5px;color:#333;margin-top:3px}
+.hubn{border-width:3px;border-radius:22px;background:var(--c);padding:10px 14px}
+.hubn .t{font-size:15px;color:#fff}.hubn .x{color:#fff}
+.root{border-width:5px;border-radius:30px;padding:14px 16px;background:#e6f5ea}
+.root .t{font-size:22px}.root .x{font-size:15px;color:#111}
+.gate{background:#111;border-color:#111;border-width:4px}
+.gate .t,.gate .x{color:#fff}
+.dash{border-style:dashed}
+.n{display:inline-block;background:var(--c,#111);color:#fff;border-radius:50%;min-width:20px;height:20px;padding:0 4px;text-align:center;line-height:20px;font-size:12px;margin-right:6px}
+.hubn .n{background:#fff;color:var(--c)}
+.tg{background:#777;color:#fff;font:700 10px system-ui;letter-spacing:.06em;padding:2px 6px;border-radius:3px;margin-left:4px;white-space:nowrap;vertical-align:2px}
+.tb{background:#111}
+.lb{position:absolute;z-index:3;background:#fff;border:1.5px solid var(--c,#111);color:var(--c,#111);font:700 11px system-ui;padding:1px 7px;border-radius:10px;transform:translate(-50%,-50%);white-space:nowrap}
+</style>
+<div class="cap">Checkout, as one mind map. Centre = purpose. Colour = branch. Numbers = order. Dashed lines = links between branches. Mark ✓, ✗, or write the change.</div>
+<div id="w"><svg id="e"></svg></div>
+<script>
+const GREEN='#1a7a3a',BLUE='#1a56c4',RED='#c00',GREY='#555';
+const root={id:'root',t:`PURPOSE`,x:`A viewer believes checkout is professional because they saw real evidence, not because you said so. None finds an angle to attack.`};
+const gate={id:'gate',t:`GATE`,x:`<div>If it's not simple, clear, and easy to present in the movie, then something is wrong.</div><div style="margin-top:8px;font-weight:700">The movie must be so simple, clear, solid, and concise that it survives and satisfies even this kind of audience.</div><div style="margin-top:8px">The plain-language view and the movie are the gate. They are built later, but they are upstream dependencies: the slices are built against the gate, and before any movie building.</div>`};
+
+const SUCCESS={id:'hs',c:BLUE,n:'3',t:`WHAT DOES SUCCESS LOOK LIKE?`,lb:'success is',kids:[
+ {id:'s1',n:'1',t:`I LEARN CHECKOUT`,x:`First, I, the human, learn about the checkout system.`},
+ {id:'s2',n:'2',t:`CO-CREATE THE DESIGN`,x:`With AI, I create the design of the actual checkout system feature. The design consists of the proof case list, the real tests design first, and then the actual feature itself against those tests. It lands in the Design branch.`},
+ {id:'s3',n:'3',t:`CO-CREATE THE BUILD ORDER`,x:`With AI, I create the build order. Its core purpose: not to take on too much at once, and to determine verification chunks. Neither too granular nor too big. Each step culminates in a PR: one PR per step. It lands in the Build Order branch.`}]};
+
+const DESIGN={id:'hd',c:'#7a3ab0',n:'4',dash:true,t:`DESIGN THE CHECKOUT AS A FEATURE`,x:`Placeholder, to be deconstructed into its own mind map.`,lb:'designed here',kids:[
+ {id:'d1',n:'1',dash:true,t:`PROOF CASE LIST`,x:`What needs to be proven, case by case.`},
+ {id:'d2',n:'2',dash:true,t:`REAL TESTS, DESIGNED FIRST`,x:`How each case is proven, settled before the feature exists.`},
+ {id:'d3',n:'3',dash:true,t:`THE ACTUAL FEATURE`,x:`Itself, against those tests.`}]};
+
+const BUILD={id:'hb',c:'#c76a00',n:'5',t:`BUILD ORDER`,x:`Each step ends in one PR. Built vertically, one slice at a time, all the way to its PR. Not all tests as one big layer.`,lb:'built as',kids:[
+ {id:'b1',n:'1',t:`THE CLAIM, STATED EXACTLY <span class="tg">RED PHASE</span>`,x:`Every outcome of every path ends in one of two states. Customer: charged once, exact sum, receives exactly that order; otherwise not charged, or the money returns. Store: no corrupt data, no money lost.`,kids:[
+   {id:'e1',c:GREY,t:`SOLID MEANS`,x:`Every type of case is accounted for, including edge cases and failure modes. Each case is handled so the customer is satisfied and the store owner is satisfied. Store owner: zero money lost in any case, failure, edge case or situation; zero data corruption in orders; nothing messed up, distorted, disorderly or complicated.`}]},
+ {id:'b2',n:'2',t:`THE CASE LIST <span class="tg">RED PHASE</span>`,x:`Every path: guest and logged-in; happy, failure, edge. Each case is one input and one expected end state.`,kids:[
+   {id:'e2',c:GREY,t:`GATHER INTELLIGENCE`,x:`Gather intelligence, scan the gaps, close the gaps: how are checkout systems actually tested and proven to be, first, secure, and second, solid?`}]},
+ {id:'b3',n:'3',t:`REAL TESTS <span class="tg">RED PHASE</span>`,x:`One deterministic test per case, able to fail. A test that cannot fail proves nothing, and a skeptic would see it. Written before the actual feature.`,kids:[
+   {id:'e3',c:GREY,t:`IDEA · PROPERTY TESTING`,x:`I think we should have property testing, as opposed to case tests.`}]},
+ {id:'bf',n:'F',t:`BUILD THE ACTUAL FEATURE`,x:`Then the feature is built against those tests. Designed first, in the Design branch.`},
+ {id:'bp',n:'P',t:`ONE PR PER SLICE`,x:`Each chunk is a separate PR, verified by Opus and merged by Opus.`},
+ {id:'b4',n:'4',t:`PLAIN-LANGUAGE VIEW OF THE PROOF <span class="tg tb">GATE</span><span class="tg">BUILT LATER</span>`,x:`A non-technical viewer sees that the tests exist, are real, are simple, and that the cases pass.`}]};
+
+const MOVIE={id:'hm',c:'#0e7c86',n:'6',t:`THE MOVIE · TRUNK LINE AND ITS BRANCHES, IN THIS ORDER <span class="tg" style="background:#fff;color:#0e7c86">GATE</span>`,x:`Question slide, then fast-motion cases, then the end states. Last, because it only shows what the other branches produced.`,lb:'shown in',kids:[
+ {id:'fa',n:'A',t:`HAPPY PATH BRANCHES`,x:`Journeys that go smoothly, guest and logged-in.`},
+ {id:'fb',n:'B',t:`EDGE CASE BRANCHES`,x:`Each edge case, handled.`},
+ {id:'fc',n:'C',t:`FAILURE MODE BRANCHES`,x:`Each failure, handled: zero data corruption, zero payment issues, zero risk of paying for nothing.`},
+ {id:'hub3',t:`EVERY CASE GETS TWO BEATS`,kids:[
+   {id:'g1',n:'1',t:`TESTS SLIDE`,x:`Brief and visually clear, like this map: arrows, tests annotated.`},
+   {id:'g2',n:'2',t:`THE REAL CHECKOUT`,x:`The real cases going through, in fast motion. How each one resolves.`}]},
+ {id:'res',c:GREEN,t:`CONTROLLED, SAFE RESULT`,x:`Every branch ends here. Store: zero data corruption, zero money loss. Customer: zero money lost; paid for an order and received exactly that order, for exactly that sum.`}]};
+
+const PRE={id:'hp',c:GREY,n:'1',t:`ARCHIVE THE EXISTING CHECKOUT`,x:`Pre-requisite work is done: the existing checkout system, as a whole, is archived. First into: UNUSABLE ARCHIVED.`,lb:'before anything',kids:[
+ {id:'pb',t:`THEN · USABLE ARCHIVED`,x:`From the unusable archive, only the useful, non-functional parts: UI elements with design, responsiveness and mobile responsiveness already built and reusable, all functionality stripped from them.`}]};
+
+const WHY={id:'hw',c:GREEN,n:'2',t:`WHY`,lb:'because',kids:[
+ {id:'q1',c:BLUE,t:`Q1 · SECURE?`,x:`How do I know checkout is secure?`},
+ {id:'q2',c:BLUE,t:`Q2 · ZERO COMPLAINTS?`,x:`How do I know there will be zero payment and order complaints?`},
+ {id:'q3',c:BLUE,t:`Q3 · PAID = RECEIVED?`,x:`How do I know a paying customer always gets exactly what they paid for?`},
+ {id:'n1',t:`FORCED BY LOGIC`,x:`The movie cannot show proof that does not exist. So everything that produces proof comes first and the movie last.`},
+ {id:'n2',t:`REWORDED`,x:`&quot;Zero risk by physics&quot; cannot be proven. Provable: every listed case ends in an allowed state, and the list covers the code's real branches. The movie claims exactly that.`},
+ {id:'n3',dash:true,c:'#777',t:`CHOICES`,x:`The four audiences, the Q&amp;A format and the slide order are choices.`},
+ {id:'ca',c:BLUE,t:`AUDIENCES · FOUR`,x:`HR recruiter · software person · store owner · customer.`},
+ {id:'ch',c:RED,t:`ASSUME THE HARSHEST CONDITIONS`,x:`Each of the four is cold, harsh, critical, prejudiced, judgmental, and eager to dismiss and disqualify the movie as soon, as quickly and as easily as possible, for the most trivial reason.`}]};
+
+const CULM={id:'hc',c:'#b0307a',n:'→',t:`CULMINATES IN · THREE MASTER PROMPTS`,x:`Right off the gate, what this leads to: this mind map, once completed, culminates in three master prompts. Well-designed, well-engineered, simple, focused, all context given, handed to the most powerful model, Opus 5.5 Max. At most 3, in progressive disclosure.`,lb:'culminates in',kids:[
+ {id:'w1',t:`OPUS 5.5 MAX · WORKFLOW`,x:`Instructed to use the architect, runner, Devin executor workflow for each of the build-order chunks.`},
+ {id:'w2',t:`ITS FIRST JOB`,x:`Properly split the work up into vertical slices, in order to be built.`},
+ {id:'w3',t:`EACH SLICE`,x:`Built in the proof-and-tests-before-implementation manner.`},
+ {id:'w4',t:`EACH CHUNK`,x:`A separate PR. Each PR is verified by Opus and merged by Opus.`}]};
+
+const FLAGS={id:'hf',c:RED,n:'!',t:`FLAGS · NEED YOUR CALL`,lb:'needs your call',kids:[
+ {id:'f1',t:`OPUS MERGES`,x:`Project rule: never merge without your explicit approval. &quot;Verified and merged by Opus&quot; needs your approval wording. I did not decide it.`},
+ {id:'f2',t:`WHO SLICES`,x:`Success step 3 has you co-create the build order. Your note makes slicing Opus's first job. Who owns the slice list?`},
+ {id:'f3',t:`STILL OPEN`,x:`Property testing against &quot;one deterministic test per case&quot; (Build Order, steps 2 and 3).`},
+ {id:'f4',t:`MY READINGS`,x:`GRINDE read as Grouping, Relational, Interconnected, Non-verbal, Directional, Emphasized (one thin source). Gate is now a node with links, not a bar. Reading order is the numbers, not top to bottom. &quot;Forced by logic&quot; reworded for the new structure. Cut-off note &quot;something upstream of the&quot; read as the slicing note.`}]};
+
+const right=[SUCCESS,DESIGN,BUILD,MOVIE],left=[PRE,WHY,CULM,FLAGS];
+const wd=[340,210,300,270],GAP=12,HG=44,GX=64,RG=90,PADL=70,PADT=10;
+const W=document.getElementById('w'),svg=document.getElementById('e');
+function mk(n,d,side,cls){
+ const e=document.createElement('div');
+ e.className='nd '+(cls||'')+(n.dash?' dash':'');
+ if(n.c)e.style.setProperty('--c',n.c);
+ e.style.width=wd[d]+'px';
+ e.innerHTML='<div class="t">'+(n.n?'<span class="n">'+n.n+'</span>':'')+n.t+'</div>'+(n.x?'<div class="x">'+n.x+'</div>':'');
+ W.appendChild(e);n.el=e;n.d=d;n.side=side;n.w=wd[d];
+ for(const k of n.kids||[]){k.c=k.c||n.c;mk(k,d+1,side,'')}
+}
+for(const h of right)mk(h,1,1,'hubn');
+for(const h of left)mk(h,1,-1,'hubn');
+mk(root,0,0,'root');mk(gate,0,0,'gate');
+const all=[];const walk=n=>{all.push(n);for(const k of n.kids||[])walk(k)};[...right,...left].forEach(walk);all.push(root,gate);
+for(const n of all)n.h=n.el.offsetHeight;
+function sub(n){if(!n.kids){n.sh=n.h;return n.sh}let s=0;for(const k of n.kids)s+=sub(k);s+=GAP*(n.kids.length-1);n.ks=s;n.sh=Math.max(n.h,s);return n.sh}
+function pos(n,top){
+ if(!n.kids){n.y=top+(n.sh-n.h)/2}
+ else{let y=top+(n.sh-n.ks)/2;for(const k of n.kids){pos(k,y);y+=k.sh+GAP}
+  const a=n.kids[0],b=n.kids[n.kids.length-1];n.y=(a.y+a.h/2+b.y+b.h/2)/2-n.h/2}
+ n.cy=n.y+n.h/2}
+const tot=l=>l.reduce((s,h)=>s+sub(h),0)+HG*(l.length-1);
+const tR=tot(right),tL=tot(left),H=Math.max(tR,tL)+2*PADT;
+for(const [l,t] of [[right,tR],[left,tL]]){let y=PADT+(H-2*PADT-t)/2;for(const h of l){pos(h,y);y+=h.sh+HG}}
+const leftExt=wd[0]/2+RG+wd[1]+GX+wd[2],cx=PADL+leftExt;
+const rightExt=wd[0]/2+RG+wd[1]+GX+wd[2]+GX+wd[3];
+const TW=cx+rightExt+20;
+const XR=[0,cx+wd[0]/2+RG],XL=[0,cx-wd[0]/2-RG-wd[1]];
+XR[2]=XR[1]+wd[1]+GX;XR[3]=XR[2]+wd[2]+GX;
+XL[2]=XL[1]-GX-wd[2];
+for(const n of all){if(n.side>0)n.x=XR[n.d];else if(n.side<0)n.x=XL[n.d]}
+root.x=cx-wd[0]/2;root.y=H/2-root.h/2;root.cy=H/2;
+gate.w=300;gate.el.style.width='300px';gate.h=gate.el.offsetHeight;gate.x=cx-150;gate.y=H/2+260;gate.cy=gate.y+gate.h/2;
+for(const n of all){n.el.style.left=n.x+'px';n.el.style.top=n.y+'px'}
+const need=Math.max(H,gate.y+gate.h+20);
+W.style.width=TW+'px';W.style.height=need+'px';
+svg.setAttribute('width',TW);svg.setAttribute('height',need);
+let h='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>';
+const P=(d,c,sw,dash)=>h+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+sw+'" stroke-linejoin="round"'+(dash?' stroke-dasharray="9 6"':'')+' marker-end="url(#ar)"/>';
+const L=(x,y,t,c)=>{const e=document.createElement('div');e.className='lb';e.style.left=x+'px';e.style.top=y+'px';e.style.setProperty('--c',c);e.textContent=t;W.appendChild(e)};
+function tree(a,b,sw){
+ const r=b.side>0,x0=r?a.x+a.w:a.x,x1=r?b.x:b.x+b.w,y0=a.cy,y1=b.cy,xm=(x0+x1)/2;
+ P('M'+x0+','+y0+' C'+xm+','+y0+' '+xm+','+y1+' '+x1+','+y1,b.c,sw);
+ if(b.lb)L(xm,(y0+y1)/2,b.lb,b.c)}
+for(const hb of [...right,...left]){tree(root,hb,8);(function f(n,d){for(const k of n.kids||[]){tree(n,k,d>1?3:4.5);f(k,d+1)}})(hb,1)}
+const ortho=(pts,c,lab,li)=>{P('M'+pts.map(p=>p.join(',')).join(' L'),c,3.5,true);if(lab){const p=pts[li||1],q=pts[(li||1)+1];L((p[0]+q[0])/2,(p[1]+q[1])/2,lab,c)}};
+const byId=id=>all.find(n=>n.id===id);
+const s2=byId('s2'),s3=byId('s3'),hd=byId('hd'),hb=byId('hb'),b4=byId('b4'),hm=byId('hm'),f1=byId('f1'),f2=byId('f2'),w2=byId('w2'),w4=byId('w4');
+ortho([[s2.x,s2.cy],[s2.x-16,s2.cy],[s2.x-16,hd.y+hd.h-14],[hd.x+hd.w+2,hd.y+hd.h-14]],BLUE,'lands in',1);
+ortho([[s3.x,s3.cy],[s3.x-34,s3.cy],[s3.x-34,hb.y+hb.h-14],[hb.x+hb.w+2,hb.y+hb.h-14]],BLUE,'lands in',1);
+P('M'+cx+','+(root.y+root.h)+' V'+(gate.y-2),'#111',6);L(cx,(root.y+root.h+gate.y)/2,'feeds','#111');
+ortho([[gate.x+gate.w,gate.cy],[cx+215,gate.cy],[cx+215,b4.cy],[b4.x-2,b4.cy]],'#111','built against',1);
+ortho([[gate.x+gate.w,gate.cy+18],[cx+240,gate.cy+18],[cx+240,hm.y+hm.h-14],[hm.x-2,hm.y+hm.h-14]],'#111','built against',1);
+ortho([[f1.x,f1.cy],[f1.x-18,f1.cy],[f1.x-18,w4.cy],[w4.x-2,w4.cy]],RED,'conflict',1);
+ortho([[f2.x,f2.cy],[f2.x-38,f2.cy],[f2.x-38,w2.cy],[w2.x-2,w2.cy]],RED,'who owns it?',1);
+svg.innerHTML=h;
+document.body.setAttribute('data-w',TW+40);document.body.setAttribute('data-h',need+90);
+</script>

@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><style>
+*{box-sizing:border-box}
+body{margin:0;width:1150px;padding:12px 20px;font:14px/1.35 system-ui,sans-serif;color:#111;background:#fff}
+#w{position:relative}#e{position:absolute;left:0;top:0;pointer-events:none;z-index:5}
+.blk{position:relative;border:2px solid #9a9a9a;border-radius:10px;background:#f5f5f5;padding:38px 14px 34px;margin-top:100px}.blk:first-of-type{margin-top:8px}
+.tag{position:absolute;top:-2px;left:-2px;background:#111;color:#fff;font:700 12px system-ui;letter-spacing:.08em;padding:6px 14px;border-radius:10px 0 10px 0}
+.box{border:2px solid #111;padding:8px 10px;background:#fff7e0}.b{background:#e8f0fe;border-color:#1a56c4}.g{background:#e6f5ea;border-color:#1a7a3a}.r{background:#fdeaea;border-color:#c00}.d{border-style:dashed;border-color:#777}
+.t{font-weight:700}.x{font-size:13px;color:#333;margin-top:3px}
+.row{display:flex;gap:24px;justify-content:center}.row .box{flex:1}
+</style>
+<div id="w"><svg id="e"></svg>
+<div class="blk"><div class="tag">BLOCK 1 · WHY</div>
+<div class="row">
+<div class="box g d" id="a"><div class="t">PURPOSE</div><div class="x">Empty. What is checkout for?</div></div>
+<div class="box g d" id="a2"><div class="t">WHO JUDGES</div><div class="x">Empty. Who decides it works?</div></div>
+<div class="box g d" id="a3"><div class="t">HARSHEST CONDITIONS</div><div class="x">Empty. Worst case it must survive?</div></div>
+</div></div>
+<div class="blk"><div class="tag">BLOCK 2 · CLAIM</div>
+<div class="row"><div class="box b d" id="b"><div class="t">1 · FIRST STATEMENT</div><div class="x">Empty. A yes/no statement of success.</div></div></div></div>
+</div>
+<script>
+const W=document.getElementById('w').getBoundingClientRect(),svg=document.getElementById('e');
+svg.setAttribute('width',W.width);svg.setAttribute('height',W.height);
+const R=id=>{const r=document.getElementById(id).getBoundingClientRect();return{l:r.left-W.left,r:r.right-W.left,t:r.top-W.top,b:r.bottom-W.top,cx:(r.left+r.right)/2-W.left,cy:(r.top+r.bottom)/2-W.top}};
+let h='<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#111"/></marker></defs>';
+const P=(d,dash)=>h+='<path d="'+d+'" fill="none" stroke="#111" stroke-width="2.5"'+(dash?' stroke-dasharray="6 5"':'')+' marker-end="url(#ar)"/>';
+const down=(a,b,dash)=>{a=R(a);b=R(b);const y=(a.b+b.t)/2;P('M'+a.cx+','+a.b+' C'+a.cx+','+y+' '+b.cx+','+y+' '+b.cx+','+b.t,dash)};
+down('a2','b');
+svg.innerHTML=h;
+</script>

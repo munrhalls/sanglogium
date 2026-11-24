@@ -9,7 +9,7 @@
 //   6. GONE: none of the exports of the files wave 4 deleted remains in the tree (git grep)
 // No flakiness: questions 2, 4, 5, 6 are literal; 1 and 3 read live data and a failed read is no verdict, not a no.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --conditions=react-server --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/searchDropIn.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --conditions=react-server --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/searchDropIn.test.ts
 // (it imports nuqs and the server doors, so node_modules must be reachable and --conditions=react-server is needed; `server-only`, `next-sanity` and the filter client door are swapped in the file)
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //

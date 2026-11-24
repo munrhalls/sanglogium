@@ -69,30 +69,18 @@ logs/
 # Repomix output
 repomix-output.xml
 
-# Temporary test files
-cookies.txt
-payment-response.html
-temp-stripe-test.mjs
-
 # Temporary artifacts
-cookie_jar.txt
-oss_*.txt
-oss_*.json
-scripts/apply-migration.mjs
 scripts/experiment-*.mjs
 scripts/temp-*.mjs
 .windsurf/
-_temp_*.json
-_temp_*.txt
-temp_notes.txt
 *.db-wal
-
-# Temporary spotlight images
-temp-spotlight-images/
 
 build.log
 test-output.txt
-git_stats.txt
+
+# Sanity codegen output (npm run typegen)
+sanity.types.ts
+schema.json
 
 # Photography audit output
 scripts/output/

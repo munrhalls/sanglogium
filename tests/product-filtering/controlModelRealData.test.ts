@@ -5,7 +5,7 @@
 //   2. hand-written cases give the written model: all three kinds, a control mixing types, a control with no value, text that looks like a number or like true/false, a single-value range, a negative number, and the empty answer
 // No flakiness: each real answer is judged against itself: the oracle is derived from the same answer object the function received, so nothing can change between the read and the verdict; no clock, no randomness.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/controlModelRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/controlModelRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail -> live -> fixtures -> report

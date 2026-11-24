@@ -70,8 +70,8 @@ function zone(p) {
     case "data": return Z("runtime", { home: "leaf" });
     case "scripts": case "tools": case "tests": return Z("tooling");
     case "docs":
-      return p === "docs/organizational-pattern.md" || a === "features" || a === "adr" ? Z("other") : null;
-    case "_project": case ".github": case ".claude": case ".codex": case ".devin": case "public": return Z("other");
+      return p === "docs/organizational-pattern.md" || a === "features" ? Z("other") : null;
+    case "_project": case ".github": case ".claude": case ".codex": case ".devin": case "public": case "adr": return Z("other");
     default: return null;
   }
 }

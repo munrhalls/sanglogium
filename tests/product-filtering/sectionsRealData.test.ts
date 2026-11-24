@@ -7,7 +7,7 @@
 // No flakiness: live, the stored rows and the route come from one request per scope, so nothing can change between them; fixtures, every input is literal and every section is written by hand; no clock, no randomness.
 // Not checked, because nothing is wrong when it holds: a heading whose control is not picked (it is ignored); two rows on one control (the first counts). How the Studio form looks is a hand check.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/sectionsRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/sectionsRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail -> live -> fixtures -> report

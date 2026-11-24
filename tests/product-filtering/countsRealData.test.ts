@@ -5,7 +5,7 @@
 //   2. hand-written products give the written counts
 // No flakiness: live, the snapshot and every compared count come from one request, so nothing can change between them; fixtures, the products are literal and the counts are written by hand; no clock, no randomness.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/countsRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/countsRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail -> live -> fixtures -> report

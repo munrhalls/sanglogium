@@ -19,7 +19,7 @@
 // No flakiness: one snapshot, no clock, no randomness in a verdict. A read that fails is no verdict.
 // The proof can say no: before judging, questions 1-9 are each run once on fixtures with a planted break (a proof that cannot say no exits 2).
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/picklistLabelsRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/picklistLabelsRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail -> read -> derive -> judge + fixtures -> report

@@ -2,7 +2,6 @@ import "server-only";
 import { sanityFetch } from '@/platform/sanity/client';
 import { groq } from 'next-sanity';
 import { cache } from 'react';
-import type { Product as SanityProduct } from '@/sanity.types';
 import { CATALOGUE_FETCH_CACHE } from '@/features/product-filtering/server';
 import type { Product } from '@/features/products/core/types/productTypes';
 import type {

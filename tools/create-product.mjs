@@ -4,7 +4,7 @@
 // Answer: yes, and they are written, in one transaction. Or a refusal that lists every finding, and nothing is written.
 //
 // Create only. An input names no id, type or revision, so it cannot address an existing product: no product is read for change,
-// replaced or patched, and no existing document's revision moves. That keeps checkout untouched (docs/adr/ADR-003-product-write-freeze.md).
+// replaced or patched, and no existing document's revision moves. That keeps checkout untouched (adr/ADR-003-product-write-freeze.md).
 // Editing existing products is closed until checkout provides its marker.
 //
 // Concurrent writes: rules 3 and 4 compare products with each other, so two writes can each pass alone and break a rule together.

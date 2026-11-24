@@ -10,7 +10,7 @@
 // Not read: overviewFields (out of scope) and filterAttributes.sourcing (a quote is exact, and sourcing is assumed true).
 // Not judged: two words for one fact, typos, units, punctuation. Each looks like two real values; only a person's list could tell.
 //
-// Human-run, reads only: node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-products.mjs
+// Human-run, reads only: node --env-file=/home/jan/work/projects/sanglogium/.env.local tests/products/check-products.mjs
 // Exit 0 PASS. Exit 1 NO, every broken place is printed. Exit 2 no verdict: it could not read, or the self-proof failed.
 //
 // FLOW  selfProof -> read -> collect -> judge -> report

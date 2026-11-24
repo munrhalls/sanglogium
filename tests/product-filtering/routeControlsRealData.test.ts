@@ -5,7 +5,7 @@
 //   2. the happy path, a control with no value, absent rows, a sort field no route product holds, a sort pick that is also an always-on sort, the always-on sorts that are not always-on controls and a failing request give the written answer
 // No flakiness: one atomic request holds both the snapshot and the shop's request; no clock, no randomness in a verdict; a read that fails is no verdict.
 //
-// Human-run: node --env-file=/home/jan/work/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/routeControlsRealData.test.ts
+// Human-run: node --env-file=/home/jan/work/projects/sanglogium/.env.local --experimental-strip-types --import ./tools/alias-loader.mjs tests/product-filtering/routeControlsRealData.test.ts
 // Exit 0 PASS. Exit 1 NO, every finding is printed. Exit 2 no verdict: it could not read, or the proof itself is broken.
 //
 // FLOW  proofCanFail -> live -> fixtures -> report

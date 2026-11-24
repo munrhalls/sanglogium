@@ -11,7 +11,7 @@
 // Not read, chosen: overviewFields, filterAttributes.sourcing, system keys, ids, links, sku and slug (rule 4 reads them), rich-text mechanics.
 //
 // Human-run, reads only. From the repo root:
-//   node --env-file=/home/jan/work/sanglogium/.env.local tests/products/check-integrity.mjs
+//   node --env-file=/home/jan/work/projects/sanglogium/.env.local tests/products/check-integrity.mjs
 // Exit 0 = PASS. Exit 1 = NO, each finding is printed. Exit 2 = no verdict: it could not read, or the self-proof failed.
 //
 // FLOW
