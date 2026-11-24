@@ -1,7 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { getListingPage, getListingMetadata, ListingView } from '@/features/products/server';
-import { getWishlistProductIds, WishlistToggleView } from '@/features/wishlist/server';
+import { WishlistToggle } from '@/features/wishlist';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>;
@@ -11,16 +11,13 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
   const query = await searchParams;
-  const wishlist = getWishlistProductIds();
   const result = await getListingPage({ slug, query });
   if (result.notFound) notFound();
 
   return (
     <ListingView
       {...result}
-      cardAction={(productId, className) => (
-        <WishlistToggleView productId={productId} wishlistPromise={wishlist} variant="quiet" className={className} />
-      )}
+      cardAction={(productId, className) => <WishlistToggle productId={productId} variant="quiet" className={className} />}
     />
   );
 }

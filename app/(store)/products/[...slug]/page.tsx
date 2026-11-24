@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getListingPage, getListingMetadata, ListingView } from '@/features/products/server';
 import { getAllCategoryPaths } from '@/features/catalogue/server';
+import { WishlistToggle } from '@/features/wishlist';
 
 // Next reads this as a literal. It must equal FACET_REVALIDATE_SECONDS in
 // features/product-filtering/adapters/sanity/catalogueCache.ts. dynamicParams stays at its default (true),
@@ -22,7 +23,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const result = await getListingPage({ slug, query: {} });
   if (result.notFound) notFound();
 
-  return <ListingView {...result} />;
+  return <ListingView {...result} cardAction={(productId, className) => <WishlistToggle productId={productId} variant="quiet" className={className} />} />;
 }
 
 // Generate metadata for SEO
