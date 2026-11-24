@@ -66,6 +66,20 @@ export const getAllLeafKeys = (): string[] => {
     .map(([id]) => id);
 };
 
+export const getAllCategoryPaths = (): string[][] => {
+  const paths: string[][] = [];
+  const walk = (nodes: CatalogueTree, ancestors: string[]) => {
+    for (const node of nodes) {
+      const slug = node.slug?.current;
+      const here = slug ? [...ancestors, slug] : ancestors;
+      if (slug) paths.push(here);
+      walk(node.children ?? [], here);
+    }
+  };
+  walk(getCatalogue(), []);
+  return paths;
+};
+
 export const getCategoryLookup = (): CategoryLookup => {
   const data = catalogueIndex as unknown as CatalogueIndexData;
   const parentById: Record<string, string> = {};

@@ -5,6 +5,7 @@ export interface CatalogueIndex {
   resolveSlugToId(slug: string): string | undefined;
   unrollDescendantKeys(nodeId: string): string[];
   getAllLeafKeys(): string[];
+  getAllCategoryPaths(): string[][];
   getCatalogueForNavigation(): NavigationItem[];
   getCategoryLookup(): CategoryLookup;
   getCategoryMetadata(key: string): Promise<CategoryMetadata | null>;
