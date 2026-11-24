@@ -6,7 +6,7 @@ import SearchField from "@/features/shell/ui/header/SearchField";
 import NavbarActions from "@/features/shell/ui/header/NavbarActions";
 import { Suspense } from "react";
 
-export default function HeaderView({ isAuthenticated }: { isAuthenticated: boolean }) {
+export default function HeaderView() {
   return (
     <header
       className={cn(
@@ -22,7 +22,7 @@ export default function HeaderView({ isAuthenticated }: { isAuthenticated: boole
         <SearchField />
       </Suspense>
       {/* Cart count: hardcode 0 for now — cart state is managed client-side via Zustand */}
-      <NavbarActions isAuthenticated={isAuthenticated} cartCount={0} />
+      <NavbarActions cartCount={0} />
     </header>
   );
 }

@@ -39,5 +39,4 @@ export const updateUserName = createUserNameUpdater(auth);
 
 const { getSession, requireSession, verifySession } = createSessionReaders(auth, profiles);
 export { getSession, requireSession, verifySession };
-export { hasSessionCookie } from './adapters/better-auth/serverApi';
 export { isGoogleAuthEnabled } from './adapters/better-auth/providers';
