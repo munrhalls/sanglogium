@@ -9,14 +9,15 @@ import {
 import { cn } from "@/platform/utils/tailwind";
 import { NavActionItem } from "@/platform/design/ui/NavActionItem";
 import { BasketButton } from "@/features/basket";
-import { signOut } from "@/features/auth";
+import { signOut, useIsSignedIn } from "@/features/auth";
 
 interface NavbarActionsProps {
-  isAuthenticated: boolean;
   cartCount?: number; // Kept for compatibility but prioritized store
 }
 
-const NavbarActions = ({ isAuthenticated }: NavbarActionsProps) => {
+const NavbarActions = ({ cartCount }: NavbarActionsProps) => {
+  const isAuthenticated = useIsSignedIn();
+
   async function handleSignOut() {
     await signOut();
   }
