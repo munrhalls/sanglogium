@@ -7,6 +7,7 @@ import ActionBar from "@/features/shell/ui/ActionBar";
 import Footer from "@/features/shell/ui/Footer";
 import { WebVitals } from "@/platform/analytics/WebVitals";
 import { SpeedInsights } from "@/platform/analytics/SpeedInsights";
+import { AuthHintSync } from "@/features/auth";
 import { Suspense } from "react";
 import type { ComponentProps, ReactNode } from "react";
 
@@ -44,6 +45,7 @@ export default function StoreShellView({ children, catalogueDataRaw }: StoreShel
         <Suspense fallback={null}>
           <DrawersManager catalogueDataRaw={catalogueDataRaw} />
           <ActionBar />
+          <AuthHintSync />
           <WebVitals />
           <SpeedInsights />
         </Suspense>
