@@ -9,15 +9,13 @@ import {
 import { cn } from "@/platform/utils/tailwind";
 import { NavActionItem } from "@/platform/design/ui/NavActionItem";
 import { BasketButton } from "@/features/basket";
-import { signOut, useIsSignedIn } from "@/features/auth";
+import { signOut } from "@/features/auth";
 
 interface NavbarActionsProps {
   cartCount?: number; // Kept for compatibility but prioritized store
 }
 
-const NavbarActions = ({ cartCount }: NavbarActionsProps) => {
-  const isAuthenticated = useIsSignedIn();
-
+const NavbarActions = ({}: NavbarActionsProps) => {
   async function handleSignOut() {
     await signOut();
   }
@@ -28,8 +26,7 @@ const NavbarActions = ({ cartCount }: NavbarActionsProps) => {
       <BasketButton />
 
       {/* Account / Auth Group */}
-      {isAuthenticated ? (
-        <div className={cn("group relative")}>
+      <div className={cn("group relative")} data-auth-only="in">
           <NavActionItem
             icon={<UserIcon size={24} />}
             label="Account"
@@ -60,20 +57,18 @@ const NavbarActions = ({ cartCount }: NavbarActionsProps) => {
             </div>
           </div>
         </div>
-      ) : (
-        <>
-          <NavActionItem
-            icon={<SignInIcon size={24} />}
-            label="Sign In"
-            href="/sign-in"
-          />
-          <NavActionItem
-            icon={<UserPlus size={24} />}
-            label="Sign Up"
-            href="/sign-up"
-          />
-        </>
-      )}
+      <div className="contents" data-auth-only="out">
+        <NavActionItem
+          icon={<SignInIcon size={24} />}
+          label="Sign In"
+          href="/sign-in"
+        />
+        <NavActionItem
+          icon={<UserPlus size={24} />}
+          label="Sign Up"
+          href="/sign-up"
+        />
+      </div>
     </div>
   );
 };
