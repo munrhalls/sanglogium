@@ -7,10 +7,8 @@ import { useDrawer } from "@/features/shell/state/useDrawer";
 import { useSearchOverlay } from "@/features/product-search";
 import { cn } from "@/platform/utils/tailwind";
 import { useBasketStore, selectTotalItemsCount, selectHasHydrated } from "@/features/basket";
-import { useIsSignedIn } from "@/features/auth";
 
 function ActionButtons() {
-  const isAuthenticated = useIsSignedIn();
   const { isOpen, openDrawer, closeDrawer } = useDrawer();
   const { isSearchOpen, openSearch, closeSearch } = useSearchOverlay();
   const basketCount = useBasketStore(selectTotalItemsCount);
@@ -64,20 +62,15 @@ function ActionButtons() {
         )}
       </button>
 
-      {isAuthenticated ? (
-        <Link href="/account" className={item} style={iso} aria-label="Account">
-          <UserIcon className="h-5 w-5" aria-hidden="true" />
-        </Link>
-      ) : (
-        <>
-          <Link href="/sign-in" className={item} style={iso} aria-label="Sign in">
-            <SignInIcon className="h-5 w-5" aria-hidden="true" />
-          </Link>
-          <Link href="/sign-up" className={item} style={iso} aria-label="Sign up">
-            <UserPlus className="h-5 w-5" aria-hidden="true" />
-          </Link>
-        </>
-      )}
+      <Link href="/account" className={item} style={iso} data-auth-only="in" aria-label="Account">
+        <UserIcon className="h-5 w-5" aria-hidden="true" />
+      </Link>
+      <Link href="/sign-in" className={item} style={iso} data-auth-only="out" aria-label="Sign in">
+        <SignInIcon className="h-5 w-5" aria-hidden="true" />
+      </Link>
+      <Link href="/sign-up" className={item} style={iso} data-auth-only="out" aria-label="Sign up">
+        <UserPlus className="h-5 w-5" aria-hidden="true" />
+      </Link>
 
       <Link
         href="/basket"
