@@ -58,11 +58,29 @@ function textOf(items) {
   return items.map((item) => `${item.productId}:${item.quantity}`).join(',')
 }
 
+function basketDoor(compact) {
+  if (compact.includes('@/features/basket/state/basketStore') || compact.includes('@/features/basket/server')) {
+    return 'the basket is reached past its door'
+  }
+  if (!compact.includes('from"@/features/basket"') && !compact.includes("from'@/features/basket'")) {
+    return 'the basket is not the customer basket'
+  }
+  return null
+}
+
 function ruler() {
   if (textOf(GOODS) !== 'a:2,b:1') return 'the written goods are not two of a and one of b'
   if (textOf([]) !== '') return 'an empty basket was not empty'
   if (textOf(GOODS) === '') return 'a basket with goods was called empty'
   if (KEPT.length !== 6) return 'a payment result is missing'
+  const door = 'import{useBasketStore}from"@/features/basket"'
+  const single = "import{useBasketStore}from'@/features/basket'"
+  const inside = 'import{useBasketStore}from"@/features/basket/state/basketStore"'
+  const server = 'import{useBasketStore}from"@/features/basket/server"'
+  if (basketDoor(door) !== null || basketDoor(single) !== null) return 'the customer door was refused'
+  if (basketDoor(inside) !== 'the basket is reached past its door') return 'the inside of the basket was called the door'
+  if (basketDoor(server) !== 'the basket is reached past its door') return 'the server door was called the customer basket'
+  if (basketDoor('useBasketStore.getState().clear()') !== 'the basket is not the customer basket') return 'a clear without the basket was accepted'
   return null
 }
 
@@ -132,7 +150,8 @@ function groups(useBasketStore) {
           const compact = clearer.replace(/\s+/g, '')
           if (!compact.includes('"useclient"') && !compact.includes("'useclient'")) return 'the basket is emptied on the server'
           if (!compact.includes('useEffect(()=>{useBasketStore.getState().clear();},[])')) return 'the basket is not emptied in the browser'
-          if (!compact.includes('@/features/basket/state/basketStore')) return 'the basket is not the customer basket'
+          const door = basketDoor(compact)
+          if (door) return door
           return null
         }],
         ['A payment that did not succeed leaves the basket', () => {
