@@ -6,6 +6,7 @@ import ConfirmedOrderDetailsView from './ConfirmedOrderDetailsView'
 import OrderDetailsSkeleton from '@/features/checkout/ui/OrderDetailsSkeleton'
 import OrderNextSteps from '@/features/checkout/ui/OrderNextSteps'
 import { SuccessAnalytics } from '@/features/checkout/ui/SuccessAnalytics'
+import { ClearBoughtBasket } from '@/features/checkout/ui/ClearBoughtBasket'
 import { getPaymentMethodHint } from '@/features/checkout/core/rules/paymentMethodHint'
 import { formatPrice } from '@/platform/utils/price'
 
@@ -23,6 +24,7 @@ export default function PaymentConfirmedView({ paymentIntentId, amount, paymentM
   return (
     <section aria-label="Order confirmation" className="flex flex-col gap-6">
       <SuccessAnalytics transactionId={paymentIntentId} value={amount} />
+      <ClearBoughtBasket />
       <div className="card-base">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
