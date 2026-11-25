@@ -98,6 +98,14 @@ export async function getShippingPageData(ports: {
     }
   }
   session.shippingOffers = shippingOffers;
+  const stillOffered = shippingOffers.some((offer) => offer.rateId === session.shippingCode && offer.priceInCents === session.shippingCost);
+  if (!stillOffered) {
+    session.shippingCode = undefined;
+    session.shippingCost = undefined;
+    session.shippingMethodName = undefined;
+    session.shippingCarrier = undefined;
+    session.shippingEstimatedDays = undefined;
+  }
   await session.save();
 
   return { kind: "ok", shippingOptions, traceId };
