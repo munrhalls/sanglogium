@@ -7,7 +7,8 @@
 // choice is cleared.
 //
 // The shipping price. A price is stored only when it is a positive whole
-// number of grosze. Anything else leaves the old price where it was.
+// number of grosze, and only when that number is one of the rates just offered.
+// The screen shows the carrier amount in zloty and stores Math.round(amount × 100).
 //
 // A PASS line ended as its sentence says. A NO line did not, and the text after
 // NO is what actually happened. A NO is a true answer. Do not edit the sentence
@@ -22,6 +23,7 @@
 
 import { saveAddressAction } from '@/features/checkout/actions/saveAddressAction'
 import { saveShippingAction } from '@/features/checkout/actions/saveShippingAction'
+import { getShippingPageData } from '@/features/checkout/queries/getShippingPageData'
 import { beginSession, checkCount, saveCount, savedSnapshot, scriptCheck } from './save-stand.mjs'
 
 const TYPED = {
@@ -88,12 +90,15 @@ function expectGo(result, url) {
   return seen(result)
 }
 
+const OFFERED = [{ rateId: 'inpost', priceInCents: 1550 }]
+
 function shippingCleared(row) {
   return row.shippingCode === undefined
     && row.shippingCost === undefined
     && row.shippingMethodName === undefined
     && row.shippingCarrier === undefined
     && row.shippingEstimatedDays === undefined
+    && row.shippingOffers === undefined
 }
 
 function keptOldShipping(row) {
@@ -101,14 +106,17 @@ function keptOldShipping(row) {
 }
 
 function rulingsHold() {
+  if (Math.round(15.5 * 100) !== 1550 || Math.round(9 * 100) !== 900) return 'the offered grosze were not the written numbers'
+  if (Math.round(0.004 * 100) >= 1) return 'a fraction of a grosz was called a price'
+  if (Number.isSafeInteger(Math.round(1e15 * 100))) return 'an unsafe grosz total was called safe'
   if (!legalPrice(1) || !legalPrice(500)) return 'a whole grosz price was refused on paper'
   for (const price of [0, -1, 1.5, Number.NaN]) {
     if (legalPrice(price)) return `${price} was called a price`
   }
   if (expectGo({ kind: 'go', url: '/basket' }, '/checkout/shipping') === '') return 'the wrong step was called a pass'
   if (expectGo({ kind: 'stop', error: new Error('Invalid shipping price') }, '/checkout/payment') === '') return 'a refusal was called payment'
-  const cleared = { shippingCode: undefined, shippingCost: undefined, shippingMethodName: undefined, shippingCarrier: undefined, shippingEstimatedDays: undefined }
-  const kept = { shippingCode: 'old', shippingCost: 500, shippingEstimatedDays: 2 }
+  const cleared = { shippingCode: undefined, shippingCost: undefined, shippingMethodName: undefined, shippingCarrier: undefined, shippingEstimatedDays: undefined, shippingOffers: undefined }
+  const kept = { shippingCode: 'old', shippingCost: 500, shippingEstimatedDays: 2, shippingOffers: OFFERED }
   if (shippingCleared(cleared) !== true) return 'cleared shipping was not recognised'
   if (shippingCleared(kept) === true) return 'old shipping was called cleared'
   if (keptOldShipping(kept) !== true) return 'the old price was not recognised'
@@ -117,7 +125,7 @@ function rulingsHold() {
 }
 
 const addressQuestion = 'An address is saved only when the check accepts it, and the old shipping choice is then cleared.'
-const priceQuestion = 'A shipping price is saved only when it is a positive whole number of grosze.'
+const priceQuestion = 'A shipping price is saved only when it is one of the rates just offered.'
 
 const addressCases = [
   ['An empty basket does not save an address', async () => {
@@ -140,26 +148,28 @@ const addressCases = [
     return ''
   }],
   ['A rejected address stays on the address step', async () => {
-    const row = beginSession({ address: OLD })
+    const row = beginSession({ address: OLD, shippingOffers: OFFERED })
     scriptCheck({ status: 'FIX', errors: { message: 'no such street' } })
     const result = await ask(() => saveAddressAction(TYPED))
     if (result.kind !== 'done' || result.value?.status !== 'FIX') return seen(result)
     if (saveCount() !== 0) return 'saved the session'
     if (row.address?.city !== 'Gdansk') return `address became ${row.address?.city ?? 'nothing'}`
     if (!keptOldShipping(row)) return `shipping became ${row.shippingCost}`
+    if (row.shippingOffers?.[0]?.priceInCents !== 1550) return 'the offered rate was dropped'
     return ''
   }],
   ['An unconfirmed address stays on the address step', async () => {
-    const row = beginSession({ address: OLD })
+    const row = beginSession({ address: OLD, shippingOffers: OFFERED })
     scriptCheck({ status: 'CONFIRM' })
     const result = await ask(() => saveAddressAction(TYPED))
     if (result.kind !== 'done' || result.value?.status !== 'CONFIRM') return seen(result)
     if (saveCount() !== 0) return 'saved the session'
     if (!keptOldShipping(row)) return `shipping became ${row.shippingCost}`
+    if (row.shippingOffers?.[0]?.priceInCents !== 1550) return 'the offered rate was dropped'
     return ''
   }],
   ['An accepted address is stored and the old shipping choice is cleared', async () => {
-    beginSession({ address: OLD })
+    beginSession({ address: OLD, shippingOffers: OFFERED })
     scriptCheck(ACCEPTED)
     const result = await ask(() => saveAddressAction(TYPED))
     const finding = expectGo(result, '/checkout/shipping')
@@ -171,7 +181,7 @@ const addressCases = [
       return `saved ${saved.address?.city ?? 'nothing'}`
     }
     if (saved.address?.placeId !== 'place_1' || saved.address?.geocode?.location?.latitude !== 50) return 'the registry mark was dropped'
-    if (!shippingCleared(saved)) return `shipping stayed ${saved.shippingCost}`
+    if (!shippingCleared(saved)) return saved.shippingOffers ? 'the offered rate was kept' : `shipping stayed ${saved.shippingCost}`
     return ''
   }],
 ]
@@ -210,6 +220,12 @@ const priceCases = [
   ['A blank shipping price is not saved', () => refusePrice(Number.NaN)],
   ['One grosz of shipping is saved', () => savePrice(1)],
   ['The chosen shipping price is saved', () => savePrice(500)],
+  ['The shipping page remembers the offered prices', rememberOffers],
+  ['A price that was not offered is not saved', () => refuseUnlisted('inpost', 1, OFFERED)],
+  ["Another rate's price is not saved", () => refuseUnlisted('dhl', 1550, [{ rateId: 'inpost', priceInCents: 1550 }, { rateId: 'dhl', priceInCents: 900 }])],
+  ['No offered rate means nothing is saved', () => refuseUnlisted('inpost', 500, undefined)],
+  ['An empty rate list means nothing is saved', () => refuseUnlisted('inpost', 500, [])],
+  ['The other offered price is saved', () => saveOffered('dhl', 900, [{ rateId: 'inpost', priceInCents: 1550 }, { rateId: 'dhl', priceInCents: 900 }])],
 ]
 
 async function refusePrice(price) {
@@ -223,7 +239,7 @@ async function refusePrice(price) {
 }
 
 async function savePrice(price) {
-  beginSession({ address: OLD })
+  beginSession({ address: OLD, shippingOffers: [{ rateId: 'inpost', priceInCents: price }] })
   const result = await ask(() => saveShippingAction('inpost', price, 'Locker', 'InPost', 2))
   const finding = expectGo(result, '/checkout/payment')
   if (finding) return finding
@@ -234,6 +250,51 @@ async function savePrice(price) {
   if (saved.shippingCode !== 'inpost' || saved.shippingMethodName !== 'Locker' || saved.shippingCarrier !== 'InPost' || saved.shippingEstimatedDays !== 2) {
     return 'the chosen service was not stored'
   }
+  return ''
+}
+
+async function refuseUnlisted(code, price, offers) {
+  const row = beginSession({ address: OLD, shippingOffers: offers })
+  const result = await ask(() => saveShippingAction(code, price, 'Locker', 'InPost', 2))
+  if (saveCount() !== 0) return 'saved the session'
+  if (row.shippingCost !== 500) return `shipping became ${row.shippingCost}`
+  if (result.kind === 'go' && result.url === '/checkout/payment') return 'sent to payment'
+  if (result.kind === 'done') return 'continued'
+  return ''
+}
+
+async function saveOffered(code, price, offers) {
+  beginSession({ address: OLD, shippingOffers: offers })
+  const result = await ask(() => saveShippingAction(code, price, 'Locker', 'InPost', 2))
+  const finding = expectGo(result, '/checkout/payment')
+  if (finding) return finding
+  const saved = savedSnapshot()
+  if (saved?.shippingCost !== price || saved?.shippingCode !== code) return `saved ${saved?.shippingCost ?? 'nothing'}`
+  return ''
+}
+
+async function rememberOffers() {
+  const row = beginSession({ address: OLD, basket: [{ productId: 'a', quantity: 1 }] })
+  const options = [
+    { provider: 'InPost', servicelevel: { name: 'Locker' }, rateId: 'inpost', amount: 15.5, currency: 'PLN', estimatedDays: 2 },
+    { provider: 'DHL', servicelevel: { name: 'Courier' }, rateId: 'dhl', amount: 9, currency: 'PLN', estimatedDays: 1 },
+    { provider: 'Dust', servicelevel: { name: 'Tiny' }, rateId: 'dust', amount: 0.004, currency: 'PLN', estimatedDays: 1 },
+    { provider: 'Huge', servicelevel: { name: 'Big' }, rateId: 'huge', amount: 1e15, currency: 'PLN', estimatedDays: 1 },
+  ]
+  const result = await ask(() => getShippingPageData({
+    sessions: { getCheckoutSession: async () => row },
+    catalogue: {
+      getProductsByIds: async () => [{ _id: 'a', parcel: { length: 10, width: 10, height: 10, weight: 500 } }],
+      getPaymentProducts: async () => [],
+      getProductUnitAmountsByIds: async () => [],
+    },
+    shipping: { fetchShippingOptions: async () => options },
+  }))
+  if (result.kind !== 'done' || result.value?.kind !== 'ok') return seen(result)
+  if (JSON.stringify(result.value.shippingOptions) !== JSON.stringify(options)) return 'showed different options'
+  if (saveCount() !== 1) return `saved ${saveCount()} times`
+  const expected = [{ rateId: 'inpost', priceInCents: 1550 }, { rateId: 'dhl', priceInCents: 900 }]
+  if (JSON.stringify(row.shippingOffers) !== JSON.stringify(expected)) return `remembered ${JSON.stringify(row.shippingOffers)}`
   return ''
 }
 
