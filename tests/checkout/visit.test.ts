@@ -185,7 +185,12 @@ function world(row, extra) {
   return {
     calls,
     ports: {
-      sessions: { getCheckoutSession: async () => row },
+      sessions: {
+        getCheckoutSession: async () => {
+          row.save = async () => {}
+          return row
+        },
+      },
       catalogue: {
         getPaymentProducts: async () => {
           calls.products += 1

@@ -41,6 +41,7 @@ export interface CheckoutSession {
   shippingMethodName?: string;
   shippingCarrier?: string;
   shippingEstimatedDays?: number;
+  shippingOffers?: Array<{ rateId: string; priceInCents: number }>;
   paymentIntentId?: string;
   completedPaymentIntentId?: string;
   lastPaymentIntentId?: string; // Set for any PI processed by return handler (not just succeeded)

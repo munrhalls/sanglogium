@@ -51,6 +51,12 @@ export async function saveShippingAction(
     throw new Error("Invalid shipping price");
   }
 
+  const offers = session.shippingOffers;
+  const offered = Array.isArray(offers) && offers.some((offer) => offer.rateId === shippingCode && offer.priceInCents === priceInCents);
+  if (!offered) {
+    throw new Error("Invalid shipping price");
+  }
+
   await logEvent({
     correlationId: checkoutSessionId,
     slice: 'address-submit',

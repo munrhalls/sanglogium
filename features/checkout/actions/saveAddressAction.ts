@@ -71,6 +71,7 @@ export async function saveAddressAction(
   session.shippingMethodName = undefined;
   session.shippingCarrier = undefined;
   session.shippingEstimatedDays = undefined;
+  session.shippingOffers = undefined;
 
   await session.save();
   console.log("[SAVE ADDRESS] Session saved. session.address after save:", session.address);
