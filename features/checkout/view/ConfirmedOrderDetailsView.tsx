@@ -39,7 +39,7 @@ export default async function ConfirmedOrderDetailsView({ orderPromise, fallback
             <span className="type-caption font-mono text-brand-400">{order.orderNumber}</span>
           </div>
           <p className="type-section-caption">
-            Date: {orderedAt.toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' })}
+            Date: {orderedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
           {order.customerEmail && (
             <p className="type-section-caption">
@@ -99,7 +99,7 @@ export default async function ConfirmedOrderDetailsView({ orderPromise, fallback
                   from.setDate(from.getDate() + days)
                   const to = new Date(orderedAt)
                   to.setDate(to.getDate() + days + 1)
-                  const fmt = (d: Date) => d.toLocaleDateString('pl-PL', { month: 'long', day: 'numeric' })
+                  const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
                   return `${fmt(from)}–${fmt(to)}`
                 })()}
               </span>
