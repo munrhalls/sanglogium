@@ -97,6 +97,28 @@ export async function getPaymentPageData(ports: {
     redirect("/basket?error=invalid_total");
   }
 
+  let exact = 0
+  for (const item of session.basket) {
+    const unit = sanityProducts.find((p) => p._id === item.productId)?.price_data?.unit_amount
+    const line = typeof unit === 'number' ? unit * item.quantity : Number.NaN
+    if (
+      typeof item.productId !== 'string' || item.productId === '' ||
+      item.productId.includes(',') || item.productId.includes(':') ||
+      typeof unit !== 'number' || !Number.isSafeInteger(unit) || unit < 1 ||
+      !Number.isSafeInteger(line)
+    ) {
+      redirect('/basket?error=invalid_total')
+    }
+    exact += line
+  }
+  if (!Number.isSafeInteger(session.shippingCost) || session.shippingCost < 0) {
+    redirect('/basket?error=invalid_total')
+  }
+  exact += session.shippingCost
+  if (!Number.isSafeInteger(exact) || exact < 1 || grandTotal !== exact) {
+    redirect('/basket?error=invalid_total')
+  }
+
   if (process.env.NODE_ENV !== "production") {
     console.log("[PAYMENT PAGE] subtotal:", subtotal, "grandTotal:", grandTotal);
   }
