@@ -15,6 +15,54 @@ interface ProductDoc {
 
 const STRIPE_METADATA_MAX_SAFE = 450
 
+// C-02: Support both compact format (productId:quantity,...) and legacy JSON
+function parseMetadataBasket(rawBasket: string): BasketItem[] {
+  if (rawBasket.includes(':')) {
+    return rawBasket.split(',').map(s => {
+      const [productId, quantity] = s.split(':')
+      return { productId, quantity: parseInt(quantity, 10) }
+    })
+  }
+  return JSON.parse(rawBasket)
+}
+
+// The charged basket is always the payment metadata basket — a later session
+// basket must not replace what the customer was charged for.
+function resolveChargedBasket(pi: PaidPayment): BasketItem[] {
+  const rawBasket = pi.metadata?.basket
+  if (!rawBasket) {
+    throw new Error(`Missing basket metadata for PI ${pi.id}`)
+  }
+  if (rawBasket.length > STRIPE_METADATA_MAX_SAFE) {
+    throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
+  }
+  let basket: BasketItem[]
+  try {
+    basket = parseMetadataBasket(rawBasket)
+  } catch {
+    throw new Error(`Failed to parse basket metadata for PI ${pi.id}`)
+  }
+  if (!Array.isArray(basket) || basket.length === 0) {
+    throw new Error(`Empty basket in metadata for PI ${pi.id}`)
+  }
+  return basket
+}
+
+// The charged unit prices: productId:price pairs, same shape as the basket.
+function resolveChargedUnitPrices(pi: PaidPayment): Map<string, number> {
+  const prices = new Map<string, number>()
+  const raw = pi.metadata?.unitPrices
+  if (!raw) return prices
+  for (const pair of raw.split(',')) {
+    const [productId, price] = pair.split(':')
+    const amount = parseInt(price, 10)
+    if (productId && Number.isSafeInteger(amount)) {
+      prices.set(productId, amount)
+    }
+  }
+  return prices
+}
+
 function resolveOrderData(
   pi: PaidPayment,
   sessionData?: OrderSessionData
@@ -40,7 +88,7 @@ function resolveOrderData(
       throw new Error(`Missing address in session data for PI ${pi.id}`)
     }
     return {
-      basket: sessionData.basket,
+      basket: resolveChargedBasket(pi),
       address: sessionData.address,
       shippingCode: sessionData.shippingCode ?? '',
       shippingCost: sessionData.shippingCost ?? 0,
@@ -54,7 +102,6 @@ function resolveOrderData(
   }
 
   // Fallback to PI metadata (webhook path)
-  const rawBasket = pi.metadata?.basket
   const rawAddress = pi.metadata?.address
   const shippingCode = pi.metadata?.shippingCode ?? ''
   const shippingCostStr = pi.metadata?.shippingCost ?? '0'
@@ -63,33 +110,20 @@ function resolveOrderData(
   const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
   const customerEmail = pi.metadata?.email || pi.receiptEmail || ''
 
-  if (!rawBasket || !rawAddress) {
+  if (!rawAddress) {
     throw new Error(`Missing basket/address metadata for PI ${pi.id}`)
   }
 
-  if (rawBasket.length > STRIPE_METADATA_MAX_SAFE || rawAddress.length > STRIPE_METADATA_MAX_SAFE) {
+  if (rawAddress.length > STRIPE_METADATA_MAX_SAFE) {
     throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
   }
 
-  // C-02: Support both compact format (productId:quantity,...) and legacy JSON
-  let basket: BasketItem[]
+  const basket = resolveChargedBasket(pi)
   let address: OrderAddress
   try {
-    if (rawBasket.includes(':')) {
-      basket = rawBasket.split(',').map(s => {
-        const [productId, quantity] = s.split(':')
-        return { productId, quantity: parseInt(quantity, 10) }
-      })
-    } else {
-      basket = JSON.parse(rawBasket)
-    }
     address = JSON.parse(rawAddress)
   } catch {
     throw new Error(`Failed to parse basket/address metadata for PI ${pi.id}`)
-  }
-
-  if (!Array.isArray(basket) || basket.length === 0) {
-    throw new Error(`Empty basket in metadata for PI ${pi.id}`)
   }
 
   const userId = pi.metadata?.userId || undefined
@@ -165,10 +199,12 @@ export async function createOrderFromPayment(
   )
   const productMap = new Map(products.map((p) => [p._id, p]))
 
-  // Step 4: Build order items directly from basket
+  // Step 4: Build order items directly from basket. A charged unit price recorded
+  // in the payment metadata wins over the catalog price, which may have changed since.
+  const chargedUnitPrices = resolveChargedUnitPrices(pi)
   const items = basket.map((item) => {
     const product = productMap.get(item.productId)
-    const price = product?.price_data?.unit_amount ?? 0
+    const price = chargedUnitPrices.get(item.productId) ?? product?.price_data?.unit_amount ?? 0
     return {
       productId: item.productId,
       name: product?.name ?? item.productId,
