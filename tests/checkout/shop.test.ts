@@ -115,7 +115,7 @@ export function seedProduct(row) {
   seed([row])
 }
 
-export function payment({ id, amount, basket, shipping, status }) {
+export function payment({ id, amount, basket, shipping, status, unitPrices }) {
   return {
     id,
     object: 'payment_intent',
@@ -134,6 +134,7 @@ export function payment({ id, amount, basket, shipping, status }) {
       checkoutSessionId: 'sess_1',
       vat: '0',
       userId: '',
+      ...(typeof unitPrices === 'string' ? { unitPrices } : {}),
     },
     client_secret: 'cs_test',
     receipt_email: 'ada@example.com',
