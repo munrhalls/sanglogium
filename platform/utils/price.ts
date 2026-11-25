@@ -3,9 +3,9 @@
  */
 
 /**
- * Convert cents to display price (dollars)
- * @param cents - Price in cents (e.g., 1999 for $19.99)
- * @returns Price in dollars (e.g., 19.99)
+ * Convert cents to display price (zloty)
+ * @param cents - Price in cents (e.g., 1999 for PLN 19.99)
+ * @returns Price in zloty (e.g., 19.99)
  */
 export function centsToDisplay(cents: number): number {
   return cents / 100;
@@ -18,14 +18,14 @@ export function centsToDisplay(cents: number): number {
  * through the helpers below so the currency and number format never diverge
  * between surfaces.
  */
-const STORE_CURRENCY = "USD";
+const STORE_CURRENCY = "PLN";
 const STORE_LOCALE = "en-US";
 
 const priceFormatter = new Intl.NumberFormat(STORE_LOCALE, {
   style: "currency",
   currency: STORE_CURRENCY,
-  // Whole amounts show as "$1,299"; fractional amounts show every cent
-  // ("$1,299.99"). No surface rounds a fractional price to whole units.
+  // Whole amounts hide the grosze. Fractional amounts show every grosz.
+  // No surface rounds a fractional price to whole units.
   minimumFractionDigits: 0,
   maximumFractionDigits: 2,
 });
@@ -39,7 +39,7 @@ export function formatPrice(cents: number): string {
 }
 
 /**
- * Format a price already expressed in major units (dollars) — e.g. the output
+ * Format a price already expressed in major units (zloty) — e.g. the output
  * of `centsToDisplay`, or price-slider bound values.
  */
 export function formatPriceMajor(amount: number): string {
