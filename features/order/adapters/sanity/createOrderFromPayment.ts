@@ -199,16 +199,38 @@ export async function createOrderFromPayment(
   )
   const productMap = new Map(products.map((p) => [p._id, p]))
 
+  // Units taken from the shelf per product: the smaller of stock and the paid
+  // quantity, and only when the product exists and both counts are usable.
+  const requestedByProduct = new Map<string, number>()
+  for (const { productId, quantity } of basket) {
+    requestedByProduct.set(productId, (requestedByProduct.get(productId) ?? 0) + quantity)
+  }
+  const untakenByProduct = new Map<string, number>()
+  for (const [productId, requested] of requestedByProduct) {
+    const product = productMap.get(productId)
+    const stock = product?.stock
+    const take = product && Number.isSafeInteger(requested) && requested >= 1 && Number.isSafeInteger(stock) && (stock as number) >= 1
+      ? Math.min(stock as number, requested)
+      : 0
+    untakenByProduct.set(productId, take)
+  }
+
   // Step 4: Build order items directly from basket. A charged unit price recorded
   // in the payment metadata wins over the catalog price, which may have changed since.
+  // Each line records how many of its units were taken, in basket order.
   const chargedUnitPrices = resolveChargedUnitPrices(pi)
   const items = basket.map((item) => {
     const product = productMap.get(item.productId)
     const price = chargedUnitPrices.get(item.productId) ?? product?.price_data?.unit_amount ?? 0
+    const paidQuantity = Number.isSafeInteger(item.quantity) && item.quantity >= 1 ? item.quantity : 0
+    const untaken = untakenByProduct.get(item.productId) ?? 0
+    const fulfilled = Math.min(paidQuantity, untaken)
+    untakenByProduct.set(item.productId, untaken - fulfilled)
     return {
       productId: item.productId,
       name: product?.name ?? item.productId,
       quantity: item.quantity,
+      fulfilled,
       price,
       subtotal: price * item.quantity,
       returnStatus: 'none' as const,
@@ -296,24 +318,24 @@ export async function createOrderFromPayment(
   // - `ifRevisionID` makes each decrement conditional on the stock we read: if another
   //   order touched the product meanwhile, the whole transaction is rejected and nothing
   //   is written. The webhook then returns 500 and Stripe retries against fresh stock.
-  const quantityByProduct = new Map<string, number>()
-  for (const { productId, quantity } of basket) {
-    quantityByProduct.set(productId, (quantityByProduct.get(productId) ?? 0) + quantity)
-  }
-
   const transaction = backendClient.transaction().create(orderDoc as Parameters<typeof backendClient.create>[0])
   const shortfalls: Array<{ productId: string; currentStock: number; requested: number }> = []
-  for (const [productId, requested] of quantityByProduct) {
+  for (const [productId, requested] of requestedByProduct) {
     const product = productMap.get(productId)
     const currentStock = product?.stock ?? 0
-    // A paid order must always be recorded, so a line that cannot be decremented
-    // (unknown product, malformed quantity, not enough stock) is skipped and reported
-    // rather than allowed to reject the whole transaction.
-    if (!product || !Number.isInteger(requested) || requested < 1 || currentStock < requested) {
+    // A paid order must always be recorded, so the shelf gives up only the units
+    // it has; a shortfall is reported rather than allowed to reject the whole
+    // transaction. Nothing is patched when no units can be taken.
+    const stock = product?.stock
+    const take = product && Number.isSafeInteger(requested) && requested >= 1 && Number.isSafeInteger(stock) && (stock as number) >= 1
+      ? Math.min(stock as number, requested)
+      : 0
+    if (take !== requested) {
       shortfalls.push({ productId, currentStock, requested })
-      continue
     }
-    transaction.patch(productId, { ifRevisionID: product._rev, dec: { stock: requested } })
+    if (take >= 1) {
+      transaction.patch(productId, { ifRevisionID: product!._rev, dec: { stock: take } })
+    }
   }
 
   try {
@@ -335,10 +357,10 @@ export async function createOrderFromPayment(
     await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_insufficient', data: shortfall, outcome: 'error' })
   }
 
-  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: quantityByProduct.size - shortfalls.length }, outcome: 'success' })
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: requestedByProduct.size - shortfalls.length }, outcome: 'success' })
 
   if (process.env.NODE_ENV !== 'production') {
-    console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${quantityByProduct.size - shortfalls.length} products`)
+    console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${requestedByProduct.size - shortfalls.length} products`)
   }
   return { created: true, email: { to: customerEmail, orderNumber, items, total, shippingAddress } }
 }

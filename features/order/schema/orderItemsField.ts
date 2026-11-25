@@ -82,6 +82,13 @@ export const orderItemsField = defineField({
               validation: (Rule) => Rule.required().integer().min(1),
             }),
             defineField({
+              name: "fulfilled",
+              title: "Fulfilled",
+              type: "number",
+              validation: (Rule) => Rule.integer().min(0),
+              description: "Units taken from the shelf for this line.",
+            }),
+            defineField({
               name: "subtotal",
               title: "Line Subtotal",
               type: "number",
