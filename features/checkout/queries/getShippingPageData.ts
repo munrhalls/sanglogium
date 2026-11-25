@@ -90,5 +90,15 @@ export async function getShippingPageData(ports: {
 
   await logEvent({ correlationId: traceId, slice: 'address-submit', event: 'shipping_allekurier_response', data: { rateCount: shippingOptions.length, rates: shippingOptions.map((o) => ({ carrier: o.provider, service: o.servicelevel.name, price: o.amount })) }, outcome: 'success' });
 
+  const shippingOffers = [];
+  for (const option of shippingOptions) {
+    const priceInCents = Math.round(option.amount * 100);
+    if (typeof option.rateId === "string" && option.rateId !== "" && Number.isSafeInteger(priceInCents) && priceInCents >= 1) {
+      shippingOffers.push({ rateId: option.rateId, priceInCents });
+    }
+  }
+  session.shippingOffers = shippingOffers;
+  await session.save();
+
   return { kind: "ok", shippingOptions, traceId };
 }
