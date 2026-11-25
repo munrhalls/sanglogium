@@ -42,6 +42,7 @@ export async function createPaymentIntent(
       await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_missing_shipping', data: {}, outcome: 'error' })
       return { ok: false, error: 'Shipping cost is missing', status: 400 }
     }
+    const shippingCost = session.shippingCost
 
     const ids = session.basket.map(i => i.productId)
     const products = await ports.catalogue.getProductUnitAmountsByIds(ids)
@@ -52,20 +53,38 @@ export async function createPaymentIntent(
     }
 
     let subtotal = 0
+    const unitPriceParts: string[] = []
     for (const item of session.basket) {
       const product = products.find(p => p._id === item.productId)
       const unitPrice = product?.price_data?.unit_amount
-      if (!unitPrice || !Number.isFinite(unitPrice)) {
+      if (
+        typeof item.productId !== 'string' || item.productId === '' ||
+        item.productId.includes(',') || item.productId.includes(':') ||
+        !Number.isSafeInteger(item.quantity) || item.quantity < 1 ||
+        typeof unitPrice !== 'number' || !Number.isSafeInteger(unitPrice) || unitPrice < 1 ||
+        !Number.isSafeInteger(unitPrice * item.quantity)
+      ) {
         await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_price', data: { productId: item.productId }, outcome: 'error' })
         return { ok: false, error: `Invalid price for product ${item.productId}`, status: 400 }
       }
       subtotal += unitPrice * item.quantity
+      unitPriceParts.push(`${item.productId}:${unitPrice}`)
     }
 
-    const computedGrandTotal = calculateGrandTotal(subtotal, session.shippingCost)
+    if (!Number.isSafeInteger(shippingCost) || shippingCost < 0) {
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_shipping', data: { shippingCost: shippingCost }, outcome: 'error' })
+      return { ok: false, error: 'Invalid shipping cost', status: 400 }
+    }
 
-    if (!Number.isInteger(computedGrandTotal) || computedGrandTotal < 1) {
-      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_total', data: { subtotal, shippingCost: session.shippingCost, computedGrandTotal }, outcome: 'error' })
+    const exact = subtotal + shippingCost
+
+    if (!Number.isSafeInteger(exact) || exact < 1) {
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_total', data: { subtotal, shippingCost: shippingCost, exact }, outcome: 'error' })
+      return { ok: false, error: 'Invalid total amount', status: 400 }
+    }
+
+    if (calculateGrandTotal(subtotal, shippingCost) !== exact) {
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_total', data: { subtotal, shippingCost: shippingCost, exact }, outcome: 'error' })
       return { ok: false, error: 'Invalid total amount', status: 400 }
     }
 
@@ -91,7 +110,7 @@ export async function createPaymentIntent(
     const basketCompact = session.basket.map(i => `${i.productId}:${i.quantity}`).join(',')
 
     // H-02: Calculate Polish standard VAT (23%) — gross pricing breakdown
-    const vatAmount = computedGrandTotal - Math.round(computedGrandTotal / 1.23)
+    const vatAmount = exact - Math.round(exact / 1.23)
 
     // Merge session data into metadata so the webhook can build the order
     // without depending on basketReservation documents
@@ -100,9 +119,10 @@ export async function createPaymentIntent(
     const enrichedMetadata: Record<string, string> = {
       ...metadata,
       basket: basketCompact,
+      unitPrices: unitPriceParts.join(','),
       address: JSON.stringify(leanAddress),
       shippingCode: session.shippingCode ?? '',
-      shippingCost: String(session.shippingCost ?? ''),
+      shippingCost: String(shippingCost ?? ''),
       shippingMethodName: session.shippingMethodName ?? '',
       shippingCarrier: session.shippingCarrier ?? '',
       shippingEstimatedDays: String(session.shippingEstimatedDays ?? ''),
@@ -136,19 +156,19 @@ export async function createPaymentIntent(
 
     if (session.paymentIntentId) {
       try {
-        result = await ports.payments.updatePaymentAmount(session.paymentIntentId, computedGrandTotal, enrichedMetadata, idempotencyKey)
-        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: computedGrandTotal }, outcome: 'success' })
+        result = await ports.payments.updatePaymentAmount(session.paymentIntentId, exact, enrichedMetadata, `${idempotencyKey}:${exact}:${basketCompact}`)
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: exact }, outcome: 'success' })
       } catch (err) {
         await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' })
         session.paymentIntentId = undefined
-        result = await ports.payments.createPayment(computedGrandTotal, enrichedMetadata, idempotencyKey)
+        result = await ports.payments.createPayment(exact, enrichedMetadata, idempotencyKey)
         session.paymentIntentId = result.id
-        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: exact, currency: 'pln' }, outcome: 'success' })
       }
     } else {
-      result = await ports.payments.createPayment(computedGrandTotal, enrichedMetadata, idempotencyKey)
+      result = await ports.payments.createPayment(exact, enrichedMetadata, idempotencyKey)
       session.paymentIntentId = result.id
-      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: computedGrandTotal, currency: 'pln' }, outcome: 'success' })
+      await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_create', data: { paymentIntentId: result.id, amount: exact, currency: 'pln' }, outcome: 'success' })
     }
 
     if (!result.clientSecret) {

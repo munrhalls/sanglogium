@@ -15,6 +15,54 @@ interface ProductDoc {
 
 const STRIPE_METADATA_MAX_SAFE = 450
 
+// C-02: Support both compact format (productId:quantity,...) and legacy JSON
+function parseMetadataBasket(rawBasket: string): BasketItem[] {
+  if (rawBasket.includes(':')) {
+    return rawBasket.split(',').map(s => {
+      const [productId, quantity] = s.split(':')
+      return { productId, quantity: parseInt(quantity, 10) }
+    })
+  }
+  return JSON.parse(rawBasket)
+}
+
+// The charged basket is always the payment metadata basket — a later session
+// basket must not replace what the customer was charged for.
+function resolveChargedBasket(pi: PaidPayment): BasketItem[] {
+  const rawBasket = pi.metadata?.basket
+  if (!rawBasket) {
+    throw new Error(`Missing basket metadata for PI ${pi.id}`)
+  }
+  if (rawBasket.length > STRIPE_METADATA_MAX_SAFE) {
+    throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
+  }
+  let basket: BasketItem[]
+  try {
+    basket = parseMetadataBasket(rawBasket)
+  } catch {
+    throw new Error(`Failed to parse basket metadata for PI ${pi.id}`)
+  }
+  if (!Array.isArray(basket) || basket.length === 0) {
+    throw new Error(`Empty basket in metadata for PI ${pi.id}`)
+  }
+  return basket
+}
+
+// The charged unit prices: productId:price pairs, same shape as the basket.
+function resolveChargedUnitPrices(pi: PaidPayment): Map<string, number> {
+  const prices = new Map<string, number>()
+  const raw = pi.metadata?.unitPrices
+  if (!raw) return prices
+  for (const pair of raw.split(',')) {
+    const [productId, price] = pair.split(':')
+    const amount = parseInt(price, 10)
+    if (productId && Number.isSafeInteger(amount)) {
+      prices.set(productId, amount)
+    }
+  }
+  return prices
+}
+
 function resolveOrderData(
   pi: PaidPayment,
   sessionData?: OrderSessionData
@@ -40,7 +88,7 @@ function resolveOrderData(
       throw new Error(`Missing address in session data for PI ${pi.id}`)
     }
     return {
-      basket: sessionData.basket,
+      basket: resolveChargedBasket(pi),
       address: sessionData.address,
       shippingCode: sessionData.shippingCode ?? '',
       shippingCost: sessionData.shippingCost ?? 0,
@@ -54,7 +102,6 @@ function resolveOrderData(
   }
 
   // Fallback to PI metadata (webhook path)
-  const rawBasket = pi.metadata?.basket
   const rawAddress = pi.metadata?.address
   const shippingCode = pi.metadata?.shippingCode ?? ''
   const shippingCostStr = pi.metadata?.shippingCost ?? '0'
@@ -63,33 +110,20 @@ function resolveOrderData(
   const shippingEstimatedDaysStr = pi.metadata?.shippingEstimatedDays ?? ''
   const customerEmail = pi.metadata?.email || pi.receiptEmail || ''
 
-  if (!rawBasket || !rawAddress) {
+  if (!rawAddress) {
     throw new Error(`Missing basket/address metadata for PI ${pi.id}`)
   }
 
-  if (rawBasket.length > STRIPE_METADATA_MAX_SAFE || rawAddress.length > STRIPE_METADATA_MAX_SAFE) {
+  if (rawAddress.length > STRIPE_METADATA_MAX_SAFE) {
     throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
   }
 
-  // C-02: Support both compact format (productId:quantity,...) and legacy JSON
-  let basket: BasketItem[]
+  const basket = resolveChargedBasket(pi)
   let address: OrderAddress
   try {
-    if (rawBasket.includes(':')) {
-      basket = rawBasket.split(',').map(s => {
-        const [productId, quantity] = s.split(':')
-        return { productId, quantity: parseInt(quantity, 10) }
-      })
-    } else {
-      basket = JSON.parse(rawBasket)
-    }
     address = JSON.parse(rawAddress)
   } catch {
     throw new Error(`Failed to parse basket/address metadata for PI ${pi.id}`)
-  }
-
-  if (!Array.isArray(basket) || basket.length === 0) {
-    throw new Error(`Empty basket in metadata for PI ${pi.id}`)
   }
 
   const userId = pi.metadata?.userId || undefined
@@ -165,14 +199,38 @@ export async function createOrderFromPayment(
   )
   const productMap = new Map(products.map((p) => [p._id, p]))
 
-  // Step 4: Build order items directly from basket
+  // Units taken from the shelf per product: the smaller of stock and the paid
+  // quantity, and only when the product exists and both counts are usable.
+  const requestedByProduct = new Map<string, number>()
+  for (const { productId, quantity } of basket) {
+    requestedByProduct.set(productId, (requestedByProduct.get(productId) ?? 0) + quantity)
+  }
+  const untakenByProduct = new Map<string, number>()
+  for (const [productId, requested] of requestedByProduct) {
+    const product = productMap.get(productId)
+    const stock = product?.stock
+    const take = product && Number.isSafeInteger(requested) && requested >= 1 && Number.isSafeInteger(stock) && (stock as number) >= 1
+      ? Math.min(stock as number, requested)
+      : 0
+    untakenByProduct.set(productId, take)
+  }
+
+  // Step 4: Build order items directly from basket. A charged unit price recorded
+  // in the payment metadata wins over the catalog price, which may have changed since.
+  // Each line records how many of its units were taken, in basket order.
+  const chargedUnitPrices = resolveChargedUnitPrices(pi)
   const items = basket.map((item) => {
     const product = productMap.get(item.productId)
-    const price = product?.price_data?.unit_amount ?? 0
+    const price = chargedUnitPrices.get(item.productId) ?? product?.price_data?.unit_amount ?? 0
+    const paidQuantity = Number.isSafeInteger(item.quantity) && item.quantity >= 1 ? item.quantity : 0
+    const untaken = untakenByProduct.get(item.productId) ?? 0
+    const fulfilled = Math.min(paidQuantity, untaken)
+    untakenByProduct.set(item.productId, untaken - fulfilled)
     return {
       productId: item.productId,
       name: product?.name ?? item.productId,
       quantity: item.quantity,
+      fulfilled,
       price,
       subtotal: price * item.quantity,
       returnStatus: 'none' as const,
@@ -260,24 +318,24 @@ export async function createOrderFromPayment(
   // - `ifRevisionID` makes each decrement conditional on the stock we read: if another
   //   order touched the product meanwhile, the whole transaction is rejected and nothing
   //   is written. The webhook then returns 500 and Stripe retries against fresh stock.
-  const quantityByProduct = new Map<string, number>()
-  for (const { productId, quantity } of basket) {
-    quantityByProduct.set(productId, (quantityByProduct.get(productId) ?? 0) + quantity)
-  }
-
   const transaction = backendClient.transaction().create(orderDoc as Parameters<typeof backendClient.create>[0])
   const shortfalls: Array<{ productId: string; currentStock: number; requested: number }> = []
-  for (const [productId, requested] of quantityByProduct) {
+  for (const [productId, requested] of requestedByProduct) {
     const product = productMap.get(productId)
     const currentStock = product?.stock ?? 0
-    // A paid order must always be recorded, so a line that cannot be decremented
-    // (unknown product, malformed quantity, not enough stock) is skipped and reported
-    // rather than allowed to reject the whole transaction.
-    if (!product || !Number.isInteger(requested) || requested < 1 || currentStock < requested) {
+    // A paid order must always be recorded, so the shelf gives up only the units
+    // it has; a shortfall is reported rather than allowed to reject the whole
+    // transaction. Nothing is patched when no units can be taken.
+    const stock = product?.stock
+    const take = product && Number.isSafeInteger(requested) && requested >= 1 && Number.isSafeInteger(stock) && (stock as number) >= 1
+      ? Math.min(stock as number, requested)
+      : 0
+    if (take !== requested) {
       shortfalls.push({ productId, currentStock, requested })
-      continue
     }
-    transaction.patch(productId, { ifRevisionID: product._rev, dec: { stock: requested } })
+    if (take >= 1) {
+      transaction.patch(productId, { ifRevisionID: product!._rev, dec: { stock: take } })
+    }
   }
 
   try {
@@ -299,10 +357,10 @@ export async function createOrderFromPayment(
     await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_insufficient', data: shortfall, outcome: 'error' })
   }
 
-  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: quantityByProduct.size - shortfalls.length }, outcome: 'success' })
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_stock_decremented', data: { itemCount: requestedByProduct.size - shortfalls.length }, outcome: 'success' })
 
   if (process.env.NODE_ENV !== 'production') {
-    console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${quantityByProduct.size - shortfalls.length} products`)
+    console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${requestedByProduct.size - shortfalls.length} products`)
   }
   return { created: true, email: { to: customerEmail, orderNumber, items, total, shippingAddress } }
 }
