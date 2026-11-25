@@ -13,6 +13,26 @@ export async function initCheckoutSessionAction(items: Array<{ productId: string
 
   session.checkoutSessionId = finalCheckoutSessionId;
 
+  const previous = new Map<string, number>();
+  for (const item of session.basket ?? []) {
+    previous.set(item.productId, (previous.get(item.productId) ?? 0) + item.quantity);
+  }
+  for (const item of items) {
+    previous.set(item.productId, (previous.get(item.productId) ?? 0) - item.quantity);
+  }
+  let sameGoods = true;
+  for (const quantity of previous.values()) {
+    if (quantity !== 0) sameGoods = false;
+  }
+  if (!sameGoods) {
+    session.shippingCode = undefined;
+    session.shippingCost = undefined;
+    session.shippingMethodName = undefined;
+    session.shippingCarrier = undefined;
+    session.shippingEstimatedDays = undefined;
+    session.shippingOffers = undefined;
+  }
+
   // Save items directly to the secure iron-session cookie
   session.basket = items;
   await session.save();
