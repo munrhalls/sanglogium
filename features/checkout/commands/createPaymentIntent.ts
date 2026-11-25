@@ -156,7 +156,7 @@ export async function createPaymentIntent(
 
     if (session.paymentIntentId) {
       try {
-        result = await ports.payments.updatePaymentAmount(session.paymentIntentId, exact, enrichedMetadata, idempotencyKey)
+        result = await ports.payments.updatePaymentAmount(session.paymentIntentId, exact, enrichedMetadata, `${idempotencyKey}:${exact}:${basketCompact}`)
         await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update', data: { paymentIntentId: session.paymentIntentId, amount: exact }, outcome: 'success' })
       } catch (err) {
         await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_update_failed', data: { error: err instanceof Error ? err.message : String(err) }, outcome: 'error' })
