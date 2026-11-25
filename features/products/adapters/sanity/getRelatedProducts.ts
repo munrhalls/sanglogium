@@ -1,5 +1,6 @@
 import "server-only";
 import { sanityFetch } from '@/platform/sanity/client';
+import { CATALOGUE_FETCH_CACHE } from '@/features/product-filtering/server';
 import groq from 'groq';
 import type { RelatedProduct } from '@/features/products/core/types/productTypes';
 
@@ -29,7 +30,8 @@ export async function getRelatedProducts(
         current
       }
     }`,
-    params: { currentId, catalogueKeys, limit }
+    params: { currentId, catalogueKeys, limit },
+    next: CATALOGUE_FETCH_CACHE
   });
 
   return products || [];
