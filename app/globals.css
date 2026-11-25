@@ -245,3 +245,9 @@ button {
 .animate-search-sheet-in {
   animation: search-sheet-in 180ms ease-out both;
 }
+
+/* Header auth variants. A pre-paint script sets html[data-auth]; no attribute means signed out. */
+html[data-auth="in"] [data-auth-only="out"],
+html:not([data-auth="in"]) [data-auth-only="in"] {
+  display: none !important;
+}
