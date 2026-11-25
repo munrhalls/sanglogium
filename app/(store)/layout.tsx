@@ -8,6 +8,7 @@ import { Montserrat } from "next/font/google";
 import { StoreShellView } from "@/features/shell/server";
 import GoogleAnalytics from "@/platform/analytics/GoogleAnalytics";
 import { getCatalogueForNavigation } from "@/features/catalogue/server";
+import { AuthHintScript } from "@/features/auth";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -44,8 +45,9 @@ export default function RootLayout({
   const catalogueDataRaw = { catalogue: getCatalogueForNavigation() };
 
   return (
-    <html lang="en" className={cn(montserrat.variable, "antialiased")}>
+    <html lang="en" className={cn(montserrat.variable, "antialiased")} suppressHydrationWarning>
       <head>
+        <AuthHintScript />
         {/* Performance: Preconnect to Sanity CDN for faster image loading */}
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />

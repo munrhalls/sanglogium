@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/features/auth/state/authClient";
+import { clearAuthHint } from "@/features/auth/state/authHint";
 
 /**
  * Shared sign-out utility.
@@ -11,6 +12,7 @@ import { authClient } from "@/features/auth/state/authClient";
 export async function signOut(): Promise<void> {
   try {
     await authClient.signOut();
+    clearAuthHint();
   } catch {
     // Non-fatal — proceed to redirect regardless.
     // A network error or stale session should still land the user
@@ -28,6 +30,7 @@ export async function signOutAllDevices(): Promise<void> {
   try {
     const session = await authClient.getSession();
     if (!session.data?.session) {
+      clearAuthHint();
       window.location.href = "/sign-in";
       return;
     }
@@ -38,6 +41,7 @@ export async function signOutAllDevices(): Promise<void> {
     }
 
     await authClient.revokeSessions();
+    clearAuthHint();
   } catch {
     // Non-fatal — proceed to redirect regardless.
   }

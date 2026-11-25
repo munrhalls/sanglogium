@@ -8,3 +8,6 @@ export { TwoFactorSection } from './ui/TwoFactorSection';
 export { signOut, signOutAllDevices } from './state/useSignOut';
 export { changePassword, changeEmail, deleteAccount, useIsSignedIn } from './state/accountSecurity';
 export { requireFreshSession } from './state/requireFreshSession';
+export { default as AuthHintSync } from './ui/AuthHintSync';
+export { default as AuthHintScript } from './ui/AuthHintScript';
+export { clearAuthHint } from './state/authHint';
