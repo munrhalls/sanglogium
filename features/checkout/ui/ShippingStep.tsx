@@ -8,9 +8,9 @@ import CheckoutStepper from "./CheckoutStepper";
 
 function formatDeliveryEstimate(days: number): string {
   if (days === 1) {
-    return '1 dzień roboczy';
+    return '1 business day';
   }
-  return `${days} dni robocze`;
+  return `${days} business days`;
 }
 
 interface ShippingOption {
@@ -76,7 +76,7 @@ export default function ShippingStep({
       if (err instanceof Error && (err as any).digest === "NEXT_REDIRECT") {
         throw err;
       }
-      setError(err instanceof Error ? err.message : "Nie udało się zapisać wyboru dostawy");
+      setError(err instanceof Error ? err.message : "The shipping choice could not be saved.");
       setIsSubmitting(false);
     }
   };
@@ -102,7 +102,7 @@ export default function ShippingStep({
 
         <CheckoutStepper currentStep={2} />
 
-        <h1 className="type-section-hed mb-8">Wybierz metodę dostawy</h1>
+        <h1 className="type-section-hed mb-8">Choose a shipping method</h1>
 
         {/* Inline error banner with retry action */}
         {error && (
@@ -113,7 +113,7 @@ export default function ShippingStep({
               type="button"
               className="btn-secondary px-4 py-2 text-sm"
             >
-              Spróbuj ponownie
+              Try again
             </button>
           </div>
         )}
@@ -122,7 +122,7 @@ export default function ShippingStep({
         {!hasOptions && !error && (
           <div className="mb-6 rounded border border-border-secondary bg-surface-subtle p-4">
             <p className="type-body text-text-secondary">
-              Brak dostępnych opcji dostawy.
+              No shipping options are available.
             </p>
           </div>
         )}
@@ -131,7 +131,7 @@ export default function ShippingStep({
             The entire card area is clickable/tappable (≥48px touch target on mobile). */}
         {hasOptions && (
           <>
-            <div className="space-y-3" role="radiogroup" aria-label="Opcje dostawy">
+            <div className="space-y-3" role="radiogroup" aria-label="Shipping options">
               {shippingOptions.map((option) => {
                 const isSelected = selectedRateId === option.rateId;
                 return (
@@ -215,7 +215,7 @@ export default function ShippingStep({
             {selectedOption && (
               <div className="mt-4 rounded-lg border border-brand-400/30 bg-surface-subtle px-4 py-3 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="type-caption text-text-secondary flex-shrink-0">Wybrano:</span>
+                  <span className="type-caption text-text-secondary flex-shrink-0">Selected:</span>
                   <span className="type-card-title text-text-body truncate">
                     {selectedOption.provider} — {selectedOption.servicelevel.name}
                   </span>
@@ -242,10 +242,10 @@ export default function ShippingStep({
                 aria-hidden="true"
                 className="inline-block w-4 h-4 rounded-full border-2 border-brand-700/40 border-t-brand-700 animate-spin"
               />
-              Przetwarzanie…
+              Processing…
             </>
           ) : (
-            "Przejdź do płatności"
+            "Continue to payment"
           )}
         </button>
       </div>
@@ -265,10 +265,10 @@ export default function ShippingStep({
                 aria-hidden="true"
                 className="inline-block w-4 h-4 rounded-full border-2 border-brand-700/40 border-t-brand-700 animate-spin"
               />
-              Przetwarzanie…
+              Processing…
             </>
           ) : (
-            "Przejdź do płatności"
+            "Continue to payment"
           )}
         </button>
       </div>
