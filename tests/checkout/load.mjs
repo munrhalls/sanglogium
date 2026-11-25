@@ -5,7 +5,7 @@
 //
 // node --experimental-strip-types --import ./tools/alias-loader.mjs --import ./tests/checkout/load.mjs tests/checkout/payment-order.test.ts
 
-import { existsSync } from 'node:fs'
+import { existsSync, realpathSync } from 'node:fs'
 import { registerHooks } from 'node:module'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -30,7 +30,7 @@ registerHooks({
       // Node ESM does not add .js. Next's navigation entry is that file.
       const candidate = path.join(repoRoot, 'node_modules', `${specifier}.js`)
       if (error?.code === 'ERR_MODULE_NOT_FOUND' && existsSync(candidate)) {
-        return { url: pathToFileURL(candidate).href, shortCircuit: true }
+        return { url: pathToFileURL(realpathSync(candidate)).href, shortCircuit: true }
       }
       throw error
     }
