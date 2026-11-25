@@ -72,6 +72,7 @@ function paidFor(basket, id, status) {
     basket: basketText(basket),
     shipping: basket.shipping,
     status,
+    unitPrices: basket.lines.map((line) => `${line.id}:${line.unit}`).join(','),
   })
 }
 
