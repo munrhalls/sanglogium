@@ -21,6 +21,7 @@ export default function DetailWatermark({ imageUrl }: { imageUrl: string }) {
         <img
           src={imageUrl}
           alt=""
+          loading="lazy"
           aria-hidden="true"
           className={cn("absolute inset-0 h-full w-full object-contain object-center rounded-none", "sm:object-bottom")}
         />
