@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "react";
 import type { createAuth } from "./auth";
 import type { UserProfiles } from "@/features/auth/core/ports";
+import type { SignInFacts } from "@/features/auth/core/types/authTypes";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 export function createSessionReaders(
@@ -121,5 +122,25 @@ export function createSessionReaders(
     };
   }
 
-  return { getSession, requireSession, verifySession };
+  // Reads the sign-in database itself, never the cookie copy, so a session signed out elsewhere is gone at once.
+  async function getSignInFacts(): Promise<SignInFacts | null> {
+    const requestHeaders = await headers();
+    const session = await auth.api.getSession({
+      headers: requestHeaders,
+      query: { disableCookieCache: true },
+    });
+    if (!session) return null;
+
+    const accounts = await auth.api.listUserAccounts({ headers: requestHeaders });
+
+    return {
+      email: session.user.email,
+      emailVerified: session.user.emailVerified === true,
+      twoFactorEnabled: (session.user as { twoFactorEnabled?: boolean | null }).twoFactorEnabled === true,
+      signedInAt: new Date(session.session.createdAt).getTime(),
+      providers: accounts.map((account) => account.providerId),
+    };
+  }
+
+  return { getSession, requireSession, verifySession, getSignInFacts };
 }
