@@ -6,6 +6,7 @@ export type OrderBasketItem = {
 export type OrderAddress = {
   firstName?: string;
   lastName?: string;
+  phone?: string;
   regionCode: string;
   postalCode: string;
   street: string;
