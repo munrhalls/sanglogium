@@ -17,7 +17,7 @@ export default function PaymentVerificationFailed({ paymentIntentId }: { payment
           </code>
           <div className="flex flex-wrap gap-3">
             <a href="/basket" className="btn-primary px-6 py-2.5">Return to basket</a>
-            <a href="/support" className="btn-secondary px-6 py-2.5">Contact support</a>
+            <a href="/contact" className="btn-secondary px-6 py-2.5">Contact support</a>
           </div>
         </div>
       </section>
