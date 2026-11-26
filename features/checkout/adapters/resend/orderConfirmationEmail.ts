@@ -10,6 +10,11 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
     ? `<p style="margin:0;">${shipped.phone}</p>`
     : ""
 
+  const addressed = shippingAddress as typeof shippingAddress & { country?: string }
+  const countryLine = addressed.country
+    ? `<p style="margin:0;">${addressed.country}</p>`
+    : ""
+
   const itemsHtml = items
     .map(
       (item) =>
@@ -48,6 +53,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
           <p style="margin:0;">${shippingAddress.name}</p>
           <p style="margin:0;">${shippingAddress.line1}</p>
           <p style="margin:0;">${shippingAddress.postalCode} ${shippingAddress.city}</p>
+          ${countryLine}
           ${phoneLine}
         </div>
       </div>
