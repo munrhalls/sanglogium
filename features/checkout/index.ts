@@ -4,6 +4,7 @@ export { default as CheckoutSummary } from './ui/CheckoutSummary';
 export { default as AddressForm } from './ui/AddressForm';
 export { default as ShippingStep } from './ui/ShippingStep';
 export { BasketCheckout } from './ui/BasketCheckout';
+export { BasketTotalRefusal } from './ui/BasketTotalRefusal';
 export { PaymentNav } from './ui/PaymentNav';
 export { ShippingStepSkeleton } from './ui/ShippingStepSkeleton';
 export { default as PaymentVerificationFailed } from './ui/payment-status/PaymentVerificationFailed';
