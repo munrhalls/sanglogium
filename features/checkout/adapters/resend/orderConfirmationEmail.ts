@@ -70,13 +70,13 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
           </thead>
           <tbody>${itemsHtml}</tbody>
         </table>
-        <p style="margin-top:16px;font-size:16px;">
-          <strong>Total:</strong> ${formatPrice(total)}
-        </p>
         ${methodLine}
         ${shippingLine}
         ${taxLine}
         ${deliveryLine}
+        <p style="margin-top:16px;font-size:16px;">
+          <strong>Total:</strong> ${formatPrice(total)}
+        </p>
         <div style="margin-top:24px;padding:16px;background:#f9fafb;border-radius:8px;">
           <p style="margin:0 0 8px;font-weight:bold;">Shipping to:</p>
           <p style="margin:0;">${shippingAddress.name}</p>
