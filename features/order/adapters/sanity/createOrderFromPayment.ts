@@ -252,6 +252,7 @@ export async function createOrderFromPayment(
     city: address.city,
     postalCode: address.postalCode,
     country: address.regionCode,
+    phone: address.phone,
   }
 
   // Step 7: Compute pricing
