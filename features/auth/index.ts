@@ -11,3 +11,4 @@ export { requireFreshSession } from './state/requireFreshSession';
 export { default as AuthHintSync } from './ui/AuthHintSync';
 export { default as AuthHintScript } from './ui/AuthHintScript';
 export { clearAuthHint } from './state/authHint';
+export type { SignInFacts } from './core/types/authTypes';
