@@ -22,12 +22,7 @@ export default function AdminLayout({
       lang="en"
       className={`${inter.className} antialiased ${dmSerifDisplay.variable} h-full w-full`}
     >
-      <body>
-        <div>
-          layout
-          <div>{children}</div>
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
