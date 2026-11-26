@@ -3,5 +3,8 @@
   "installCommand": "npm install --legacy-peer-deps",
   "git": {
     "deploymentEnabled": false
-  }
+  },
+  "crons": [
+    { "path": "/api/checkout/sweep", "schedule": "0 4 * * *" }
+  ]
 }
