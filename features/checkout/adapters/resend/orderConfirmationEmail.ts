@@ -4,7 +4,7 @@ import { formatPrice } from "@/platform/utils/price";
 import type { OrderConfirmationEmailData } from "@/features/order";
 
 export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailData): Promise<void> {
-  const { to, orderNumber, items, total, shippingAddress } = data
+  const { to, orderNumber, items, total, shippingAddress, shipping } = data
   const shipped = shippingAddress as typeof shippingAddress & { phone?: string }
   const phoneLine = shipped.phone
     ? `<p style="margin:0;">${shipped.phone}</p>`
@@ -19,6 +19,8 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
   const methodLine = method
     ? `<p style="margin:0;">${method.carrier} — ${method.estimatedDays ?? '?'} ${method.estimatedDays === 1 ? 'business day' : 'business days'}</p>`
     : ""
+
+  const shippingLine = `<p style="margin:0;">Shipping ${formatPrice(shipping)}</p>`
 
   const itemsHtml = items
     .map(
@@ -54,6 +56,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
           <strong>Total:</strong> ${formatPrice(total)}
         </p>
         ${methodLine}
+        ${shippingLine}
         <div style="margin-top:24px;padding:16px;background:#f9fafb;border-radius:8px;">
           <p style="margin:0 0 8px;font-weight:bold;">Shipping to:</p>
           <p style="margin:0;">${shippingAddress.name}</p>
