@@ -1,7 +1,7 @@
 import "server-only";
 import { backendClient } from '@/platform/sanity/backendClient'
 import { logEvent } from '@/platform/utils/eventLogger'
-import type { OrderBasketItem as BasketItem, OrderAddress, OrderSessionData, CreateOrderResult, PaidPayment } from '@/features/order/core/types/orderTypes'
+import type { OrderBasketItem as BasketItem, OrderAddress, CreateOrderResult, PaidPayment } from '@/features/order/core/types/orderTypes'
 import { z } from 'zod'
 
 interface ProductDoc {
@@ -64,8 +64,7 @@ function resolveChargedUnitPrices(pi: PaidPayment): Map<string, number> {
 }
 
 function resolveOrderData(
-  pi: PaidPayment,
-  sessionData?: OrderSessionData
+  pi: PaidPayment
 ): {
   basket: BasketItem[]
   address: OrderAddress
@@ -78,28 +77,7 @@ function resolveOrderData(
   traceId: string
   userId?: string
 } {
-  const traceId = sessionData?.checkoutSessionId ?? pi.metadata?.checkoutSessionId ?? 'unknown'
-
-  if (sessionData) {
-    if (!sessionData.basket || sessionData.basket.length === 0) {
-      throw new Error(`Empty basket in session data for PI ${pi.id}`)
-    }
-    if (!sessionData.address) {
-      throw new Error(`Missing address in session data for PI ${pi.id}`)
-    }
-    return {
-      basket: resolveChargedBasket(pi),
-      address: sessionData.address,
-      shippingCode: sessionData.shippingCode ?? '',
-      shippingCost: sessionData.shippingCost ?? 0,
-      shippingMethodName: sessionData.shippingMethodName ?? '',
-      shippingCarrier: sessionData.shippingCarrier ?? '',
-      shippingEstimatedDays: sessionData.shippingEstimatedDays,
-      customerEmail: sessionData.email ?? pi.receiptEmail ?? '',
-      traceId,
-      userId: sessionData.userId,
-    }
-  }
+  const traceId = pi.metadata?.checkoutSessionId ?? 'unknown'
 
   // Fallback to PI metadata (webhook path)
   const rawAddress = pi.metadata?.address
@@ -148,8 +126,7 @@ function resolveOrderData(
  * handler: a payment ends with exactly one order and its stock decremented exactly once.
  */
 export async function createOrderFromPayment(
-  pi: PaidPayment,
-  sessionData?: OrderSessionData
+  pi: PaidPayment
 ): Promise<CreateOrderResult> {
   const paymentIntentId = pi.id
 
@@ -164,9 +141,9 @@ export async function createOrderFromPayment(
     customerEmail: rawCustomerEmail,
     traceId,
     userId,
-  } = resolveOrderData(pi, sessionData)
+  } = resolveOrderData(pi)
 
-  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId, source: sessionData ? 'session' : 'metadata' }, outcome: 'success' });
+  await logEvent({ correlationId: traceId, slice: 'order-create', event: 'order_create_start', data: { paymentIntentId }, outcome: 'success' });
 
   // Step 1: Fast-path idempotency — skip if order already exists for this PI.
   // Also covers orders created before deterministic IDs. The atomic guard is Step 11.
