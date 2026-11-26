@@ -2,7 +2,6 @@ import type { ShippingOption, ShippingRatesInput } from "@/features/shipping";
 import type {
   CreateOrderResult,
   OrderConfirmationEmailData,
-  OrderSessionData,
   PaidPayment,
 } from "@/features/order";
 import type {
@@ -17,8 +16,7 @@ import type {
 
 export type Orders = {
   createOrderFromPayment: (
-    payment: PaidPayment,
-    sessionData?: OrderSessionData
+    payment: PaidPayment
   ) => Promise<CreateOrderResult>;
   getOrderByPaymentIntentId: (
     paymentIntentId: string

@@ -13,6 +13,9 @@
 
 import { beforeSuccess, chargeVerdict, nothingSold, orderCountIs, saleVerdict, stillPayable } from './books.mjs'
 import {
+  LATER_ADDRESS,
+  LATER_SHIPPING,
+  ORDER_DELIVERY,
   OTHER_PRICE,
   SHIPPING_MISSING,
   bankThenReturn,
@@ -24,6 +27,7 @@ import {
   forgedSituations,
   knownBasket,
   legalBaskets,
+  longestAddresses,
   oneBankNotice,
   oneReturn,
   orderLines,
@@ -48,11 +52,14 @@ import {
   fresh,
   notCharged,
   openPayments,
+  pauseCommits,
   payment,
   rememberPayment,
+  resumeCommits,
   seedLines,
   setShelfPrice,
   unsignedBankNotice,
+  waitForCommits,
 } from './shop.test.ts'
 
 export const question = 'Parity'
@@ -76,8 +83,8 @@ function paidFor(basket, id, status) {
   })
 }
 
-export function saleRecorded(basket, paymentId) {
-  return saleVerdict(paymentId, basket.total, 'pln', orderLines(basket), basket.shipping, stockLeft(basket))
+export function saleRecorded(basket, paymentId, delivery) {
+  return saleVerdict(paymentId, basket.total, 'pln', orderLines(basket), basket.shipping, delivery, stockLeft(basket))
     ?? orderCountIs(1)
 }
 
@@ -92,7 +99,29 @@ export async function deliver(basket, doors, change) {
     if (door === 'bank') await bankNotice(paid)
     if (door === 'customer') await customerReturns(session, paid.id)
   }
-  return saleRecorded(basket, paid.id)
+  return saleRecorded(basket, paid.id, ORDER_DELIVERY)
+}
+
+// The bank notice and the customer's return both read the shelf before
+// either one writes. Their writes are held, then land one after the other.
+// If the shop gives up before writing, both doors finish first, and the
+// books say what is missing.
+export async function sameMoment(basket) {
+  fresh()
+  seedLines(basket.lines, SHELF)
+  const session = sessionFor(basket, { paymentIntentId: 'pi_std' })
+  const paid = paidFor(basket, 'pi_std', 'succeeded')
+  rememberPayment(paid)
+  pauseCommits()
+  const bank = bankNotice(paid)
+  const customer = customerReturns(session, paid.id)
+  const finished = Promise.all([bank, customer]).then(() => false)
+  const held = waitForCommits(2).then(() => true, () => false)
+  await Promise.race([held, finished])
+  resumeCommits()
+  await bank
+  await customer
+  return saleRecorded(basket, paid.id, ORDER_DELIVERY)
 }
 
 export async function refuse(situation) {
@@ -100,6 +129,7 @@ export async function refuse(situation) {
   const extra = { checkoutSessionId: 'sess_refuse', basket: situation.basket }
   if (situation.shipping === SHIPPING_MISSING) extra.shippingCost = undefined
   else extra.shippingCost = situation.shipping
+  if (situation.address) extra.address = situation.address
   await charge(basketSession(extra), situation.rows)
   return notCharged()
 }
@@ -129,6 +159,7 @@ export const cases = [
   ['A price the computer cannot store exactly is not charged', () => checkEvery(refusalsFor('exact'), refuse)],
   ['A product id that cannot be written down whole is not charged', () => checkEvery(refusalsFor('id'), refuse)],
   ['A basket that does not fit in the payment record is not charged', () => checkEvery(refusalsFor('fit'), refuse)],
+  ['An address that does not fit in the payment record is not charged', () => checkEvery(refusalsFor('address'), refuse)],
 
   ['Changing to any other legal basket leaves exactly one charge for the new basket', () => checkEvery(basketChanges(), async (situation) => {
     fresh()
@@ -149,7 +180,22 @@ export const cases = [
     if (wrong) return wrong
     created[0].status = 'succeeded'
     await bankNotice(created[0])
-    return saleRecorded(basket, created[0].id)
+    return saleRecorded(basket, created[0].id, ORDER_DELIVERY)
+  })],
+
+  ['A payment the shop creates for the longest address it accepts becomes one order to that address', () => checkEvery(longestAddresses(), async (situation) => {
+    const basket = knownBasket()
+    fresh()
+    seedLines(basket.lines, SHELF)
+    await charge(sessionFor(basket, { checkoutSessionId: 'sess_address', address: situation.address }), priceRows(basket))
+    const created = openPayments()
+    const wrong = chargeVerdict(created, basket.total, basketText(basket))
+    if (wrong) return wrong
+    const written = created[0].metadata.address.length
+    if (written !== 500) return `the address on the payment is ${written} characters`
+    created[0].status = 'succeeded'
+    await bankNotice(created[0])
+    return saleRecorded(basket, created[0].id, situation.delivery)
   })],
 
   ['One bank notice creates one order for every legal basket', () => checkEvery(legalBaskets, (basket) => deliver(basket, oneBankNotice))],
@@ -158,6 +204,7 @@ export const cases = [
   ['The customer returning twice still creates one order for every legal basket', () => checkEvery(legalBaskets, (basket) => deliver(basket, twoReturns))],
   ['The customer returns, then the bank notice arrives: still one order for every legal basket', () => checkEvery(legalBaskets, (basket) => deliver(basket, returnThenBank))],
   ['The bank notice arrives, then the customer returns: still one order for every legal basket', () => checkEvery(legalBaskets, (basket) => deliver(basket, bankThenReturn))],
+  ["The bank notice and the customer's return at the same moment still create one order for every legal basket", () => checkEvery(legalBaskets, sameMoment)],
 
   ['A later shelf price does not change the order when the customer returns first', () => checkEvery(legalBaskets, (basket) => deliver(
     basket,
@@ -179,6 +226,16 @@ export const cases = [
     bankThenReturn,
     (session) => { session.basket = differentSessionLines(basket) },
   ))],
+  ['A later shipping choice does not change the order when the customer returns first', () => checkEvery(legalBaskets, (basket) => deliver(
+    basket,
+    returnThenBank,
+    (session) => { Object.assign(session, LATER_SHIPPING) },
+  ))],
+  ['A later address does not change the order when the customer returns first', () => checkEvery(legalBaskets, (basket) => deliver(
+    basket,
+    returnThenBank,
+    (session) => { session.address = LATER_ADDRESS },
+  ))],
 
   ['A payment that is still processing sells nothing, and success afterwards sells once', () => checkEvery(legalBaskets, async (basket) => {
     fresh()
@@ -191,7 +248,7 @@ export const cases = [
     if (early) return early
     paid.status = 'succeeded'
     await bankNotice(paid)
-    return saleRecorded(basket, paid.id)
+    return saleRecorded(basket, paid.id, ORDER_DELIVERY)
   })],
 
   ['Returning while the bank still wants a payment method sells nothing', () => checkEvery(legalBaskets, async (basket) => {

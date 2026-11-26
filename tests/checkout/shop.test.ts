@@ -13,21 +13,11 @@ import { handlePaymentReturn } from '@/features/checkout/commands/handlePaymentR
 import { handlePaymentWebhook } from '@/features/checkout/commands/handlePaymentWebhook'
 import { createOrderFromPayment } from '@/features/order/adapters/sanity/createOrderFromPayment'
 import { notChargedVerdict } from './books.mjs'
+import { ADDRESS } from './domain.mjs'
 import { hold, orderDocs, release, reset as resetStock, seed, setPrice, until, warehouseObeysItsRule } from './stock-book.mjs'
 import { allPayments, cardCompanyObeysItsRule, openPayments, remember, resetCardCompany } from './card-provider.test.ts'
 
 export { allPayments, openPayments, setPrice as setShelfPrice }
-
-const ADDRESS = {
-  firstName: 'Ada',
-  lastName: 'Lovelace',
-  phone: '1',
-  regionCode: 'PL',
-  postalCode: '00-001',
-  street: 'Main',
-  streetNumber: '1',
-  city: 'Warsaw',
-}
 
 function paymentsPort() {
   return { createPayment, updatePaymentAmount, retrievePayment, parseWebhookEvent }
@@ -35,7 +25,7 @@ function paymentsPort() {
 
 function ordersPort() {
   return {
-    createOrderFromPayment: (payment, sessionData) => createOrderFromPayment(payment, sessionData),
+    createOrderFromPayment: (payment) => createOrderFromPayment(payment),
     async getOrderByPaymentIntentId(id) {
       return orderDocs().find((order) => order.paymentIntentId === id) ?? null
     },
@@ -89,8 +79,9 @@ export function basketSession(extra = {}) {
   }
 }
 
-// The typed total is 1 and the typed basket is a fake. The shelf decides the charge.
-export function charge(session, rows = shelfPrices(), body = { grandTotal: 1, metadata: { basket: 'nope:9' } }) {
+// The typed total is 1, and the typed basket, unit prices, shipping price and
+// address are fakes. The shelf and the session decide the charge and the order.
+export function charge(session, rows = shelfPrices(), body = { grandTotal: 1, metadata: { basket: 'nope:9', unitPrices: 'a:1,b:1', shippingCost: '0', address: '{}' } }) {
   return createPaymentIntent(
     {
       sessions: { getCheckoutSession: async () => session },

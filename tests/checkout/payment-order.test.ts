@@ -20,10 +20,18 @@
 // The shop questions do not wait, roll dice, or call Stripe, Sanity, or the database.
 // The same run twice gives the same answer.
 //
+// After both questions, the shipping price proofs run exactly as they run
+// alone, and their lines are printed here too. Last, every printed line has
+// to be listed in docs/features/checkout/proof-book.md, with why it cannot lie.
+//
 // 0 every line passed. 1 one or more lines are NO. 2 the proof itself broke.
 //
+// npm run proof:checkout, which is:
 // node --experimental-strip-types --import ./tools/alias-loader.mjs --import ./tests/checkout/load.mjs tests/checkout/payment-order.test.ts
 
+import { spawnSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { installCardCompany } from './card-provider.test.ts'
 import { worldsAreExact } from './domain.mjs'
 import { cases as conservationCases, question as conservationQuestion } from './conservation.test.ts'
@@ -57,7 +65,76 @@ async function quietly(run) {
   }
 }
 
+const repoRoot = fileURLToPath(new URL('../..', import.meta.url))
+const BOOK = new URL('../../docs/features/checkout/proof-book.md', import.meta.url)
+
+// The shipping price proofs, each run exactly as it is run alone.
+const shippingProofs = [
+  ['--import', './tests/checkout/save-load.mjs', 'tests/checkout/save.test.ts'],
+  ['tests/checkout/rates.test.ts'],
+  ['--import', './tests/checkout/save-load.mjs', 'tests/checkout/basket.test.ts'],
+]
+
+// Its printed lines, without its own last line. A run that did not end in
+// 0 or 1 is broken, and the first line it wrote to stderr says why.
+function runAlone(args) {
+  const file = args[args.length - 1]
+  const run = spawnSync(process.execPath, ['--experimental-strip-types', '--import', './tools/alias-loader.mjs', '--import', './tests/checkout/load.mjs', ...args], { cwd: repoRoot, encoding: 'utf8' })
+  const lines = (run.stdout ?? '').split('\n').filter((line) => line !== '')
+  if (run.status === 0 || run.status === 1) {
+    lines.pop()
+    return { lines, broken: false }
+  }
+  const why = (run.stderr ?? '').split('\n').find((line) => line.trim() !== '') ?? ''
+  return { lines: [...lines, `proof broken: ${file} ended with ${run.status}. ${why}`], broken: true }
+}
+
+// Null when the book lists every printed sentence once, each followed by why
+// it cannot lie, and lists no sentence that nothing printed.
+function bookMatches(rows, printed) {
+  const sentences = printed.filter((line) => line.startsWith('  '))
+  const named = (name, line) => line === `  ${name}: PASS` || line.startsWith(`  ${name}: NO — `)
+  const listed = []
+  for (let i = 0; i < rows.length; i += 1) {
+    const hit = /^- \*\*(.+)\*\*$/.exec(rows[i])
+    if (!hit) continue
+    if (!/^  Cannot lie: \S/.test(rows[i + 1] ?? '')) return `the proof book does not say why “${hit[1]}” cannot lie`
+    listed.push(hit[1])
+  }
+  for (const name of listed) {
+    const count = sentences.filter((line) => named(name, line)).length
+    if (count !== 1) return `the proof book lists “${name}”, and ${count} printed lines carry that name`
+  }
+  for (const line of sentences) {
+    if (!listed.some((name) => named(name, line))) return `the proof book does not list “${line.trim()}”`
+  }
+  return null
+}
+
+// The book check, on paper. A string means it can lie.
+function bookRuler() {
+  const rows = ['- **A**', '  Cannot lie: x', '- **B: c**', '  Cannot lie: y']
+  if (bookMatches(rows, ['  A: PASS', '  B: c: NO — z']) !== null) return 'a book that matches was called wrong'
+  if (bookMatches(rows, ['  A: PASS']) === null) return 'a listed line that did not run was not reported'
+  if (bookMatches(rows, ['  A: PASS', '  B: c: PASS', '  D: PASS']) === null) return 'a line the book does not list was not reported'
+  if (bookMatches(['- **A**', '  no reason'], ['  A: PASS']) === null) return 'a line with no reason was not reported'
+  return null
+}
+
+function readBook() {
+  try {
+    return readFileSync(BOOK, 'utf8').split('\n')
+  } catch {
+    return null
+  }
+}
+
 async function main() {
+  const ruler = bookRuler()
+  if (ruler) {
+    console.log(`proof broken: ${ruler}`)
+    return 2
+  }
   installCardCompany()
   const worlds = worldsAreExact()
   if (worlds) {
@@ -89,19 +166,37 @@ async function main() {
       }
     }
   }
+  const printed = []
+  const say = (line) => {
+    printed.push(line)
+    console.log(line)
+  }
   let current = ''
   for (const result of results) {
     if (result.question !== current) {
       current = result.question
-      console.log(current)
+      say(current)
     }
-    console.log(result.finding ? `  ${result.name}: NO — ${result.finding}` : `  ${result.name}: PASS`)
+    say(result.finding ? `  ${result.name}: NO — ${result.finding}` : `  ${result.name}: PASS`)
+  }
+  for (const args of shippingProofs) {
+    const alone = runAlone(args)
+    for (const line of alone.lines) say(line)
+    if (alone.broken) broken = true
+  }
+  const rows = readBook()
+  const book = rows ? bookMatches(rows, printed) : 'the proof book docs/features/checkout/proof-book.md is missing'
+  if (book) {
+    broken = true
+    say(`proof broken: ${book}`)
+  } else {
+    say('Every line above is in the proof book, with why it cannot lie.')
   }
   if (broken) {
     console.log('proof broken')
     return 2
   }
-  const nos = results.filter((result) => result.finding)
+  const nos = printed.filter((line) => line.startsWith('  ') && line.includes(': NO — '))
   if (nos.length !== 0) {
     console.log(`${nos.length} NO`)
     return 1

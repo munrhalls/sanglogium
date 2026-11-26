@@ -14,18 +14,6 @@ export type OrderAddress = {
   city: string;
 };
 
-export interface OrderSessionData {
-  basket: OrderBasketItem[];
-  address?: OrderAddress;
-  shippingCode?: string;
-  shippingCost?: number;
-  shippingMethodName?: string;
-  shippingCarrier?: string;
-  shippingEstimatedDays?: number;
-  email?: string;
-  checkoutSessionId?: string;
-  userId?: string;
-}
 
 export type OrderConfirmationEmailData = {
   to: string;
