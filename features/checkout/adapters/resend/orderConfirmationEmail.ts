@@ -5,6 +5,10 @@ import type { OrderConfirmationEmailData } from "@/features/order";
 
 export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailData): Promise<void> {
   const { to, orderNumber, items, total, shippingAddress } = data
+  const shipped = shippingAddress as typeof shippingAddress & { phone?: string }
+  const phoneLine = shipped.phone
+    ? `<p style="margin:0;">${shipped.phone}</p>`
+    : ""
 
   const itemsHtml = items
     .map(
@@ -44,6 +48,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
           <p style="margin:0;">${shippingAddress.name}</p>
           <p style="margin:0;">${shippingAddress.line1}</p>
           <p style="margin:0;">${shippingAddress.postalCode} ${shippingAddress.city}</p>
+          ${phoneLine}
         </div>
       </div>
     `,
