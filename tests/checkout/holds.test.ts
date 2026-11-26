@@ -22,7 +22,9 @@ import {
   SHELF,
   SHIPPING_MISSING,
   SHORT,
+  UNPAID,
   bankThenReturn,
+  bankThenSweeps,
   basketChanges,
   basketText,
   changedShelfId,
@@ -36,6 +38,7 @@ import {
   longestAddresses,
   oneBankNotice,
   oneReturn,
+  oneSweep,
   priceText,
   productFits,
   refusalsFor,
@@ -43,12 +46,15 @@ import {
   returnThenBank,
   shelfIsShort,
   shortShelves,
+  sweepKeys,
+  sweepPages,
   twoBankNotices,
   twoReturns,
+  unpaidSweeps,
   unsignedSituations,
 } from './domain.mjs'
 import { deliver, refuse, saleRecorded, sameMoment } from './parity.test.ts'
-import { bankNotice, charge, customerReturns, forgedBankNotice, notCharged, unsignedBankNotice } from './shop.test.ts'
+import { bankNotice, charge, customerReturns, forgedBankNotice, notCharged, sweep, unsignedBankNotice } from './shop.test.ts'
 import { backendClient, reset, seed, until } from './stock-book.mjs'
 
 function source(run) {
@@ -166,6 +172,7 @@ function deliverHolds() {
   }
   if (!text.includes("door === 'bank'") || !text.includes('await bankNotice(paid)')) return 'a bank notice is no longer delivered'
   if (!text.includes("door === 'customer'") || !text.includes('await customerReturns(session, paid.id)')) return 'the customer return is no longer delivered'
+  if (!text.includes("door === 'sweep'") || !text.includes('await sweep()')) return 'the sweep is no longer run'
   return uses(deliver, 'return saleRecorded(', 'the order for that payment') ?? recordedSaleHolds()
 }
 
@@ -191,6 +198,7 @@ function shopStillDoesTheWork() {
     ?? uses(unsignedBankNotice, 'return handlePaymentWebhook(', 'a notice with no signature')
     ?? uses(customerReturns, 'await handlePaymentReturn(', 'the customer returning')
     ?? uses(customerReturns, 'if (!isRedirect(error)) throw error', 'a failed return is reported')
+    ?? uses(sweep, 'sweepPaidPayments(doors(), { authorization, now: SWEEP_NOW })', 'the shop sweep at the fixed time')
 }
 
 function sellsNothing(run, token, plain) {
@@ -714,6 +722,42 @@ const sentenceProofs = new Map([
     ?? await marksPaper()
     ?? await stockPaper()
     ?? await aMissingCommitDoesNotPass()],
+
+  ['A paid payment whose order was never written gets one order at the next sweep, for every legal basket', async (run) =>
+    doorSentence(run, 'oneSweep', 'one sweep', oneSweep, ['sweep'], 'one sweep is no longer the only way the order is written') ?? await orderPaper()],
+  ['Sweeping twice after the bank notice still leaves one order, for every legal basket', async (run) =>
+    doorSentence(run, 'bankThenSweeps', 'the bank notice and then two sweeps', bankThenSweeps, ['bank', 'sweep', 'sweep'], 'the bank notice is no longer followed by two sweeps') ?? await orderPaper()],
+  ["A sweep without the shop's secret writes nothing", async (run) =>
+    steady(() => sweepKeys)
+    ?? has(sweepKeys.some((situation) => situation.authorization === null), 'no key')
+    ?? has(sweepKeys.some((situation) => situation.authorization === 'Bearer wrong'), 'a wrong key')
+    ?? has(sweepKeys.some((situation) => situation.unset && situation.authorization === 'Bearer undefined'), 'Bearer undefined while no secret is set')
+    ?? uses(run, 'sweepKeys', 'every wrong key')
+    ?? uses(run, "rememberPayment(paidFor(basket, 'pi_std', 'succeeded'))", 'a paid payment the sweep would otherwise write')
+    ?? uses(run, 'delete process.env.CRON_SECRET', 'the shop with no secret')
+    ?? uses(run, 'process.env.CRON_SECRET = kept', 'the secret put back')
+    ?? uses(run, 'await sweep(situation.authorization)', 'the sweep with that key')
+    ?? uses(run, 'return nothingSold(', 'that nothing was sold')
+    ?? await noSalePaper()],
+  ['The sweep sells nothing for a payment that is not paid', async (run) =>
+    legalBasketsHold()
+    ?? steady(unpaidSweeps)
+    ?? has(UNPAID.every((status) => unpaidSweeps().some((situation) => situation.status === status)), 'every unpaid status')
+    ?? has(unpaidSweeps().length === legalBaskets.length * UNPAID.length, 'every legal basket in every unpaid status')
+    ?? uses(run, 'unpaidSweeps()', 'every unpaid payment')
+    ?? uses(run, "paidFor(situation.basket, 'pi_std', situation.status)", 'the unpaid status')
+    ?? uses(run, 'await sweep()', 'the sweep')
+    ?? uses(run, 'return nothingSold(', 'that nothing was sold')
+    ?? await noSalePaper()],
+  ['A payment whose order cannot be written does not stop the sweep writing the others', async (run) =>
+    steady(sweepPages)
+    ?? uses(run, 'sweepPages()', 'the three payments')
+    ?? (after(run, "paidFor(situation.newer, 'pi_new'", "notTheShops('pi_hand')") ? null : 'the payment made by hand is no longer the newest')
+    ?? uses(run, 'await sweep()', 'the sweep')
+    ?? uses(run, "saleVerdict('pi_old'", 'the oldest order')
+    ?? uses(run, "saleVerdict('pi_new'", 'the newer order')
+    ?? uses(run, '?? orderCountIs(2)', 'that only the two shop payments got orders')
+    ?? await orderPaper()],
 
   ['A payment for a product removed from the shop is still written, marked short of stock', async (run) =>
     steady(() => removedProducts)

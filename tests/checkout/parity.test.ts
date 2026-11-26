@@ -19,6 +19,7 @@ import {
   OTHER_PRICE,
   SHIPPING_MISSING,
   bankThenReturn,
+  bankThenSweeps,
   basketChanges,
   basketText,
   changedShelfId,
@@ -31,6 +32,7 @@ import {
   longestAddresses,
   oneBankNotice,
   oneReturn,
+  oneSweep,
   orderLines,
   priceRows,
   returnThenBank,
@@ -39,8 +41,11 @@ import {
   sessionLines,
   stockFull,
   stockLeft,
+  sweepKeys,
+  sweepPages,
   twoBankNotices,
   twoReturns,
+  unpaidSweeps,
   unsignedSituations,
 } from './domain.mjs'
 import {
@@ -52,6 +57,7 @@ import {
   forgedBankNotice,
   fresh,
   notCharged,
+  notTheShops,
   openPayments,
   pauseCommits,
   payment,
@@ -59,6 +65,7 @@ import {
   resumeCommits,
   seedLines,
   setShelfPrice,
+  sweep,
   unsignedBankNotice,
   waitForCommits,
 } from './shop.test.ts'
@@ -99,6 +106,7 @@ export async function deliver(basket, doors, change) {
   for (const door of doors) {
     if (door === 'bank') await bankNotice(paid)
     if (door === 'customer') await customerReturns(session, paid.id)
+    if (door === 'sweep') await sweep()
   }
   return saleRecorded(basket, paid.id, ORDER_DELIVERY)
 }
@@ -312,5 +320,41 @@ export const cases = [
     await customerReturns(session, 'pi_other')
     if (session.basket.length !== basket.lines.length) return 'the basket was cleared'
     return nothingSold(stockFull(basket))
+  })],
+
+  ['A paid payment whose order was never written gets one order at the next sweep, for every legal basket', () => checkEvery(legalBaskets, (basket) => deliver(basket, oneSweep))],
+  ['Sweeping twice after the bank notice still leaves one order, for every legal basket', () => checkEvery(legalBaskets, (basket) => deliver(basket, bankThenSweeps))],
+  ["A sweep without the shop's secret writes nothing", () => checkEvery(sweepKeys, async (situation) => {
+    const basket = knownBasket()
+    fresh()
+    seedLines(basket.lines, SHELF)
+    rememberPayment(paidFor(basket, 'pi_std', 'succeeded'))
+    const kept = process.env.CRON_SECRET
+    try {
+      if (situation.unset) delete process.env.CRON_SECRET
+      await sweep(situation.authorization)
+    } finally {
+      process.env.CRON_SECRET = kept
+    }
+    return nothingSold(stockFull(basket))
+  })],
+  ['The sweep sells nothing for a payment that is not paid', () => checkEvery(unpaidSweeps(), async (situation) => {
+    fresh()
+    seedLines(situation.basket.lines, SHELF)
+    rememberPayment(paidFor(situation.basket, 'pi_std', situation.status))
+    await sweep()
+    return nothingSold(stockFull(situation.basket))
+  })],
+  ['A payment whose order cannot be written does not stop the sweep writing the others', () => checkEvery(sweepPages(), async (situation) => {
+    fresh()
+    seedLines(situation.older.lines, SHELF)
+    seedLines(situation.newer.lines, SHELF)
+    rememberPayment(paidFor(situation.older, 'pi_old', 'succeeded'))
+    rememberPayment(paidFor(situation.newer, 'pi_new', 'succeeded'))
+    rememberPayment(notTheShops('pi_hand'))
+    await sweep()
+    return saleVerdict('pi_old', situation.older.total, 'pln', orderLines(situation.older), situation.older.shipping, ORDER_DELIVERY, stockLeft(situation.older))
+      ?? saleVerdict('pi_new', situation.newer.total, 'pln', orderLines(situation.newer), situation.newer.shipping, ORDER_DELIVERY, stockLeft(situation.newer))
+      ?? orderCountIs(2)
   })],
 ]
