@@ -13,6 +13,10 @@
 import { beforeSuccess, chargeVerdict, notChargedVerdict, nothingSold, orderCountIs, orderMatches, saleVerdict, stillPayable, stockExplained } from './books.mjs'
 import { shortShelf, twoCustomers } from './conservation.test.ts'
 import {
+  ADDRESS,
+  LATER_ADDRESS,
+  LATER_SHIPPING,
+  ORDER_DELIVERY,
   OTHER_PRICE,
   SHIPPING_MISSING,
   bankThenReturn,
@@ -25,8 +29,10 @@ import {
   forgedSituations,
   idRoundTrips,
   legalBaskets,
+  longestAddresses,
   oneBankNotice,
   oneReturn,
+  priceText,
   productFits,
   refusalsFor,
   returnThenBank,
@@ -35,7 +41,7 @@ import {
   twoReturns,
   unsignedSituations,
 } from './domain.mjs'
-import { deliver, refuse, saleRecorded } from './parity.test.ts'
+import { deliver, refuse, saleRecorded, sameMoment } from './parity.test.ts'
 import { bankNotice, charge, customerReturns, forgedBankNotice, notCharged, unsignedBankNotice } from './shop.test.ts'
 import { backendClient, reset, seed, until } from './stock-book.mjs'
 
@@ -123,6 +129,7 @@ function legalBasketsHold() {
     ?? has(legalBaskets.some((basket) => basket.lines.some((line) => line.qty > 2)), 'a quantity above two')
     ?? has(legalBaskets.some((basket) => basket.lines.some((line) => line.id !== 'a' && line.id !== 'b')), 'a product other than a and b')
     ?? has(legalBaskets.some((basket) => basket.total === 5000 && basketText(basket) === 'a:2,b:1'), 'the basket of 5000 for a:2,b:1')
+    ?? has(legalBaskets.some((basket) => priceText(basket).length === 500), 'a basket whose prices fill the payment record to exactly 500 characters')
 }
 
 function refusalHolds(rule, run, shape, missing) {
@@ -170,6 +177,8 @@ function shopStillDoesTheWork() {
   return uses(charge, 'return createPaymentIntent(', 'the shop charges the payment')
     ?? uses(charge, 'grandTotal: 1', 'the price the customer typed')
     ?? uses(charge, "basket: 'nope:9'", 'the basket the customer typed')
+    ?? uses(charge, "unitPrices: 'a:1,b:1'", 'the unit prices the customer typed')
+    ?? uses(charge, "shippingCost: '0'", 'the shipping price the customer typed')
     ?? uses(bankNotice, 'generateTestHeaderString', 'the bank signature')
     ?? uses(bankNotice, 'return handlePaymentWebhook(', 'a bank notice')
     ?? uses(forgedBankNotice, 'return handlePaymentWebhook(', 'a forged bank notice')
@@ -185,11 +194,13 @@ function sellsNothing(run, token, plain) {
     ?? uses(run, 'return nothingSold(', 'that nothing was sold')
 }
 
-async function putOrder(id, items, total, currency = 'PLN') {
+async function putOrder(id, items, total, currency = 'PLN', delivery = ORDER_DELIVERY) {
   await backendClient.transaction().create({
     _id: `order_${id}`,
     paymentIntentId: id,
     pricing: { total, currency, shipping: 0 },
+    shippingMethod: { name: delivery.service },
+    shippingAddress: { ...delivery.address },
     items,
   }).commit()
 }
@@ -251,38 +262,50 @@ async function orderPaper() {
   const line = [{ productId: 'a', quantity: 1, unit: 100 }]
   const expect = { a: 9 }
   reset()
-  const missing = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, expect), true)
+  const missing = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, ORDER_DELIVERY, expect), true)
   if (missing) return missing
   reset()
   seed([{ id: 'a', unit: 100, stock: 9 }])
   await putOrder('pi_std', [{ productId: 'a', quantity: 1, price: 9000 }], 100)
-  const priced = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, expect), true)
+  const priced = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, ORDER_DELIVERY, expect), true)
   if (priced) return priced
   reset()
   seed([{ id: 'a', unit: 100, stock: 9 }])
   await putOrder('pi_std', [{ productId: 'a', quantity: 1, price: 100 }], 100, 'USD')
-  const currency = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, expect), true)
+  const currency = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, ORDER_DELIVERY, expect), true)
   if (currency) return currency
   reset()
   seed([{ id: 'a', unit: 100, stock: 10 }])
   await putOrder('pi_std', [{ productId: 'a', quantity: 1, price: 100 }], 100)
-  const unmoved = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, expect), true)
+  const unmoved = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, ORDER_DELIVERY, expect), true)
   if (unmoved) return unmoved
+  reset()
+  seed([{ id: 'a', unit: 100, stock: 9 }])
+  await putOrder('pi_std', [{ productId: 'a', quantity: 1, price: 100 }], 100, 'PLN', { service: 'DHL', address: ORDER_DELIVERY.address })
+  const service = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, ORDER_DELIVERY, expect), true)
+  if (service) return service
+  for (const field of Object.keys(ORDER_DELIVERY.address)) {
+    reset()
+    seed([{ id: 'a', unit: 100, stock: 9 }])
+    await putOrder('pi_std', [{ productId: 'a', quantity: 1, price: 100 }], 100, 'PLN', { service: ORDER_DELIVERY.service, address: { ...ORDER_DELIVERY.address, [field]: 'elsewhere' } })
+    const sent = twice(() => saleVerdict('pi_std', 100, 'pln', line, 0, ORDER_DELIVERY, expect), true)
+    if (sent) return sent
+  }
   reset()
   seed([{ id: 'a', unit: 100, stock: 9 }])
   await putOrder('pi_std', [{ productId: 'a', quantity: 1, price: 100 }], 100)
   const basket = { name: 'one item', lines: [{ id: 'a', qty: 1, unit: 100 }], shipping: 0, total: 100 }
-  const recorded = twice(() => saleRecorded(basket, 'pi_std'), false)
+  const recorded = twice(() => saleRecorded(basket, 'pi_std', ORDER_DELIVERY), false)
   if (recorded) return recorded
   await putOrder('pi_extra', [{ productId: 'a', quantity: 1, price: 100 }], 100)
-  const extra = twice(() => saleRecorded(basket, 'pi_std'), true)
+  const extra = twice(() => saleRecorded(basket, 'pi_std', ORDER_DELIVERY), true)
   if (extra) return extra
   return twice(() => orderCountIs(1), true)
 }
 
 function unmatchedOrder() {
   reset()
-  return twice(() => orderMatches('pi_c1', 100, 'pln', [{ productId: 'c', quantity: 1, unit: 100 }], 0), true)
+  return twice(() => orderMatches('pi_c1', 100, 'pln', [{ productId: 'c', quantity: 1, unit: 100 }], 0, ORDER_DELIVERY), true)
 }
 
 async function stockPaper() {
@@ -413,6 +436,31 @@ async function aMissingCommitDoesNotPass() {
   }
 }
 
+// The bank notice and the return are both started while writes are held, and
+// the writes are released only after that.
+function sameMomentIsHeld() {
+  const text = source(sameMoment)
+  let at = -1
+  for (const mark of ['seedLines(', 'pauseCommits(', 'bankNotice(paid)', 'customerReturns(session, paid.id)', 'waitForCommits(2)', 'resumeCommits(', 'return saleRecorded(']) {
+    const next = text.indexOf(mark, at + 1)
+    if (next < 0) return 'the bank notice and the return are no longer held until both have read the shelf'
+    at = next
+  }
+  return null
+}
+
+function laterShippingDiffers() {
+  if (LATER_SHIPPING.shippingMethodName === ORDER_DELIVERY.service) return 'the later shipping choice is the same service'
+  if (legalBaskets.some((basket) => basket.shipping === LATER_SHIPPING.shippingCost)) return 'the later shipping price is one a legal basket pays'
+  return null
+}
+
+function laterAddressDiffers() {
+  const same = Object.keys(ADDRESS).filter((field) => LATER_ADDRESS[field] === ADDRESS[field])
+  if (same.length !== 0) return `the later address keeps ${same.join(', ')}`
+  return null
+}
+
 const sentenceProofs = new Map([
   ['Every legal basket is charged the shelf price, not the price the customer typed', (run) =>
     legalBasketsHold() ?? uses(run, 'legalBaskets', 'every legal basket') ?? uses(run, 'priceRows(basket))', 'the shelf price') ?? uses(run, 'return chargeVerdict(', 'the amount, the currency, and the basket on the payment') ?? chargePaper()],
@@ -445,6 +493,9 @@ const sentenceProofs = new Map([
     refusalHolds('id', run, (list) => list.every((situation) => !idRoundTrips(situation.basket[0].productId)) && list.some((situation) => situation.basket[0].productId.includes(',')) && list.some((situation) => situation.basket[0].productId.includes(':')), 'a product id with a comma and a product id with a colon')],
   ['A basket that does not fit in the payment record is not charged', (run) =>
     refusalHolds('fit', run, (list) => list.every((situation) => `${situation.basket[0].productId}:${situation.basket[0].quantity}`.length > 500), 'a basket text longer than the payment record')],
+  ['An address that does not fit in the payment record is not charged', (run) =>
+    refusalHolds('address', run, (list) => list.every((situation) => JSON.stringify(situation.address ?? null).length > 500), 'an address longer than the payment record')
+    ?? uses(refuse, 'extra.address = situation.address', 'the address of the situation')],
 
   ['Changing to any other legal basket leaves exactly one charge for the new basket', (run) =>
     changesHold()
@@ -466,6 +517,21 @@ const sentenceProofs = new Map([
     ?? chargePaper()
     ?? await orderPaper()],
 
+  ['A payment the shop creates for the longest address it accepts becomes one order to that address', async (run) =>
+    steady(longestAddresses)
+    ?? has(longestAddresses().every((situation) => JSON.stringify(situation.address).length === 500), 'an address of exactly 500 characters')
+    ?? has(longestAddresses().every((situation) => situation.delivery.address.line1 !== ORDER_DELIVERY.address.line1), 'an order address other than the usual one')
+    ?? uses(run, 'longestAddresses()', 'the longest address')
+    ?? uses(run, 'address: situation.address', 'the long address in the session')
+    ?? uses(run, 'chargeVerdict(created', 'the payment the shop created')
+    ?? uses(run, 'if (wrong) return wrong', 'a wrong charge')
+    ?? uses(run, 'metadata.address.length', 'the length of the address on the payment')
+    ?? uses(run, 'await bankNotice(created[0])', 'the bank notice')
+    ?? uses(run, 'return saleRecorded(basket, created[0].id, situation.delivery)', 'the order to that address')
+    ?? recordedSaleHolds()
+    ?? chargePaper()
+    ?? await orderPaper()],
+
   ['One bank notice creates one order for every legal basket', async (run) =>
     doorSentence(run, 'oneBankNotice', 'one bank notice', oneBankNotice, ['bank'], 'one bank notice is no longer a single notice from the bank') ?? await orderPaper()],
   ['The same bank notice twice still creates one order for every legal basket', async (run) =>
@@ -478,6 +544,13 @@ const sentenceProofs = new Map([
     doorSentence(run, 'returnThenBank', 'the customer returning before the bank notice', returnThenBank, ['customer', 'bank'], 'the customer no longer returns before the bank notice') ?? await orderPaper()],
   ['The bank notice arrives, then the customer returns: still one order for every legal basket', async (run) =>
     doorSentence(run, 'bankThenReturn', 'the bank notice arriving before the customer returns', bankThenReturn, ['bank', 'customer'], 'the bank notice no longer arrives before the customer returns') ?? await orderPaper()],
+  ["The bank notice and the customer's return at the same moment still create one order for every legal basket", async (run) =>
+    legalBasketsHold()
+    ?? uses(run, 'legalBaskets', 'every legal basket')
+    ?? uses(run, 'sameMoment', 'the bank notice and the return arriving at once')
+    ?? sameMomentIsHeld()
+    ?? recordedSaleHolds()
+    ?? await orderPaper()],
 
   ['A later shelf price does not change the order when the customer returns first', async (run) =>
     doorSentence(run, 'returnThenBank', 'the customer returning before the bank notice', returnThenBank, ['customer', 'bank'], 'the customer no longer returns before the bank notice')
@@ -500,6 +573,16 @@ const sentenceProofs = new Map([
     doorSentence(run, 'bankThenReturn', 'the bank notice arriving before the customer returns', bankThenReturn, ['bank', 'customer'], 'the bank notice no longer arrives before the customer returns')
     ?? changeIsInside(run, 'differentSessionLines(', 'the later basket is no longer applied to the sale')
     ?? basketStillChanges()
+    ?? await orderPaper()],
+  ['A later shipping choice does not change the order when the customer returns first', async (run) =>
+    doorSentence(run, 'returnThenBank', 'the customer returning before the bank notice', returnThenBank, ['customer', 'bank'], 'the customer no longer returns before the bank notice')
+    ?? changeIsInside(run, 'LATER_SHIPPING', 'the later shipping choice is no longer applied to the sale')
+    ?? laterShippingDiffers()
+    ?? await orderPaper()],
+  ['A later address does not change the order when the customer returns first', async (run) =>
+    doorSentence(run, 'returnThenBank', 'the customer returning before the bank notice', returnThenBank, ['customer', 'bank'], 'the customer no longer returns before the bank notice')
+    ?? changeIsInside(run, 'LATER_ADDRESS', 'the later address is no longer applied to the sale')
+    ?? laterAddressDiffers()
     ?? await orderPaper()],
 
   ['A payment that is still processing sells nothing, and success afterwards sells once', async (run) =>
@@ -575,7 +658,7 @@ export async function testsHold(parityCases, conservationCases) {
     if (checker) return checker
     const shop = shopStillDoesTheWork()
     if (shop) return shop
-    const helpers = returnsPass(refuse) ?? returnsPass(deliver) ?? returnsPass(saleRecorded) ?? returnsPass(twoCustomers) ?? returnsPass(shortShelf)
+    const helpers = returnsPass(refuse) ?? returnsPass(deliver) ?? returnsPass(saleRecorded) ?? returnsPass(twoCustomers) ?? returnsPass(shortShelf) ?? returnsPass(sameMoment)
     if (helpers) return helpers
     for (const [name, proof] of sentenceProofs) {
       const run = sentences.get(name)

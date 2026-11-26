@@ -104,8 +104,74 @@ export function differentSessionLines(basket) {
   return [{ productId: line.id, quantity: qty }]
 }
 
+// The address on every payment in this proof, as the shop writes it.
+export const ADDRESS = {
+  firstName: 'Ada',
+  lastName: 'Lovelace',
+  phone: '1',
+  regionCode: 'PL',
+  postalCode: '00-001',
+  street: 'Main',
+  streetNumber: '1',
+  city: 'Warsaw',
+}
+
+// What an order for that payment must say about delivery: the service the
+// customer paid for, and the address in the order's own words.
+export const ORDER_DELIVERY = {
+  service: 'InPost',
+  address: { name: 'Ada Lovelace', line1: 'Main 1', city: 'Warsaw', postalCode: '00-001', country: 'PL', phone: '1' },
+}
+
+// Chosen after paying. Every field differs from what was paid for.
+export const LATER_ADDRESS = {
+  firstName: 'Bob',
+  lastName: 'Nowak',
+  phone: '2',
+  regionCode: 'DE',
+  postalCode: '10115',
+  street: 'Other',
+  streetNumber: '9',
+  city: 'Berlin',
+}
+
+export const LATER_SHIPPING = {
+  shippingCode: 'dhl',
+  shippingCost: 1700,
+  shippingMethodName: 'Courier',
+  shippingCarrier: 'DHL',
+  shippingEstimatedDays: 5,
+}
+
+// ADDRESS with a longer street, so its text on the payment is exactly n characters.
+export function addressOfLength(n) {
+  const room = n - JSON.stringify({ ...ADDRESS, street: '' }).length
+  if (!Number.isInteger(room) || room < 1) fail(`an address of ${n} characters cannot be written`)
+  return { ...ADDRESS, street: 'M'.repeat(room) }
+}
+
+// The longest address the payment record holds, and the order address it must become.
+export function longestAddresses() {
+  const address = addressOfLength(500)
+  return [{
+    name: 'an address whose text on the payment is 500 characters',
+    address,
+    delivery: { service: ORDER_DELIVERY.service, address: { ...ORDER_DELIVERY.address, line1: `${address.street} 1` } },
+  }]
+}
+
+// The longest id the payment record holds at a price of 100: its price text
+// id:100 is 500 characters. Its basket text id:1 is 498.
+const LONGEST_ID = `p${'x'.repeat(495)}`
+
+// The basket's unit prices as the payment record writes them.
+export function priceText(basket) {
+  return basket.lines.map((line) => `${line.id}:${line.unit}`).join(',')
+}
+
 export const legalBaskets = [
   { name: 'one item at 100', lines: [{ id: 'a', qty: 1, unit: 100 }], shipping: 0, total: 100 },
+  { name: 'one item with the longest id the payment record holds', lines: [{ id: LONGEST_ID, qty: 1, unit: 100 }], shipping: 0, total: 100 },
   { name: 'two items at 100', lines: [{ id: 'a', qty: 2, unit: 100 }], shipping: 0, total: 200 },
   { name: 'one each of a, b and c', lines: [
     { id: 'a', qty: 1, unit: 100 },
@@ -147,8 +213,8 @@ export function basketChanges() {
 
 export const SHIPPING_MISSING = 'missing'
 
-function refusal(rule, name, basket, shipping, rows) {
-  return { rule, name, basket, shipping, rows }
+function refusal(rule, name, basket, shipping, rows, address) {
+  return { rule, name, basket, shipping, rows, address }
 }
 
 function row(id, unit) {
@@ -217,6 +283,8 @@ export const refusals = [
 
   refusal('fit', 'a basket text of 501 characters', [{ productId: longId, quantity: 1 }], 0, [row(longId, 1000)]),
   refusal('fit', 'a basket text of 600 characters', [{ productId: longerId, quantity: 1 }], 0, [row(longerId, 1000)]),
+
+  refusal('address', 'an address of 501 characters', [{ productId: 'a', quantity: 1 }], 0, [row('a', 100)], addressOfLength(501)),
 ]
 
 export function refusalsFor(rule) {
@@ -290,7 +358,7 @@ export function worldsAreExact() {
     if (changed.length === known.lines.length && changed.every((line, i) => line.productId === known.lines[i].id && line.quantity === known.lines[i].qty)) {
       fail('the later basket is the same as the known basket')
     }
-    const rules = ['empty', 'shipping', 'unknown', 'price', 'zero', 'negative', 'fraction', 'grosze', 'exact', 'id', 'fit']
+    const rules = ['empty', 'shipping', 'unknown', 'price', 'zero', 'negative', 'fraction', 'grosze', 'exact', 'id', 'fit', 'address']
     for (const rule of rules) refusalsFor(rule)
     for (const situation of refusals) {
       if (!situation.name) fail('a refusal has no name')
@@ -306,9 +374,15 @@ export function worldsAreExact() {
         const text = `${situation.basket[0].productId}:${situation.basket[0].quantity}`
         if (text.length <= 500) fail(`${situation.name} fits in the payment record`)
       }
+      if (situation.rule === 'address' && JSON.stringify(situation.address).length <= 500) {
+        fail(`${situation.name} fits in the payment record`)
+      }
     }
     for (const basket of legalBaskets) {
-      if (basketText(basket).length > 500) fail(`${basket.name} does not fit in the payment record`)
+      if (basketText(basket).length > 500 || priceText(basket).length > 500) fail(`${basket.name} does not fit in the payment record`)
+    }
+    for (const situation of longestAddresses()) {
+      if (JSON.stringify(situation.address).length !== 500) fail(`${situation.name} is not 500 characters`)
     }
     for (const situation of filledShelves) checkShelf(situation, true)
     for (const situation of shortShelves) checkShelf(situation, false)

@@ -10,7 +10,7 @@
 // A NO names the smallest situation that did not.
 
 import { orderCountIs, orderMatches, stockExplained } from './books.mjs'
-import { checkEvery, filledShelves, shortShelves } from './domain.mjs'
+import { ORDER_DELIVERY, checkEvery, filledShelves, shortShelves } from './domain.mjs'
 import {
   bankNotice,
   fresh,
@@ -39,8 +39,8 @@ export async function twoCustomers(situation) {
   await bankNotice(first)
   await bankNotice(second)
   const line = lineFor(situation)
-  return orderMatches('pi_c1', situation.amount, 'pln', line, 0)
-    ?? orderMatches('pi_c2', situation.amount, 'pln', line, 0)
+  return orderMatches('pi_c1', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
+    ?? orderMatches('pi_c2', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
     ?? stockExplained({ c: situation.stock })
     ?? orderCountIs(situation.buyers)
 }
@@ -52,7 +52,7 @@ export async function shortShelf(situation) {
   const first = paid('pi_c1', situation)
   if (situation.buyers === 1) {
     await bankNotice(first)
-    return orderMatches('pi_c1', situation.amount, 'pln', line, 0)
+    return orderMatches('pi_c1', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
       ?? stockExplained({ c: situation.stock })
       ?? orderCountIs(situation.buyers)
   }
@@ -66,8 +66,8 @@ export async function shortShelf(situation) {
   await left
   await right
   await bankNotice(second)
-  return orderMatches('pi_c1', situation.amount, 'pln', line, 0)
-    ?? orderMatches('pi_c2', situation.amount, 'pln', line, 0)
+  return orderMatches('pi_c1', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
+    ?? orderMatches('pi_c2', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
     ?? stockExplained({ c: situation.stock })
     ?? orderCountIs(situation.buyers)
 }

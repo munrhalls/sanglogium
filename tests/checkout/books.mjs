@@ -3,7 +3,7 @@
 // These functions only compare the order file and the shelf with numbers
 // the caller wrote down. They never ask the shop what the right total was,
 // and they never add the shelf up themselves. A missing order, an extra
-// order, a wrong price, a negative stock count, or a paid unit with no
+// order, a wrong price, a wrong delivery, a negative stock count, or a paid unit with no
 // record of what was actually there all come back as words. Nothing here
 // calls the shop, the card company, or the network.
 //
@@ -74,18 +74,24 @@ export function beforeSuccess(sold, basketLength, lineCount) {
 }
 
 // The order and the stock, compared with the payment.
-export function saleVerdict(paymentId, amount, currency, lines, shipping, stock) {
-  return orderMatches(paymentId, amount, currency, lines, shipping) ?? stockIs(stock)
+export function saleVerdict(paymentId, amount, currency, lines, shipping, delivery, stock) {
+  return orderMatches(paymentId, amount, currency, lines, shipping, delivery) ?? stockIs(stock)
 }
 
-// One order for this payment, for this amount, for these goods.
-export function orderMatches(paymentId, amount, currency, lines, shipping) {
+// One order for this payment, for this amount, for these goods, sent by this
+// service to this address.
+export function orderMatches(paymentId, amount, currency, lines, shipping, delivery) {
   const found = orderDocs().filter((order) => order.paymentIntentId === paymentId)
   if (found.length !== 1) return `${found.length} orders for ${paymentId}`
   const order = found[0]
   if (order.pricing.total !== amount) return `the order total is ${order.pricing.total}`
   if (String(order.pricing.currency).toLowerCase() !== currency) return `the order currency is ${order.pricing.currency}`
   if (order.pricing.shipping !== shipping) return `shipping on the order is ${order.pricing.shipping}`
+  if (order.shippingMethod?.name !== delivery.service) return `the order is sent by ${order.shippingMethod?.name}`
+  for (const field of ['name', 'line1', 'city', 'postalCode', 'country', 'phone']) {
+    const sent = order.shippingAddress?.[field]
+    if (sent !== delivery.address[field]) return `the order is sent to ${field} ${String(sent).slice(0, 40)}`
+  }
   for (const line of lines) {
     const item = order.items.find((candidate) => candidate.productId === line.productId && candidate.quantity === line.quantity)
     if (!item) return `the order has no line for ${line.productId} × ${line.quantity}`
