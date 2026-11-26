@@ -80,7 +80,7 @@ export default async function ConfirmedOrderDetailsView({ orderPromise, fallback
               Shipping
               {order.shippingMethod && (
                 <span className="ml-1">
-                  ({order.shippingMethod.carrier} — {order.shippingMethod.estimatedDays ?? '?'} {order.shippingMethod.estimatedDays === 1 ? 'business day' : 'business days'})
+                  ({order.shippingMethod.name} — {order.shippingMethod.carrier} — {order.shippingMethod.estimatedDays ?? '?'} {order.shippingMethod.estimatedDays === 1 ? 'business day' : 'business days'})
                 </span>
               )}
             </span>
