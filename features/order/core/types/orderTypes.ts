@@ -30,7 +30,7 @@ export interface OrderSessionData {
 export type OrderConfirmationEmailData = {
   to: string;
   orderNumber: string;
-  items: Array<{ name: string; quantity: number; subtotal: number }>;
+  items: Array<{ name: string; quantity: number; price: number; subtotal: number }>;
   total: number;
   shippingAddress: { name: string; line1: string; city: string; postalCode: string };
   shippingMethod?: { carrier: string; estimatedDays?: number };
