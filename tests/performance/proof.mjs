@@ -17,6 +17,7 @@ import http from "node:http";
 import https from "node:https";
 import path from "node:path";
 import zlib from "node:zlib";
+import { parseEnv } from "node:util";
 
 const args = process.argv.slice(2);
 const opt = (f) => { const i = args.indexOf(f); return i < 0 ? null : args[i + 1]; };
@@ -25,7 +26,11 @@ const EXACT = args.includes("--exact");
 const RUNS = +(opt("--runs") || 5);
 const ONLY = opt("--only")?.split(",");
 const root = execFileSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf8" }).trim();
-if (fs.existsSync(path.join(root, ".env.local"))) process.loadEnvFile(path.join(root, ".env.local"));
+// Only the PageSpeed key is read from .env.local: loading the whole file would hand its NODE_ENV to the build.
+const ENV_FILE = path.join(root, ".env.local");
+const PAGE_SPEED = process.env.PAGE_SPEED || (fs.existsSync(ENV_FILE) ? parseEnv(fs.readFileSync(ENV_FILE, "utf8")).PAGE_SPEED : undefined);
+const CHILD_ENV = { ...process.env };
+delete CHILD_ENV.NODE_ENV; // next build / next start set it themselves
 
 const LIVE = "https://www.sanglogium.com";
 const BARE = "https://sanglogium.com/";
@@ -200,7 +205,7 @@ const BLOCKED = {
 // ---------- timing: Google PageSpeed on the live shop ----------
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function psiOnce(url, strategy) {
-  const key = process.env.PAGE_SPEED;
+  const key = PAGE_SPEED;
   if (!key) throw new Error("PAGE_SPEED (Google API key) is not set in .env.local");
   for (let attempt = 0; attempt < 6; attempt++) {
     const r = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=${strategy}&category=performance&key=${key}`);
@@ -258,11 +263,11 @@ async function serveLocal() {
   const mark = path.join(root, ".next", "proof-commit");
   if (dirty || !fs.existsSync(mark) || fs.readFileSync(mark, "utf8") !== sha) {
     console.error(`  building ${sha.slice(0, 9)}${dirty ? " (uncommitted changes)" : ""} for measurement`);
-    const b = spawnSync("npm", ["run", "build"], { cwd: root, stdio: ["ignore", "ignore", "inherit"] });
+    const b = spawnSync("npm", ["run", "build"], { cwd: root, env: CHILD_ENV, stdio: ["ignore", "ignore", "inherit"] });
     if (b.status !== 0) throw new Error("the production build failed");
     if (!dirty) fs.writeFileSync(mark, sha);
   }
-  const server = spawn(path.join(root, "node_modules/.bin/next"), ["start", "-p", String(PORT)], { cwd: root, stdio: "ignore" });
+  const server = spawn(path.join(root, "node_modules/.bin/next"), ["start", "-p", String(PORT)], { cwd: root, env: CHILD_ENV, stdio: "ignore" });
   for (let i = 0; i < 120; i++) { try { if ((await get(`http://localhost:${PORT}/`)).status === 200) return { server, sha }; } catch {} await sleep(1000); }
   server.kill();
   throw new Error("the local server did not start");
