@@ -79,7 +79,7 @@ export async function getPaymentPageData(ports: {
   for (const product of sanityProducts) {
     if (!Number.isFinite(product.price_data?.unit_amount)) {
       await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_invalid_price', data: { productId: product._id }, outcome: 'error' });
-      throw new Error(`Product ${product._id} has invalid price`);
+      redirect("/basket?error=invalid_total");
     }
     if (product.stock === 0) {
       await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_out_of_stock', data: { productId: product._id }, outcome: 'error' });
