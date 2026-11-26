@@ -153,7 +153,6 @@ function PaymentFormInner({
         line1: `${address.street} ${address.streetNumber}`,
         postal_code: address.postalCode,
         city: address.city,
-        state: address.regionCode,
         country: "PL",
       },
     };
@@ -224,7 +223,6 @@ function PaymentFormInner({
                 line1: `${address.street} ${address.streetNumber}`,
                 postal_code: address.postalCode,
                 city: address.city,
-                state: address.regionCode,
                 country: "PL",
               },
             };
