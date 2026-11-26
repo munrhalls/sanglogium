@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { unstable_rethrow } from "next/navigation";
 import { saveShippingAction } from "@/features/checkout/actions/saveShippingAction";
 import { formatPriceMajor } from "@/platform/utils/price";
 import { cn } from "@/platform/utils/tailwind";
@@ -72,10 +73,7 @@ export default function ShippingStep({
         selectedOption.estimatedDays
       );
     } catch (err) {
-      // NEVER intercept Next.js redirect errors — let the framework handle navigation
-      if (err instanceof Error && (err as any).digest === "NEXT_REDIRECT") {
-        throw err;
-      }
+      unstable_rethrow(err);
       setError(err instanceof Error ? err.message : "The shipping choice could not be saved.");
       setIsSubmitting(false);
     }
