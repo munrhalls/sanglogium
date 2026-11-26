@@ -6,10 +6,8 @@ import type {
   Payments,
   OrderEmails,
 } from "@/features/checkout/core/ports";
-import type { OrderSessionData } from "@/features/order";
 import type { PaymentSnapshot } from "@/features/checkout/core/types/checkoutTypes";
 import { logEvent } from "@/platform/utils/eventLogger";
-import { getSession } from "@/features/auth/server";
 import { placeOrderFromPayment } from "./placeOrderFromPayment";
 
 export async function handlePaymentReturn(
@@ -20,8 +18,6 @@ export async function handlePaymentReturn(
 
   const session = await ports.sessions.getCheckoutSession();
   const traceId = session.checkoutSessionId || 'unknown';
-
-  const authSession = await getSession();
 
   await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_start', data: { hasPaymentIntent: !!payment_intent }, outcome: 'success' });
 
@@ -71,20 +67,6 @@ export async function handlePaymentReturn(
 
   await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_lifecycle_start', data: { paymentIntentId: payment.id, status: payment.status }, outcome: 'success' });
 
-  // Capture session data before clearing — needed for concurrent order creation on succeeded path
-  const capturedSessionData: OrderSessionData | null = payment.status === 'succeeded' ? {
-    basket: session.basket ?? [],
-    address: session.address,
-    shippingCode: session.shippingCode,
-    shippingCost: session.shippingCost,
-    shippingMethodName: session.shippingMethodName,
-    shippingCarrier: session.shippingCarrier,
-    shippingEstimatedDays: session.shippingEstimatedDays,
-    email: session.email,
-    checkoutSessionId: session.checkoutSessionId,
-    userId: authSession?.userId,
-  } : null;
-
   // Step 2: partial-clear per canonical lifecycle table
   // C-01: webhook is the authoritative fulfillment path; return handler only does cleanup + routing
   switch (payment.status) {
@@ -132,9 +114,9 @@ export async function handlePaymentReturn(
   // Step 3b: on succeeded path, create order synchronously before redirect
   // Idempotent — createOrderFromPayment skips if order already exists (webhook may also fire).
   // Non-fatal: wrapped in try/catch so a Sanity error never blocks the user redirect.
-  if (payment.status === 'succeeded' && capturedSessionData) {
+  if (payment.status === 'succeeded') {
     try {
-      await placeOrderFromPayment({ orders: ports.orders, emails: ports.emails }, { payment, sessionData: capturedSessionData });
+      await placeOrderFromPayment({ orders: ports.orders, emails: ports.emails }, { payment });
       await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_created', data: { paymentIntentId: payment.id }, outcome: 'success' });
     } catch (err) {
       await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_order_create_failed', data: { paymentIntentId: payment.id, error: err instanceof Error ? err.message : String(err) }, outcome: 'error' });
