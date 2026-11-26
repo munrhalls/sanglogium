@@ -15,6 +15,11 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
     ? `<p style="margin:0;">${addressed.country}</p>`
     : ""
 
+  const method = data.shippingMethod
+  const methodLine = method
+    ? `<p style="margin:0;">${method.carrier} — ${method.estimatedDays ?? '?'} ${method.estimatedDays === 1 ? 'business day' : 'business days'}</p>`
+    : ""
+
   const itemsHtml = items
     .map(
       (item) =>
@@ -48,6 +53,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
         <p style="margin-top:16px;font-size:16px;">
           <strong>Total:</strong> ${formatPrice(total)}
         </p>
+        ${methodLine}
         <div style="margin-top:24px;padding:16px;background:#f9fafb;border-radius:8px;">
           <p style="margin:0 0 8px;font-weight:bold;">Shipping to:</p>
           <p style="margin:0;">${shippingAddress.name}</p>
