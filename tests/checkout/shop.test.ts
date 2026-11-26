@@ -25,7 +25,7 @@ function paymentsPort() {
 
 function ordersPort() {
   return {
-    createOrderFromPayment: (payment, sessionData) => createOrderFromPayment(payment, sessionData),
+    createOrderFromPayment: (payment) => createOrderFromPayment(payment),
     async getOrderByPaymentIntentId(id) {
       return orderDocs().find((order) => order.paymentIntentId === id) ?? null
     },
