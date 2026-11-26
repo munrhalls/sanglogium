@@ -61,6 +61,7 @@ export type Payments = {
     metadata: Record<string, string>,
     idempotencyKey: string
   ) => Promise<PaymentHandle>;
+  listPayments: (createdSince: number) => Promise<PaymentSnapshot[]>;
 };
 
 export type OrderEmails = {

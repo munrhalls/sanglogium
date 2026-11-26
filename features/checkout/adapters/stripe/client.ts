@@ -52,6 +52,23 @@ export async function retrievePayment(paymentId: string): Promise<PaymentSnapsho
   return toPaymentSnapshot(pi)
 }
 
+// Every PaymentIntent created at or after createdSince (seconds), newest first, all pages.
+export async function listPayments(createdSince: number): Promise<PaymentSnapshot[]> {
+  const payments: PaymentSnapshot[] = []
+  let startingAfter: string | undefined
+  for (;;) {
+    const page = await stripe.paymentIntents.list({
+      created: { gte: createdSince },
+      limit: 100,
+      expand: ['data.latest_charge'],
+      ...(startingAfter ? { starting_after: startingAfter } : {}),
+    })
+    for (const pi of page.data) payments.push(toPaymentSnapshot(pi))
+    if (!page.has_more || page.data.length === 0) return payments
+    startingAfter = page.data[page.data.length - 1].id
+  }
+}
+
 export async function updatePaymentAmount(
   paymentId: string,
   amount: number,
