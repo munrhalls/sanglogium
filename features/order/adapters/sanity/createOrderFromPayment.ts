@@ -13,8 +13,6 @@ interface ProductDoc {
 }
 
 
-const STRIPE_METADATA_MAX_SAFE = 450
-
 // C-02: Support both compact format (productId:quantity,...) and legacy JSON
 function parseMetadataBasket(rawBasket: string): BasketItem[] {
   if (rawBasket.includes(':')) {
@@ -32,9 +30,6 @@ function resolveChargedBasket(pi: PaidPayment): BasketItem[] {
   const rawBasket = pi.metadata?.basket
   if (!rawBasket) {
     throw new Error(`Missing basket metadata for PI ${pi.id}`)
-  }
-  if (rawBasket.length > STRIPE_METADATA_MAX_SAFE) {
-    throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
   }
   let basket: BasketItem[]
   try {
@@ -90,10 +85,6 @@ function resolveOrderData(
 
   if (!rawAddress) {
     throw new Error(`Missing basket/address metadata for PI ${pi.id}`)
-  }
-
-  if (rawAddress.length > STRIPE_METADATA_MAX_SAFE) {
-    throw new Error(`Metadata value exceeds safe length limit for PI ${pi.id}`)
   }
 
   const basket = resolveChargedBasket(pi)
