@@ -14,6 +14,7 @@ interface CheckoutItem {
 interface Address {
   firstName?: string;
   lastName?: string;
+  phone?: string;
   street: string;
   streetNumber: string;
   city: string;
@@ -74,6 +75,9 @@ export default function CheckoutSummary({
             {address.postalCode} {address.city}
           </p>
           <p className="type-body">{address.regionCode}</p>
+          {address.phone && (
+            <p className="type-body">{address.phone}</p>
+          )}
         </div>
       )}
 
