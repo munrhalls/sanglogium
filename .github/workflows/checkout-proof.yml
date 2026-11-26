@@ -1,0 +1,31 @@
+name: Checkout proof
+
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checkout-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
+
+      - name: Run the checkout proof twice and compare
+        shell: bash
+        run: |
+          npm run --silent proof:checkout | tee first.txt
+          npm run --silent proof:checkout > second.txt
+          cmp first.txt second.txt
