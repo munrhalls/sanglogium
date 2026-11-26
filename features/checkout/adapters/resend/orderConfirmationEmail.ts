@@ -20,6 +20,10 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
     ? `<p style="margin:0;">${method.carrier} — ${method.estimatedDays ?? '?'} ${method.estimatedDays === 1 ? 'business day' : 'business days'}</p>`
     : ""
 
+  const nameLine = data.methodName
+    ? `<p style="margin:0;">${data.methodName}</p>`
+    : ""
+
   const shippingLine = `<p style="margin:0;">Shipping ${formatPrice(shipping)}</p>`
 
   const taxLine = data.tax > 0
@@ -70,6 +74,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
           </thead>
           <tbody>${itemsHtml}</tbody>
         </table>
+        ${nameLine}
         ${methodLine}
         ${shippingLine}
         ${taxLine}
