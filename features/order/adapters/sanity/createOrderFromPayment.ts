@@ -362,5 +362,5 @@ export async function createOrderFromPayment(
   if (process.env.NODE_ENV !== 'production') {
     console.log(`[ORDER CREATE] Order ${orderNumber} created for PI ${paymentIntentId}, stock decremented for ${requestedByProduct.size - shortfalls.length} products`)
   }
-  return { created: true, email: { to: customerEmail, orderNumber, items, total, shippingAddress } }
+  return { created: true, email: { to: customerEmail, orderNumber, items, total, shippingAddress, ...(shippingMethod ? { shippingMethod: { carrier: shippingMethod.carrier, estimatedDays: shippingMethod.estimatedDays } } : {}) } }
 }
