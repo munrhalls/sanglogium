@@ -71,6 +71,19 @@ export async function createPaymentIntent(
       unitPriceParts.push(`${item.productId}:${unitPrice}`)
     }
 
+    // The shelf must hold every unit asked for, adding up lines of the same product.
+    const requested = new Map<string, number>()
+    for (const item of session.basket) {
+      requested.set(item.productId, (requested.get(item.productId) ?? 0) + item.quantity)
+    }
+    for (const [productId, quantity] of requested) {
+      const stock = products.find(p => p._id === productId)?.stock
+      if (typeof stock !== 'number' || !Number.isSafeInteger(stock) || stock < quantity) {
+        await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_out_of_stock', data: { productId, requested: quantity, stock: stock ?? null }, outcome: 'error' })
+        return { ok: false, error: `Not enough stock for product ${productId}`, status: 400 }
+      }
+    }
+
     if (!Number.isSafeInteger(shippingCost) || shippingCost < 0) {
       await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_intent_invalid_shipping', data: { shippingCost: shippingCost }, outcome: 'error' })
       return { ok: false, error: 'Invalid shipping cost', status: 400 }
