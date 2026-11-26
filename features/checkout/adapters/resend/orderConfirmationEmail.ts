@@ -22,10 +22,10 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
 
   const shippingLine = `<p style="margin:0;">Shipping ${formatPrice(shipping)}</p>`
 
+  const placed = new Date(data.orderedAt)
   const days = method?.estimatedDays
   const deliveryLine = days
     ? (() => {
-        const placed = new Date(data.orderedAt)
         const from = new Date(placed)
         from.setDate(from.getDate() + days)
         const to = new Date(placed)
@@ -34,7 +34,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
         return `<p style="margin:0;">Estimated delivery ${fmt(from)}–${fmt(to)}</p>`
       })()
     : ""
-
+  const dateLine = `<p style="margin:0;">Date: ${placed.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>`
   const itemsHtml = items
     .map(
       (item) =>
@@ -55,6 +55,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
       <div style="max-width:480px;margin:0 auto;font-family:sans-serif;color:#111827;">
         <h1 style="font-size:20px;margin-bottom:16px;">Thank you for your order!</h1>
         <p style="margin-bottom:8px;"><strong>Order:</strong> ${orderNumber}</p>
+        ${dateLine}
         <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;">
           <thead>
             <tr style="border-bottom:2px solid #d1d5db;">
