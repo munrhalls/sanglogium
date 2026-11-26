@@ -109,7 +109,7 @@ export default function CheckoutSummary({
                     </span>
                   )}
                   <span className="type-card-title break-words" style={{ wordBreak: "break-word" }}>
-                    {item.name || "Product"} <span className="text-text-secondary">× {item.quantity}</span>
+                    {item.name || "Product"} <span className="text-text-secondary">× {item.quantity}</span> <span className="ml-1">({formatPrice(item.unitPrice)} each)</span>
                   </span>
                 </div>
                 <span className="type-price shrink-0 tabular-nums min-w-[72px] text-right">{formatPrice(item.lineTotal)}</span>
