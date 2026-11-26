@@ -1,5 +1,5 @@
-import { getPaymentPageData } from "@/features/checkout/server";
-import { CheckoutSummary, CheckoutStepper, PaymentForm, PaymentNav } from "@/features/checkout";
+import { getPaymentPageData, PaymentForm } from "@/features/checkout/server";
+import { CheckoutSummary, CheckoutStepper, PaymentNav } from "@/features/checkout";
 
 export default async function Page() {
   const {
