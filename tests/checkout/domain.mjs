@@ -215,6 +215,37 @@ export const twoReturns = ['customer', 'customer']
 export const returnThenBank = ['customer', 'bank']
 export const bankThenReturn = ['bank', 'customer']
 
+// The sweep runs at this fixed time, in seconds. Every payment in this proof
+// was made an hour before it. The secret is the one load.mjs sets.
+export const SWEEP_NOW = 1800000000
+export const PAID_AT = SWEEP_NOW - 3600
+export const SWEEP_SECRET = 'checkout-proof-sweep'
+
+export const oneSweep = ['sweep']
+export const bankThenSweeps = ['bank', 'sweep', 'sweep']
+
+export const sweepKeys = [
+  { name: 'no key', authorization: null, unset: false },
+  { name: 'a wrong key', authorization: 'Bearer wrong', unset: false },
+  { name: 'an empty key', authorization: 'Bearer ', unset: false },
+  { name: 'the right secret without Bearer', authorization: SWEEP_SECRET, unset: false },
+  { name: 'Bearer undefined, while the shop has no secret set', authorization: 'Bearer undefined', unset: true },
+]
+
+export const UNPAID = ['requires_payment_method', 'processing', 'canceled']
+
+export function unpaidSweeps() {
+  return legalBaskets.flatMap((basket) => UNPAID.map((status) => ({ name: `${basket.name}, ${status}`, basket, status })))
+}
+
+// Two shop payments with no shared product, and a newer one made by hand.
+export function sweepPages() {
+  const older = legalBaskets.find((basket) => basket.name === 'one lamp at 2500')
+  const newer = legalBaskets.find((basket) => basket.name === 'one each of a, b and c')
+  if (!older || !newer) fail('the sweep baskets are missing')
+  return [{ name: 'three paid payments over two pages, the newest made by hand outside the shop', older, newer }]
+}
+
 export function knownBasket() {
   const found = legalBaskets.find((basket) => basket.total === 5000)
   if (!found) fail('the known basket is missing')
@@ -423,6 +454,12 @@ export function worldsAreExact() {
     }
     for (const situation of longestAddresses()) {
       if (JSON.stringify(situation.address).length !== 500) fail(`${situation.name} is not 500 characters`)
+    }
+    if (SWEEP_NOW - PAID_AT !== 3600) fail('the payments are not an hour before the sweep')
+    if (process.env.CRON_SECRET !== SWEEP_SECRET) fail('the proof runs without its sweep secret')
+    for (const situation of sweepPages()) {
+      const ids = new Set(situation.older.lines.map((line) => line.id))
+      if (situation.newer.lines.some((line) => ids.has(line.id))) fail(`${situation.name} shares a product`)
     }
     for (const situation of filledShelves) checkShelf(situation, true)
     for (const situation of shortShelves) checkShelf(situation, false)

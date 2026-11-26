@@ -4,13 +4,15 @@
 // The company remembers the first request. The same request again returns
 // that same payment. Any other request with that key is refused and does
 // not change the payment. That is the card company's published rule.
-// No call leaves this machine.
+// Its list of payments comes newest first, at most two to a page, and a
+// page may be continued after its last payment. No call leaves this machine.
 //
 // cardCompanyObeysItsRule runs before the shop is asked anything. If it
 // fails, the proof stops. Later answers would have been read with a ruler
 // that can be bent.
 
 import { stripe } from '@/features/checkout/adapters/stripe/client'
+import { PAID_AT } from './domain.mjs'
 
 const payments = new Map()
 const seenKeys = new Map()
@@ -43,6 +45,7 @@ export function installCardCompany() {
         amount: body.amount,
         currency: body.currency,
         status: 'requires_payment_method',
+        created: PAID_AT,
         metadata: { ...body.metadata },
         client_secret: 'cs_test',
         receipt_email: null,
@@ -69,7 +72,25 @@ export function installCardCompany() {
     if (!payment) throw new Error(`no payment ${id}`)
     return structuredClone(payment)
   }
+  stripe.paymentIntents.list = async (params = {}) => {
+    const since = params.created?.gte
+    const listed = [...payments.values()]
+      .map((payment, index) => ({ payment, index }))
+      .filter(({ payment }) => since === undefined || payment.created >= since)
+      .sort((a, b) => (b.payment.created - a.payment.created) || (b.index - a.index))
+      .map(({ payment }) => payment)
+    let start = 0
+    if (params.starting_after) {
+      const at = listed.findIndex((payment) => payment.id === params.starting_after)
+      if (at < 0) throw new Error(`no payment ${params.starting_after}`)
+      start = at + 1
+    }
+    const size = Math.min(PAGE, params.limit ?? 10)
+    return { object: 'list', data: structuredClone(listed.slice(start, start + size)), has_more: start + size < listed.length }
+  }
 }
+
+const PAGE = 2
 
 export function resetCardCompany() {
   payments.clear()
@@ -120,6 +141,14 @@ export async function cardCompanyObeysItsRule() {
     if (!stored || stored.amount !== 5000 || stored.metadata.basket !== 'a:2,b:1') {
       return 'a refused request changed the remembered payment'
     }
+    resetCardCompany()
+    for (const [id, created] of [['pi_l1', 100], ['pi_l2', 200], ['pi_l3', 300], ['pi_l0', 50]]) {
+      payments.set(id, { id, created, status: 'succeeded', metadata: {} })
+    }
+    const page = await stripe.paymentIntents.list({ created: { gte: 100 }, limit: 100 })
+    if (page.data.map((payment) => payment.id).join() !== 'pi_l3,pi_l2' || page.has_more !== true) return 'the first page is not the two newest, with more to come'
+    const rest = await stripe.paymentIntents.list({ created: { gte: 100 }, limit: 100, starting_after: 'pi_l2' })
+    if (rest.data.map((payment) => payment.id).join() !== 'pi_l1' || rest.has_more !== false) return 'the second page is not the rest, without the older payment'
     return null
   } finally {
     resetCardCompany()
