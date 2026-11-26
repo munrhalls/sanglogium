@@ -20,7 +20,7 @@ Read **before** exploring, not after — this answers "where does X live" and "w
 - `homepage`: storefront sections, data via `adapters/sanity/`.
 - `shell`: store chrome (header, footer, navigation, drawers, content layout).
 - `newsletter`: signup form and Resend subscription.
-- `performance`: admin Lighthouse baseline report.
+- `admin`: owner-only area under /manager; `requireOwner` in `features/admin/server.ts` decides who the owner is.
 
 ## Route/folder map
 
