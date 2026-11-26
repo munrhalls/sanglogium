@@ -34,8 +34,7 @@ export const FeaturedCard = ({ product, idx }: FeaturedCardProps) => {
             alt={product.name}
             width={450}
             height={450}
-            priority={idx === 0}
-            loading={idx === 0 ? "eager" : "lazy"}
+            loading="lazy"
             className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
           />
         </figure>

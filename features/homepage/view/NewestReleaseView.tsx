@@ -48,7 +48,6 @@ export default async function NewestReleaseView({ newestReleaseData }: NewestRel
                     alt={image?.alt ?? product.name}
                     width={800}
                     height={800}
-                    priority={idx === 0}
                     sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 50vw, 640px"
                     className="max-w-full max-h-full w-auto h-auto object-contain"
                   />
