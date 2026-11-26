@@ -15,7 +15,8 @@
     "typegen": "sanity schema extract && sanity typegen generate",
     "ts-check": "tsc --noEmit --pretty",
     "ts-check:watch": "tsc --noEmit --watch",
-    "analyze": "ANALYZE=true npm run build"
+    "analyze": "ANALYZE=true npm run build",
+    "proof:checkout": "node --experimental-strip-types --import ./tools/alias-loader.mjs --import ./tests/checkout/load.mjs tests/checkout/payment-order.test.ts"
   },
   "dependencies": {
     "@better-auth/kysely-adapter": "1.6.11",
