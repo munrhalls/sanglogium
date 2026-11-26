@@ -43,7 +43,9 @@ export default function CheckoutSummary({
   vatAmount,
 }: CheckoutSummaryProps) {
   const deliveryEstimate = shippingEstimatedDays
-    ? `${shippingEstimatedDays} business days`
+    ? shippingEstimatedDays === 1
+      ? '1 business day'
+      : `${shippingEstimatedDays} business days`
     : null;
 
   return (
