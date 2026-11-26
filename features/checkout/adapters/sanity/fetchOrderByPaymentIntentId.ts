@@ -15,7 +15,7 @@ export async function fetchOrderByPaymentIntentId(
       isGuest,
       items[]{ productId, name, quantity, price, subtotal },
       pricing{ subtotal, shipping, tax, discount, total, currency },
-      shippingAddress{ name, line1, city, state, postalCode, country },
+      shippingAddress{ name, line1, city, state, postalCode, country, phone },
       shippingMethod{ name, carrier, price, estimatedDays },
       status,
       dates{ orderedAt }

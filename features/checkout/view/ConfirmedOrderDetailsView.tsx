@@ -134,6 +134,9 @@ export default async function ConfirmedOrderDetailsView({ orderPromise, fallback
                 <p className="type-section-caption">{order.shippingAddress.state}</p>
               )}
               <p className="type-section-caption">{order.shippingAddress.country}</p>
+              {order.shippingAddress.phone && (
+                <p className="type-section-caption">{order.shippingAddress.phone}</p>
+              )}
             </address>
           </div>
         )}

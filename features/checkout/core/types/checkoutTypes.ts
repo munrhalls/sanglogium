@@ -75,6 +75,7 @@ export interface OrderForSuccessPage {
     state: string;
     postalCode: string;
     country: string;
+    phone?: string;
   };
   shippingMethod?: {
     name: string;
