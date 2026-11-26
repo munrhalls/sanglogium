@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { unstable_rethrow } from 'next/navigation'
 import { initCheckoutSessionAction } from '@/features/checkout/actions/initCheckoutSessionAction'
 import { generateCheckoutSessionId } from '@/features/checkout/core/rules/checkoutSessionId'
 
@@ -54,6 +55,7 @@ export function CheckoutButton({
       // Call Server Action with checkoutSessionId
       await initCheckoutSessionAction(items, checkoutSessionId)
     } catch (err) {
+      unstable_rethrow(err)
       const message = err instanceof Error ? err.message : 'Checkout failed'
       setError(message)
       setIsProcessing(false)
