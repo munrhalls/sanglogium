@@ -121,7 +121,7 @@ export async function handlePaymentReturn(
       // KEEP basket, address, shippingCode, shippingCost
       await logEvent({ correlationId: traceId, slice: 'payment-submit', event: 'return_handler_session_partial_cleared_unknown', data: { status: payment.status }, outcome: 'error' });
       await session.save();
-      redirect(`/basket?error=unexpected_status`);
+      redirect(`/checkout/success?payment_intent=${payment.id}`);
   }
 
   // Step 3: persist session
@@ -153,7 +153,7 @@ export async function handlePaymentReturn(
       case "processing":
         return `/checkout/success?payment_intent=${payment.id}&status=processing`;
       default:
-        return `/basket?error=unexpected_status`;
+        return `/checkout/success?payment_intent=${payment.id}`;
     }
   })();
 
