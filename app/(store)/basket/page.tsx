@@ -1,5 +1,6 @@
 import { Loader } from "@/features/basket";
 import { BasketCheckout, BasketTotalRefusal } from "@/features/checkout";
+import { BasketQuantityRefusal } from "@/features/checkout";
 import { Suspense } from "react";
 import Shelf from "@/platform/design/ui/Shelf";
 
@@ -17,6 +18,7 @@ export default async function BasketPage({
         </h1>
       </div>
       {error === "invalid_total" ? <BasketTotalRefusal /> : null}
+      {error === "excessive_quantity" ? <BasketQuantityRefusal /> : null}
       <Suspense fallback={<Loader />}>
         <BasketCheckout />
       </Suspense>
