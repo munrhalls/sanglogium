@@ -8,7 +8,7 @@ import { getPaymentProducts } from './adapters/sanity/getPaymentProducts';
 import { getProductsByIds } from './adapters/sanity/getProductsByIds';
 import { getProductUnitAmountsByIds } from './adapters/sanity/getProductUnitAmountsByIds';
 import { sendOrderConfirmationEmail } from './adapters/resend/orderConfirmationEmail';
-import { retrievePayment, updatePaymentAmount, createPayment } from './adapters/stripe/client';
+import { retrievePayment, updatePaymentAmount, createPayment, listPayments } from './adapters/stripe/client';
 import { parseWebhookEvent } from './adapters/stripe/webhooks';
 import { getAddressPageData as getAddressPageDataQuery } from './queries/getAddressPageData';
 import { getShippingPageData as getShippingPageDataQuery } from './queries/getShippingPageData';
@@ -17,6 +17,7 @@ import { getSuccessPageResult as getSuccessPageResultQuery } from './queries/get
 import { createPaymentIntent as createPaymentIntentCmd } from './commands/createPaymentIntent';
 import { handlePaymentReturn as handlePaymentReturnCmd } from './commands/handlePaymentReturn';
 import { handlePaymentWebhook as handlePaymentWebhookCmd } from './commands/handlePaymentWebhook';
+import { sweepPaidPayments as sweepPaidPaymentsCmd } from './commands/sweepPaidPayments';
 import type {
   Orders,
   CheckoutCatalog,
@@ -42,7 +43,7 @@ const shipping: ShippingRates = { fetchShippingOptions };
 
 const sessions: CheckoutSessions = { getCheckoutSession };
 
-const payments: Payments = { retrievePayment, parseWebhookEvent, updatePaymentAmount, createPayment };
+const payments: Payments = { retrievePayment, parseWebhookEvent, updatePaymentAmount, createPayment, listPayments };
 
 const emails: OrderEmails = { sendOrderConfirmationEmail };
 
@@ -62,6 +63,9 @@ export const handlePaymentReturn = (
 export const handlePaymentWebhook = (
   input: Parameters<typeof handlePaymentWebhookCmd>[1]
 ) => handlePaymentWebhookCmd({ orders, payments, emails }, input);
+export const sweepPaidPayments = (
+  input: Parameters<typeof sweepPaidPaymentsCmd>[1]
+) => sweepPaidPaymentsCmd({ orders, payments, emails }, input);
 
 export { getCheckoutSession };
 export { fetchOrderByPaymentIntentId as getOrderByPaymentIntentId };

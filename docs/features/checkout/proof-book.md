@@ -9,8 +9,9 @@ Scope: what can go wrong with money, goods and failures, from the basket to a pa
 - It calls the shop's real code. The bank (Stripe) and the warehouse (Sanity) are stand-ins on this machine. Nothing waits, rolls dice or leaves the machine, so the same run twice prints the same lines.
 
 ## Why a PASS can be trusted
-- Before the shop is asked anything, the stand-in bank and warehouse must show they keep the real rules: the same request twice is one payment, and a write based on an old stock reading writes nothing. If not, the run stops as broken.
+- Before the shop is asked anything, the stand-in bank and warehouse must show they keep the real rules: the same request twice is one payment, the bank's list of payments comes newest first and two to a page, and a write based on an old stock reading writes nothing. If not, the run stops as broken.
 - Every amount is a number written into the situation. The shop is never asked what the right answer is.
+- Every refusal except the stock one is tried on a full shelf, so it can only be refused for its own reason.
 - Each line has a second check that it still runs every situation, still calls the shop, and that its reading calls wrong paperwork a NO. The "Cannot lie" sentence under each line says what that check holds.
 - This book has to list every printed line, each with why it cannot lie, and nothing else. A missing or extra line stops the run as broken.
 
@@ -23,6 +24,8 @@ Is the customer charged the right amount, for real goods, at a shipping price th
   Cannot lie: one written order or one unit gone from the shelf is read as NO.
 - **Changing to any other legal basket leaves exactly one charge for the new basket**
   Cannot lie: all 56 changes between legal baskets are tried, and no charge, two open charges or the old amount is read as NO.
+- **A basket asking for exactly what the shelf holds is charged**
+  Cannot lie: every legal basket is tried on a shelf holding exactly its units, so a shop that refuses the last unit is read as NO.
 - **An empty basket is not charged**
   Cannot lie: the list must hold an empty basket, and any payment or order is read as NO.
 - **A missing shipping price is not charged**
@@ -47,6 +50,8 @@ Is the customer charged the right amount, for real goods, at a shipping price th
   Cannot lie: every situation is checked on paper to be longer than the 500 characters the record holds, and any payment or order is read as NO.
 - **An address that does not fit in the payment record is not charged**
   Cannot lie: the address is checked on paper to be longer than the 500 characters the record holds, and any payment or order is read as NO.
+- **A basket asking for more than the shelf holds is not charged**
+  Cannot lie: the list must hold more than the shelf has, a shelf of 0, a missing count, and one product split across two lines, and any payment or order is read as NO.
 
 ### The shipping price
 - **An empty basket does not save a shipping price**
@@ -177,25 +182,35 @@ Does every payment become exactly one order, for the amount, goods, delivery ser
   Cannot lie: the other payment exists and has succeeded, so only the check that it belongs to this checkout stops the sale.
 
 ## 3. Stock
-Do the orders and the stock, read together, explain every unit?
+Do the orders and the stock, read together, explain every unit? An order short of units is marked "Short of stock", and the Studio order list shows every order's mark.
 
-- **Every pair of payments the shelf can fill takes exactly the units they paid for**
-  Cannot lie: the shelf counts are written, and stock that moved more or less than the orders record, or went below 0, is read as NO.
-- **Every payment for units the shelf does not have leaves a record of those units**
-  Cannot lie: the two sales are held until both have read the same shelf, the second notice is delivered again, and a missing unit with no record on its order is read as NO.
+- **Every pair of payments the shelf can fill takes exactly the units they paid for, and neither is marked short of stock**
+  Cannot lie: the shelf counts and marks are written, and stock that moved more or less than the orders record, stock below 0, or a wrong mark is read as NO.
+- **Every payment for units the shelf does not have is marked short of stock, and its lines record the missing units**
+  Cannot lie: the two sales are held until both have read the same shelf, the second notice is delivered again, and an order without its mark or without its missing units is read as NO.
+- **A payment for a product removed from the shop is still written, marked short of stock**
+  Cannot lie: the product is never put on the shelf, and a missing order, a unit recorded as taken, or a missing mark is read as NO.
 
 ## 4. When something fails
 Is anyone left charged with no order?
 
 - The order write is refused because another sale changed the same shelf first: the bank is told to try again, and its next notice writes the order. Answered by "Every payment for units the shelf does not have leaves a record of those units", which delivers the refused notice again.
 - The checkout cookie runs out before the customer comes back from the bank: answered by "One bank notice creates one order for every legal basket", because the bank notice needs no cookie.
+- Two customers pay for the last unit at the same moment: both saw it on the shelf, so both are charged; the second order is written and marked short of stock. Answered by "Every payment for units the shelf does not have is marked short of stock, and its lines record the missing units".
 - A basket or address so long that the order cannot be written after the charge: answered by the longest basket in every legal list and by the longest address line, each written right up to what the payment record holds.
+- The order store is down for longer than the bank keeps retrying, or the bank notice never arrives: once a day the shop sweeps the bank's paid payments of the last 7 days and writes every missing order. Answered by the sweep lines below.
+- The sweep runs in production only after the owner sets `CRON_SECRET` in Vercel and deploys. Until then it refuses every call ("A sweep without the shop's secret writes nothing").
 
-## Open
-These are known holes. Each is closed by a coming change, and its line moves up.
-- A basket asking for more units than the shelf holds is charged in full.
-- A unit paid for but missing from the shelf is recorded only inside the order line, not where the owner sees the order list.
-- If the bank notice and the customer's return both fail to write the order, and the bank stops retrying, nothing writes it later.
+- **A paid payment whose order was never written gets one order at the next sweep, for every legal basket**
+  Cannot lie: no bank notice and no return ever arrive, so only the sweep can write the order, and a missing, extra or wrong order is read as NO.
+- **Sweeping twice after the bank notice still leaves one order, for every legal basket**
+  Cannot lie: the sweep runs twice after the order exists, and a second order or stock moved twice is read as NO.
+- **A sweep without the shop's secret writes nothing**
+  Cannot lie: a paid payment is waiting each time, so only the key stops the sweep; no key, a wrong or empty key, the secret without Bearer, and "Bearer undefined" while the shop has no secret are all tried.
+- **The sweep sells nothing for a payment that is not paid**
+  Cannot lie: every legal basket is tried while the bank still wants a payment method, while it is processing, and after it was canceled, and one order or one unit gone is read as NO.
+- **A payment whose order cannot be written does not stop the sweep writing the others**
+  Cannot lie: the payment made by hand is the newest, so the sweep meets it first, and with two payments to a page the oldest order is only reached on the second page.
 
 ## Cannot happen
 - The customer is charged twice for one payment: cannot happen, because the bank lets one payment succeed only once, and the shop leaves only one payment open per checkout ("Changing to any other legal basket leaves exactly one charge for the new basket").
@@ -208,3 +223,6 @@ These are known holes. Each is closed by a coming change, and its line moves up.
 - The confirmation email: out of scope, because it is neither money nor goods; the order is written before the email is tried.
 - The card number: out of scope, because the bank's own form takes it, so the shop never sees it.
 - The tax line on the order: out of scope, because it is information inside the price and changes no amount charged.
+- What the owner does with an order marked short of stock (a part refund, a restock): out of scope, because the shop has no refund feature; the mark shows which order needs it.
+- A paid payment more than 7 days old with no order: out of scope, because the bank retries its notice for hours (test mode) up to 3 days (live mode) and the sweep runs every day over the last 7 days, so it takes a week of failures in a row.
+- A bank notice for a payment made by hand outside the shop is answered with an error, and the bank retries it: out of scope, because it is not a shop order; the sweep skips it and still writes the others.

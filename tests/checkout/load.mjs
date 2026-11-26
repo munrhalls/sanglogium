@@ -14,6 +14,8 @@ process.env.STRIPE_SECRET_KEY ||= 'checkout-proof-stand-in'
 process.env.STRIPE_WEBHOOK_SECRET ||= 'whsec_checkout_proof'
 process.env.LOG_LEVEL ||= 'silent'
 process.env.NODE_ENV ||= 'production'
+// Always this value, so no outside secret changes what the sweep lines try.
+process.env.CRON_SECRET = 'checkout-proof-sweep'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(here, '../..')

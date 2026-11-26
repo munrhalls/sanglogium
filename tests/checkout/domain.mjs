@@ -65,7 +65,12 @@ export function sessionLines(basket) {
 }
 
 export function priceRows(basket) {
-  return basket.lines.map((line) => ({ _id: line.id, price_data: { unit_amount: line.unit } }))
+  return basket.lines.map((line) => ({ _id: line.id, price_data: { unit_amount: line.unit }, stock: SHELF }))
+}
+
+// The shelf holds exactly the units the basket asks for.
+export function fullShelfRows(basket) {
+  return basket.lines.map((line) => ({ _id: line.id, price_data: { unit_amount: line.unit }, stock: line.qty }))
 }
 
 export function orderLines(basket) {
@@ -74,6 +79,22 @@ export function orderLines(basket) {
 
 // The shelf starts with this many of each item in a legal basket.
 export const SHELF = 10
+
+// The mark on an order: filled, or short of stock.
+export const FILLED = 'processing'
+export const SHORT = 'short_of_stock'
+
+// True when some product asks for more than its row holds, or its row has no
+// whole stock count. Lines of the same product are added together.
+export function shelfIsShort(basket, rows) {
+  const asked = new Map()
+  for (const item of basket) asked.set(item.productId, (asked.get(item.productId) ?? 0) + item.quantity)
+  for (const [id, quantity] of asked) {
+    const stock = rows.find((item) => item._id === id)?.stock
+    if (!Number.isSafeInteger(stock) || stock < 0 || quantity > stock) return true
+  }
+  return false
+}
 
 export function stockFull(basket) {
   return Object.fromEntries(basket.lines.map((line) => [line.id, SHELF]))
@@ -194,6 +215,37 @@ export const twoReturns = ['customer', 'customer']
 export const returnThenBank = ['customer', 'bank']
 export const bankThenReturn = ['bank', 'customer']
 
+// The sweep runs at this fixed time, in seconds. Every payment in this proof
+// was made an hour before it. The secret is the one load.mjs sets.
+export const SWEEP_NOW = 1800000000
+export const PAID_AT = SWEEP_NOW - 3600
+export const SWEEP_SECRET = 'checkout-proof-sweep'
+
+export const oneSweep = ['sweep']
+export const bankThenSweeps = ['bank', 'sweep', 'sweep']
+
+export const sweepKeys = [
+  { name: 'no key', authorization: null, unset: false },
+  { name: 'a wrong key', authorization: 'Bearer wrong', unset: false },
+  { name: 'an empty key', authorization: 'Bearer ', unset: false },
+  { name: 'the right secret without Bearer', authorization: SWEEP_SECRET, unset: false },
+  { name: 'Bearer undefined, while the shop has no secret set', authorization: 'Bearer undefined', unset: true },
+]
+
+export const UNPAID = ['requires_payment_method', 'processing', 'canceled']
+
+export function unpaidSweeps() {
+  return legalBaskets.flatMap((basket) => UNPAID.map((status) => ({ name: `${basket.name}, ${status}`, basket, status })))
+}
+
+// Two shop payments with no shared product, and a newer one made by hand.
+export function sweepPages() {
+  const older = legalBaskets.find((basket) => basket.name === 'one lamp at 2500')
+  const newer = legalBaskets.find((basket) => basket.name === 'one each of a, b and c')
+  if (!older || !newer) fail('the sweep baskets are missing')
+  return [{ name: 'three paid payments over two pages, the newest made by hand outside the shop', older, newer }]
+}
+
 export function knownBasket() {
   const found = legalBaskets.find((basket) => basket.total === 5000)
   if (!found) fail('the known basket is missing')
@@ -217,9 +269,9 @@ function refusal(rule, name, basket, shipping, rows, address) {
   return { rule, name, basket, shipping, rows, address }
 }
 
-function row(id, unit) {
-  if (unit === null) return { _id: id, price_data: null }
-  return { _id: id, price_data: { unit_amount: unit } }
+function row(id, unit, stock = SHELF) {
+  if (unit === null) return { _id: id, price_data: null, stock }
+  return { _id: id, price_data: { unit_amount: unit }, stock }
 }
 
 const longId = `p${'x'.repeat(498)}`
@@ -285,6 +337,18 @@ export const refusals = [
   refusal('fit', 'a basket text of 600 characters', [{ productId: longerId, quantity: 1 }], 0, [row(longerId, 1000)]),
 
   refusal('address', 'an address of 501 characters', [{ productId: 'a', quantity: 1 }], 0, [row('a', 100)], addressOfLength(501)),
+
+  refusal('stock', 'two of a, and the shelf has 1', [{ productId: 'a', quantity: 2 }], 0, [row('a', 100, 1)]),
+  refusal('stock', 'one of a, and the shelf has 0', [{ productId: 'a', quantity: 1 }], 0, [row('a', 100, 0)]),
+  refusal('stock', 'one of a beside two of b, and the shelf has 1 of b', [
+    { productId: 'a', quantity: 1 },
+    { productId: 'b', quantity: 2 },
+  ], 0, [row('a', 100), row('b', 200, 1)]),
+  refusal('stock', 'one of a on each of two lines, and the shelf has 1', [
+    { productId: 'a', quantity: 1 },
+    { productId: 'a', quantity: 1 },
+  ], 0, [row('a', 100, 1)]),
+  refusal('stock', 'one of a, and the shelf count is missing', [{ productId: 'a', quantity: 1 }], 0, [row('a', 100, null)]),
 ]
 
 export function refusalsFor(rule) {
@@ -315,16 +379,21 @@ export const unsignedSituations = [
 
 // Shipping is 0. The amount is the written line total.
 export const filledShelves = [
-  { name: 'two customers buy 1 of c, shelf has 4', unit: 100, qty: 1, amount: 100, stock: 4, buyers: 2, basket: 'c:1' },
-  { name: 'two customers buy 2 of c, shelf has 5', unit: 100, qty: 2, amount: 200, stock: 5, buyers: 2, basket: 'c:2' },
-  { name: 'two customers buy 9 of c, shelf has 20', unit: 100, qty: 9, amount: 900, stock: 20, buyers: 2, basket: 'c:9' },
+  { name: 'two customers buy 1 of c, shelf has 4', unit: 100, qty: 1, amount: 100, stock: 4, buyers: 2, basket: 'c:1', marks: [FILLED, FILLED] },
+  { name: 'two customers buy 2 of c, shelf has 5', unit: 100, qty: 2, amount: 200, stock: 5, buyers: 2, basket: 'c:2', marks: [FILLED, FILLED] },
+  { name: 'two customers buy 9 of c, shelf has 20', unit: 100, qty: 9, amount: 900, stock: 20, buyers: 2, basket: 'c:9', marks: [FILLED, FILLED] },
 ]
 
 export const shortShelves = [
-  { name: 'one customer buys 1 of c, shelf has 0', unit: 100, qty: 1, amount: 100, stock: 0, buyers: 1, race: false, basket: 'c:1' },
-  { name: 'one customer buys 2 of c, shelf has 1', unit: 100, qty: 2, amount: 200, stock: 1, buyers: 1, race: false, basket: 'c:2' },
-  { name: 'two customers buy the last 1 of c, and the second notice is delivered again', unit: 100, qty: 1, amount: 100, stock: 1, buyers: 2, race: true, basket: 'c:1' },
-  { name: 'two customers buy 2 of c, shelf has 1, and the second notice is delivered again', unit: 100, qty: 2, amount: 200, stock: 1, buyers: 2, race: true, basket: 'c:2' },
+  { name: 'one customer buys 1 of c, shelf has 0', unit: 100, qty: 1, amount: 100, stock: 0, buyers: 1, race: false, basket: 'c:1', marks: [SHORT] },
+  { name: 'one customer buys 2 of c, shelf has 1', unit: 100, qty: 2, amount: 200, stock: 1, buyers: 1, race: false, basket: 'c:2', marks: [SHORT] },
+  { name: 'two customers buy the last 1 of c, and the second notice is delivered again', unit: 100, qty: 1, amount: 100, stock: 1, buyers: 2, race: true, basket: 'c:1', marks: [FILLED, SHORT] },
+  { name: 'two customers buy 2 of c, shelf has 1, and the second notice is delivered again', unit: 100, qty: 2, amount: 200, stock: 1, buyers: 2, race: true, basket: 'c:2', marks: [SHORT, SHORT] },
+]
+
+// Paid for, then removed from the shop before the order is written.
+export const removedProducts = [
+  { name: 'one customer buys 2 of c, and c is removed from the shop before the order is written', unit: 100, qty: 2, amount: 200, basket: 'c:2' },
 ]
 
 export function worldsAreExact() {
@@ -358,7 +427,7 @@ export function worldsAreExact() {
     if (changed.length === known.lines.length && changed.every((line, i) => line.productId === known.lines[i].id && line.quantity === known.lines[i].qty)) {
       fail('the later basket is the same as the known basket')
     }
-    const rules = ['empty', 'shipping', 'unknown', 'price', 'zero', 'negative', 'fraction', 'grosze', 'exact', 'id', 'fit', 'address']
+    const rules = ['empty', 'shipping', 'unknown', 'price', 'zero', 'negative', 'fraction', 'grosze', 'exact', 'id', 'fit', 'address', 'stock']
     for (const rule of rules) refusalsFor(rule)
     for (const situation of refusals) {
       if (!situation.name) fail('a refusal has no name')
@@ -377,6 +446,8 @@ export function worldsAreExact() {
       if (situation.rule === 'address' && JSON.stringify(situation.address).length <= 500) {
         fail(`${situation.name} fits in the payment record`)
       }
+      if (situation.rule === 'stock' && !shelfIsShort(situation.basket, situation.rows)) fail(`${situation.name} can be filled from the shelf`)
+      if (situation.rule !== 'stock' && situation.rows.some((item) => item.stock !== SHELF)) fail(`${situation.name} is not on a full shelf`)
     }
     for (const basket of legalBaskets) {
       if (basketText(basket).length > 500 || priceText(basket).length > 500) fail(`${basket.name} does not fit in the payment record`)
@@ -384,8 +455,19 @@ export function worldsAreExact() {
     for (const situation of longestAddresses()) {
       if (JSON.stringify(situation.address).length !== 500) fail(`${situation.name} is not 500 characters`)
     }
+    if (SWEEP_NOW - PAID_AT !== 3600) fail('the payments are not an hour before the sweep')
+    if (process.env.CRON_SECRET !== SWEEP_SECRET) fail('the proof runs without its sweep secret')
+    for (const situation of sweepPages()) {
+      const ids = new Set(situation.older.lines.map((line) => line.id))
+      if (situation.newer.lines.some((line) => ids.has(line.id))) fail(`${situation.name} shares a product`)
+    }
     for (const situation of filledShelves) checkShelf(situation, true)
     for (const situation of shortShelves) checkShelf(situation, false)
+    for (const situation of removedProducts) {
+      if (exactProduct(situation.unit, situation.qty) !== situation.amount || situation.basket !== `c:${situation.qty}`) {
+        fail(`${situation.name} is not written as its line`)
+      }
+    }
     if (basketChanges().length !== legalBaskets.length * (legalBaskets.length - 1)) fail('a basket change is missing')
     if (forgedSituations().length < legalBaskets.length) fail('a forged notice is missing')
     return null
@@ -404,6 +486,14 @@ function checkShelf(situation, filled) {
   if (filled && situation.stock < paid) fail(`${situation.name} is listed as filled but the shelf is short`)
   if (!filled && situation.stock >= paid) fail(`${situation.name} is listed as short but the shelf can fill it`)
   if (!filled && situation.buyers === 2 && situation.race !== true) fail(`${situation.name} does not hold the two sales apart`)
+  let left = situation.stock
+  const marks = []
+  for (let buyer = 0; buyer < situation.buyers; buyer += 1) {
+    const take = Math.min(left, situation.qty)
+    left -= take
+    marks.push(take < situation.qty ? SHORT : FILLED)
+  }
+  if (JSON.stringify(marks) !== JSON.stringify(situation.marks)) fail(`${situation.name} is not marked as its shelf says`)
 }
 
 // Check every situation. A failure is the smallest situation that failed,

@@ -9,8 +9,8 @@
 // there. A PASS means every situation's paperwork explained the units.
 // A NO names the smallest situation that did not.
 
-import { orderCountIs, orderMatches, stockExplained } from './books.mjs'
-import { ORDER_DELIVERY, checkEvery, filledShelves, shortShelves } from './domain.mjs'
+import { marksAre, nothingTaken, orderCountIs, orderMatches, stockExplained } from './books.mjs'
+import { ORDER_DELIVERY, SHORT, checkEvery, filledShelves, removedProducts, shortShelves } from './domain.mjs'
 import {
   bankNotice,
   fresh,
@@ -28,7 +28,7 @@ function lineFor(situation) {
 }
 
 function paid(id, situation) {
-  return payment({ id, amount: situation.amount, basket: situation.basket, shipping: 0, status: 'succeeded' })
+  return payment({ id, amount: situation.amount, basket: situation.basket, shipping: 0, status: 'succeeded', unitPrices: `c:${situation.unit}` })
 }
 
 export async function twoCustomers(situation) {
@@ -42,6 +42,7 @@ export async function twoCustomers(situation) {
   return orderMatches('pi_c1', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
     ?? orderMatches('pi_c2', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
     ?? stockExplained({ c: situation.stock })
+    ?? marksAre(['pi_c1', 'pi_c2'], situation.marks)
     ?? orderCountIs(situation.buyers)
 }
 
@@ -54,6 +55,7 @@ export async function shortShelf(situation) {
     await bankNotice(first)
     return orderMatches('pi_c1', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
       ?? stockExplained({ c: situation.stock })
+      ?? marksAre(['pi_c1'], situation.marks)
       ?? orderCountIs(situation.buyers)
   }
   const second = paid('pi_c2', situation)
@@ -69,10 +71,22 @@ export async function shortShelf(situation) {
   return orderMatches('pi_c1', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
     ?? orderMatches('pi_c2', situation.amount, 'pln', line, 0, ORDER_DELIVERY)
     ?? stockExplained({ c: situation.stock })
+    ?? marksAre(['pi_c1', 'pi_c2'], situation.marks)
     ?? orderCountIs(situation.buyers)
 }
 
+// The product is never put on the shelf: it was removed after the payment.
+export async function removedProduct(situation) {
+  fresh()
+  await bankNotice(paid('pi_c1', situation))
+  return orderMatches('pi_c1', situation.amount, 'pln', lineFor(situation), 0, ORDER_DELIVERY)
+    ?? nothingTaken('pi_c1')
+    ?? marksAre(['pi_c1'], [SHORT])
+    ?? orderCountIs(1)
+}
+
 export const cases = [
-  ['Every pair of payments the shelf can fill takes exactly the units they paid for', () => checkEvery(filledShelves, twoCustomers)],
-  ['Every payment for units the shelf does not have leaves a record of those units', () => checkEvery(shortShelves, shortShelf)],
+  ['Every pair of payments the shelf can fill takes exactly the units they paid for, and neither is marked short of stock', () => checkEvery(filledShelves, twoCustomers)],
+  ['Every payment for units the shelf does not have is marked short of stock, and its lines record the missing units', () => checkEvery(shortShelves, shortShelf)],
+  ['A payment for a product removed from the shop is still written, marked short of stock', () => checkEvery(removedProducts, removedProduct)],
 ]

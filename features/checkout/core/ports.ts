@@ -28,7 +28,7 @@ export type CheckoutCatalog = {
   getProductsByIds: (ids: string[]) => Promise<CheckoutProduct[]>;
   getProductUnitAmountsByIds: (
     ids: string[]
-  ) => Promise<{ _id: string; price_data: { unit_amount: number } | null }[]>;
+  ) => Promise<{ _id: string; price_data: { unit_amount: number } | null; stock: number | null }[]>;
 };
 
 export type ShippingRates = { fetchShippingOptions: (input: ShippingRatesInput, traceId?: string) => Promise<ShippingOption[]> };
@@ -61,6 +61,7 @@ export type Payments = {
     metadata: Record<string, string>,
     idempotencyKey: string
   ) => Promise<PaymentHandle>;
+  listPayments: (createdSince: number) => Promise<PaymentSnapshot[]>;
 };
 
 export type OrderEmails = {

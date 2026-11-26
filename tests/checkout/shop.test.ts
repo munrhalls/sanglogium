@@ -8,19 +8,20 @@
 
 import { parseWebhookEvent } from '@/features/checkout/adapters/stripe/webhooks'
 import { stripe, createPayment, updatePaymentAmount, retrievePayment } from '@/features/checkout/adapters/stripe/client'
+import * as cardClient from '@/features/checkout/adapters/stripe/client'
 import { createPaymentIntent } from '@/features/checkout/commands/createPaymentIntent'
 import { handlePaymentReturn } from '@/features/checkout/commands/handlePaymentReturn'
 import { handlePaymentWebhook } from '@/features/checkout/commands/handlePaymentWebhook'
 import { createOrderFromPayment } from '@/features/order/adapters/sanity/createOrderFromPayment'
 import { notChargedVerdict } from './books.mjs'
-import { ADDRESS } from './domain.mjs'
+import { ADDRESS, PAID_AT, SWEEP_NOW } from './domain.mjs'
 import { hold, orderDocs, release, reset as resetStock, seed, setPrice, until, warehouseObeysItsRule } from './stock-book.mjs'
 import { allPayments, cardCompanyObeysItsRule, openPayments, remember, resetCardCompany } from './card-provider.test.ts'
 
 export { allPayments, openPayments, setPrice as setShelfPrice }
 
 function paymentsPort() {
-  return { createPayment, updatePaymentAmount, retrievePayment, parseWebhookEvent }
+  return { createPayment, updatePaymentAmount, retrievePayment, parseWebhookEvent, listPayments: (since) => cardClient.listPayments(since) }
 }
 
 function ordersPort() {
@@ -54,8 +55,8 @@ export async function standInsObeyTheirRules() {
 
 export function shelfPrices() {
   return [
-    { _id: 'a', price_data: { unit_amount: 1000 } },
-    { _id: 'b', price_data: { unit_amount: 2500 } },
+    { _id: 'a', price_data: { unit_amount: 1000 }, stock: 10 },
+    { _id: 'b', price_data: { unit_amount: 2500 }, stock: 10 },
   ]
 }
 
@@ -113,6 +114,7 @@ export function payment({ id, amount, basket, shipping, status, unitPrices }) {
     amount,
     currency: 'pln',
     status,
+    created: PAID_AT,
     metadata: {
       basket,
       address: JSON.stringify(ADDRESS),
@@ -176,6 +178,29 @@ export async function customerReturns(session, paymentId) {
   } catch (error) {
     if (!isRedirect(error)) throw error
   }
+}
+
+// A paid payment made by hand outside the shop: no basket, no address.
+export function notTheShops(id) {
+  return {
+    id,
+    object: 'payment_intent',
+    amount: 999,
+    currency: 'pln',
+    status: 'succeeded',
+    created: PAID_AT,
+    metadata: {},
+    client_secret: 'cs_test',
+    receipt_email: null,
+    latest_charge: null,
+    last_payment_error: null,
+  }
+}
+
+// The daily sweep at the fixed time, with the shop's own key unless the caller brings another.
+export async function sweep(authorization = `Bearer ${process.env.CRON_SECRET}`) {
+  const { sweepPaidPayments } = await import('@/features/checkout/commands/sweepPaidPayments')
+  return sweepPaidPayments(doors(), { authorization, now: SWEEP_NOW })
 }
 
 export function rememberPayment(paid) {

@@ -10,16 +10,21 @@
 // This file does not ask the shop. It writes the paperwork itself, reads it
 // back, and then clears it. A problem here stops the proof.
 
-import { beforeSuccess, chargeVerdict, notChargedVerdict, nothingSold, orderCountIs, orderMatches, saleVerdict, stillPayable, stockExplained } from './books.mjs'
-import { shortShelf, twoCustomers } from './conservation.test.ts'
+import { beforeSuccess, chargeVerdict, marksAre, notChargedVerdict, nothingSold, nothingTaken, orderCountIs, orderMatches, saleVerdict, stillPayable, stockExplained } from './books.mjs'
+import { removedProduct, shortShelf, twoCustomers } from './conservation.test.ts'
 import {
   ADDRESS,
+  FILLED,
   LATER_ADDRESS,
   LATER_SHIPPING,
   ORDER_DELIVERY,
   OTHER_PRICE,
+  SHELF,
   SHIPPING_MISSING,
+  SHORT,
+  UNPAID,
   bankThenReturn,
+  bankThenSweeps,
   basketChanges,
   basketText,
   changedShelfId,
@@ -27,22 +32,29 @@ import {
   differentSessionLines,
   filledShelves,
   forgedSituations,
+  fullShelfRows,
   idRoundTrips,
   legalBaskets,
   longestAddresses,
   oneBankNotice,
   oneReturn,
+  oneSweep,
   priceText,
   productFits,
   refusalsFor,
+  removedProducts,
   returnThenBank,
+  shelfIsShort,
   shortShelves,
+  sweepKeys,
+  sweepPages,
   twoBankNotices,
   twoReturns,
+  unpaidSweeps,
   unsignedSituations,
 } from './domain.mjs'
 import { deliver, refuse, saleRecorded, sameMoment } from './parity.test.ts'
-import { bankNotice, charge, customerReturns, forgedBankNotice, notCharged, unsignedBankNotice } from './shop.test.ts'
+import { bankNotice, charge, customerReturns, forgedBankNotice, notCharged, sweep, unsignedBankNotice } from './shop.test.ts'
 import { backendClient, reset, seed, until } from './stock-book.mjs'
 
 function source(run) {
@@ -160,6 +172,7 @@ function deliverHolds() {
   }
   if (!text.includes("door === 'bank'") || !text.includes('await bankNotice(paid)')) return 'a bank notice is no longer delivered'
   if (!text.includes("door === 'customer'") || !text.includes('await customerReturns(session, paid.id)')) return 'the customer return is no longer delivered'
+  if (!text.includes("door === 'sweep'") || !text.includes('await sweep()')) return 'the sweep is no longer run'
   return uses(deliver, 'return saleRecorded(', 'the order for that payment') ?? recordedSaleHolds()
 }
 
@@ -185,6 +198,7 @@ function shopStillDoesTheWork() {
     ?? uses(unsignedBankNotice, 'return handlePaymentWebhook(', 'a notice with no signature')
     ?? uses(customerReturns, 'await handlePaymentReturn(', 'the customer returning')
     ?? uses(customerReturns, 'if (!isRedirect(error)) throw error', 'a failed return is reported')
+    ?? uses(sweep, 'sweepPaidPayments(doors(), { authorization, now: SWEEP_NOW })', 'the shop sweep at the fixed time')
 }
 
 function sellsNothing(run, token, plain) {
@@ -194,10 +208,11 @@ function sellsNothing(run, token, plain) {
     ?? uses(run, 'return nothingSold(', 'that nothing was sold')
 }
 
-async function putOrder(id, items, total, currency = 'PLN', delivery = ORDER_DELIVERY) {
+async function putOrder(id, items, total, currency = 'PLN', delivery = ORDER_DELIVERY, status = FILLED) {
   await backendClient.transaction().create({
     _id: `order_${id}`,
     paymentIntentId: id,
+    status,
     pricing: { total, currency, shipping: 0 },
     shippingMethod: { name: delivery.service },
     shippingAddress: { ...delivery.address },
@@ -461,9 +476,58 @@ function laterAddressDiffers() {
   return null
 }
 
+// The mark check, on paper: a wrong mark and a missing order are not a pass.
+async function marksPaper() {
+  reset()
+  await putOrder('pi_c1', [{ productId: 'c', quantity: 1, price: 100 }], 100, 'PLN', ORDER_DELIVERY, FILLED)
+  const wrong = twice(() => marksAre(['pi_c1'], [SHORT]), true)
+  if (wrong) return wrong
+  const missing = twice(() => marksAre(['pi_c2'], [SHORT]), true)
+  if (missing) return missing
+  return twice(() => marksAre(['pi_c1'], [FILLED]), false)
+}
+
+// The nothing-taken check, on paper: a taken unit and an unrecorded count are not a pass.
+async function takenPaper() {
+  reset()
+  await putOrder('pi_c1', [{ productId: 'c', quantity: 2, price: 100, fulfilled: 1 }], 200)
+  const some = twice(() => nothingTaken('pi_c1'), true)
+  if (some) return some
+  reset()
+  await putOrder('pi_c1', [{ productId: 'c', quantity: 2, price: 100 }], 200)
+  const unrecorded = twice(() => nothingTaken('pi_c1'), true)
+  if (unrecorded) return unrecorded
+  reset()
+  await putOrder('pi_c1', [{ productId: 'c', quantity: 2, price: 100, fulfilled: 0 }], 200)
+  return twice(() => nothingTaken('pi_c1'), false)
+}
+
+function fullShelfHolds() {
+  for (const basket of legalBaskets) {
+    const rows = fullShelfRows(basket)
+    if (shelfIsShort(basket.lines.map((line) => ({ productId: line.id, quantity: line.qty })), rows)) return `the full shelf for ${basket.name} is short`
+    if (rows.some((item, index) => item.stock !== basket.lines[index].qty)) return `the shelf for ${basket.name} holds more than the basket`
+  }
+  return null
+}
+
+function removedIsGone() {
+  const text = source(removedProduct)
+  if (text.includes('seedProduct(') || text.includes('seedLines(')) return 'the removed product is put on the shelf'
+  return null
+}
+
 const sentenceProofs = new Map([
   ['Every legal basket is charged the shelf price, not the price the customer typed', (run) =>
     legalBasketsHold() ?? uses(run, 'legalBaskets', 'every legal basket') ?? uses(run, 'priceRows(basket))', 'the shelf price') ?? uses(run, 'return chargeVerdict(', 'the amount, the currency, and the basket on the payment') ?? chargePaper()],
+
+  ['A basket asking for exactly what the shelf holds is charged', (run) =>
+    legalBasketsHold()
+    ?? uses(run, 'legalBaskets', 'every legal basket')
+    ?? uses(run, 'fullShelfRows(basket)', 'a shelf holding exactly the basket')
+    ?? fullShelfHolds()
+    ?? uses(run, 'return chargeVerdict(', 'the charge')
+    ?? chargePaper()],
 
   ['Charging a legal basket does not sell the goods', async (run) =>
     legalBasketsHold() ?? uses(run, 'legalBaskets', 'every legal basket') ?? uses(run, 'priceRows(basket))', 'the shelf price') ?? uses(run, 'return nothingSold(', 'that nothing was sold') ?? await noSalePaper()],
@@ -496,6 +560,13 @@ const sentenceProofs = new Map([
   ['An address that does not fit in the payment record is not charged', (run) =>
     refusalHolds('address', run, (list) => list.every((situation) => JSON.stringify(situation.address ?? null).length > 500), 'an address longer than the payment record')
     ?? uses(refuse, 'extra.address = situation.address', 'the address of the situation')],
+  ['A basket asking for more than the shelf holds is not charged', (run) =>
+    refusalHolds('stock', run, (list) => list.every((situation) => shelfIsShort(situation.basket, situation.rows))
+      && list.some((situation) => situation.rows.some((item) => item.stock === 0))
+      && list.some((situation) => situation.rows.some((item) => item.stock === null))
+      && list.some((situation) => new Set(situation.basket.map((item) => item.productId)).size < situation.basket.length)
+      && list.some((situation) => situation.basket.length > 1 && situation.rows.some((item) => item.stock === SHELF)),
+    'more than the shelf holds, a shelf of 0, a missing count, one product on two lines, and a short line beside a full one')],
 
   ['Changing to any other legal basket leaves exactly one charge for the new basket', (run) =>
     changesHold()
@@ -617,7 +688,7 @@ const sentenceProofs = new Map([
   ["Returning with someone else's payment sells nothing", async (run) =>
     sellsNothing(run, "customerReturns(session, 'pi_other')", "someone else's payment") ?? uses(run, "return 'the basket was cleared'", 'that the basket is still there') ?? await noSalePaper()],
 
-  ['Every pair of payments the shelf can fill takes exactly the units they paid for', async (run) =>
+  ['Every pair of payments the shelf can fill takes exactly the units they paid for, and neither is marked short of stock', async (run) =>
     steady(() => filledShelves)
     ?? has(filledShelves.every((situation) => situation.stock >= situation.buyers * situation.qty), 'a shelf that can fill both payments')
     ?? has(filledShelves.some((situation) => situation.stock === 5 && situation.qty === 2 && situation.buyers === 2), 'two payments for 2, on a shelf of 5')
@@ -626,10 +697,13 @@ const sentenceProofs = new Map([
     ?? uses(twoCustomers, 'orderMatches(', 'each order')
     ?? uses(twoCustomers, 'stockExplained(', 'the stock against the paid units')
     ?? uses(twoCustomers, '?? orderCountIs(situation.buyers)', 'how many orders were written')
+    ?? uses(twoCustomers, 'marksAre(', 'the marks on both orders')
+    ?? has(filledShelves.every((situation) => situation.marks.every((mark) => mark === FILLED)), 'no short mark on a shelf that can fill both')
     ?? unmatchedOrder()
+    ?? await marksPaper()
     ?? await stockPaper()],
 
-  ['Every payment for units the shelf does not have leaves a record of those units', async (run) =>
+  ['Every payment for units the shelf does not have is marked short of stock, and its lines record the missing units', async (run) =>
     steady(() => shortShelves)
     ?? has(shortShelves.every((situation) => situation.stock < situation.buyers * situation.qty), 'a shelf that is short of the paid units')
     ?? has(shortShelves.some((situation) => situation.stock === 0), 'a shelf of 0')
@@ -642,8 +716,61 @@ const sentenceProofs = new Map([
     ?? uses(shortShelf, 'waitForCommits(', 'both sales reaching their commit')
     ?? raceIsHeld()
     ?? unmatchedOrder()
+    ?? uses(shortShelf, 'marksAre(', 'the short of stock marks')
+    ?? has(shortShelves.every((situation) => situation.marks.includes(SHORT)), 'a short mark on every short shelf')
+    ?? has(shortShelves.some((situation) => situation.marks.includes(FILLED)), 'a first sale filled before the second ran short')
+    ?? await marksPaper()
     ?? await stockPaper()
     ?? await aMissingCommitDoesNotPass()],
+
+  ['A paid payment whose order was never written gets one order at the next sweep, for every legal basket', async (run) =>
+    doorSentence(run, 'oneSweep', 'one sweep', oneSweep, ['sweep'], 'one sweep is no longer the only way the order is written') ?? await orderPaper()],
+  ['Sweeping twice after the bank notice still leaves one order, for every legal basket', async (run) =>
+    doorSentence(run, 'bankThenSweeps', 'the bank notice and then two sweeps', bankThenSweeps, ['bank', 'sweep', 'sweep'], 'the bank notice is no longer followed by two sweeps') ?? await orderPaper()],
+  ["A sweep without the shop's secret writes nothing", async (run) =>
+    steady(() => sweepKeys)
+    ?? has(sweepKeys.some((situation) => situation.authorization === null), 'no key')
+    ?? has(sweepKeys.some((situation) => situation.authorization === 'Bearer wrong'), 'a wrong key')
+    ?? has(sweepKeys.some((situation) => situation.unset && situation.authorization === 'Bearer undefined'), 'Bearer undefined while no secret is set')
+    ?? uses(run, 'sweepKeys', 'every wrong key')
+    ?? uses(run, "rememberPayment(paidFor(basket, 'pi_std', 'succeeded'))", 'a paid payment the sweep would otherwise write')
+    ?? uses(run, 'delete process.env.CRON_SECRET', 'the shop with no secret')
+    ?? uses(run, 'process.env.CRON_SECRET = kept', 'the secret put back')
+    ?? uses(run, 'await sweep(situation.authorization)', 'the sweep with that key')
+    ?? uses(run, 'return nothingSold(', 'that nothing was sold')
+    ?? await noSalePaper()],
+  ['The sweep sells nothing for a payment that is not paid', async (run) =>
+    legalBasketsHold()
+    ?? steady(unpaidSweeps)
+    ?? has(UNPAID.every((status) => unpaidSweeps().some((situation) => situation.status === status)), 'every unpaid status')
+    ?? has(unpaidSweeps().length === legalBaskets.length * UNPAID.length, 'every legal basket in every unpaid status')
+    ?? uses(run, 'unpaidSweeps()', 'every unpaid payment')
+    ?? uses(run, "paidFor(situation.basket, 'pi_std', situation.status)", 'the unpaid status')
+    ?? uses(run, 'await sweep()', 'the sweep')
+    ?? uses(run, 'return nothingSold(', 'that nothing was sold')
+    ?? await noSalePaper()],
+  ['A payment whose order cannot be written does not stop the sweep writing the others', async (run) =>
+    steady(sweepPages)
+    ?? uses(run, 'sweepPages()', 'the three payments')
+    ?? (after(run, "paidFor(situation.newer, 'pi_new'", "notTheShops('pi_hand')") ? null : 'the payment made by hand is no longer the newest')
+    ?? uses(run, 'await sweep()', 'the sweep')
+    ?? uses(run, "saleVerdict('pi_old'", 'the oldest order')
+    ?? uses(run, "saleVerdict('pi_new'", 'the newer order')
+    ?? uses(run, '?? orderCountIs(2)', 'that only the two shop payments got orders')
+    ?? await orderPaper()],
+
+  ['A payment for a product removed from the shop is still written, marked short of stock', async (run) =>
+    steady(() => removedProducts)
+    ?? uses(run, 'removedProducts', 'the removed product')
+    ?? uses(run, 'removedProduct)', 'the sale of a removed product')
+    ?? removedIsGone()
+    ?? uses(removedProduct, 'orderMatches(', 'the order')
+    ?? uses(removedProduct, 'nothingTaken(', 'that no unit was taken')
+    ?? uses(removedProduct, 'marksAre(', 'the short of stock mark')
+    ?? uses(removedProduct, '?? orderCountIs(1)', 'that there is one order')
+    ?? unmatchedOrder()
+    ?? await marksPaper()
+    ?? await takenPaper()],
 ])
 
 export async function testsHold(parityCases, conservationCases) {
@@ -658,7 +785,7 @@ export async function testsHold(parityCases, conservationCases) {
     if (checker) return checker
     const shop = shopStillDoesTheWork()
     if (shop) return shop
-    const helpers = returnsPass(refuse) ?? returnsPass(deliver) ?? returnsPass(saleRecorded) ?? returnsPass(twoCustomers) ?? returnsPass(shortShelf) ?? returnsPass(sameMoment)
+    const helpers = returnsPass(refuse) ?? returnsPass(deliver) ?? returnsPass(saleRecorded) ?? returnsPass(twoCustomers) ?? returnsPass(shortShelf) ?? returnsPass(sameMoment) ?? returnsPass(removedProduct)
     if (helpers) return helpers
     for (const [name, proof] of sentenceProofs) {
       const run = sentences.get(name)
