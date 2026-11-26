@@ -25,6 +25,7 @@ import {
   checkEvery,
   differentSessionLines,
   forgedSituations,
+  fullShelfRows,
   knownBasket,
   legalBaskets,
   longestAddresses,
@@ -141,6 +142,12 @@ export const cases = [
     return chargeVerdict(openPayments(), basket.total, basketText(basket))
   })],
 
+  ['A basket asking for exactly what the shelf holds is charged', () => checkEvery(legalBaskets, async (basket) => {
+    fresh()
+    await charge(sessionFor(basket, { checkoutSessionId: 'sess_full' }), fullShelfRows(basket))
+    return chargeVerdict(openPayments(), basket.total, basketText(basket))
+  })],
+
   ['Charging a legal basket does not sell the goods', () => checkEvery(legalBaskets, async (basket) => {
     fresh()
     seedLines(basket.lines, SHELF)
@@ -160,6 +167,7 @@ export const cases = [
   ['A product id that cannot be written down whole is not charged', () => checkEvery(refusalsFor('id'), refuse)],
   ['A basket that does not fit in the payment record is not charged', () => checkEvery(refusalsFor('fit'), refuse)],
   ['An address that does not fit in the payment record is not charged', () => checkEvery(refusalsFor('address'), refuse)],
+  ['A basket asking for more than the shelf holds is not charged', () => checkEvery(refusalsFor('stock'), refuse)],
 
   ['Changing to any other legal basket leaves exactly one charge for the new basket', () => checkEvery(basketChanges(), async (situation) => {
     fresh()

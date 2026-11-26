@@ -103,6 +103,25 @@ export function orderMatches(paymentId, amount, currency, lines, shipping, deliv
   return null
 }
 
+// Each payment's order carries its written mark: filled, or short of stock.
+export function marksAre(paymentIds, marks) {
+  for (let i = 0; i < paymentIds.length; i += 1) {
+    const order = orderDocs().find((candidate) => candidate.paymentIntentId === paymentIds[i])
+    if (!order) return `no order for ${paymentIds[i]}`
+    if (order.status !== marks[i]) return `the order for ${paymentIds[i]} is marked ${order.status}`
+  }
+  return null
+}
+
+// The order for this payment records that none of its units left the shelf.
+export function nothingTaken(paymentId) {
+  const order = orderDocs().find((candidate) => candidate.paymentIntentId === paymentId)
+  if (!order) return `no order for ${paymentId}`
+  const taken = order.items.find((item) => item.fulfilled !== 0)
+  if (taken) return `the order records ${taken.fulfilled} of ${taken.productId} taken`
+  return null
+}
+
 // Both numbers are on the line when a paid unit was not in stock.
 // When every paid unit was taken, the stock drop matching the paid quantity is enough.
 export function stockExplained(before) {
