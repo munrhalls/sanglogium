@@ -6,6 +6,7 @@ export { default as ShippingStep } from './ui/ShippingStep';
 export { BasketCheckout } from './ui/BasketCheckout';
 export { BasketTotalRefusal } from './ui/BasketTotalRefusal';
 export { BasketQuantityRefusal } from './ui/BasketQuantityRefusal';
+export { BasketInvalidRefusal } from './ui/BasketInvalidRefusal';
 export { PaymentNav } from './ui/PaymentNav';
 export { ShippingStepSkeleton } from './ui/ShippingStepSkeleton';
 export { default as PaymentVerificationFailed } from './ui/payment-status/PaymentVerificationFailed';
