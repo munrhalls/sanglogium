@@ -22,6 +22,10 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
 
   const shippingLine = `<p style="margin:0;">Shipping ${formatPrice(shipping)}</p>`
 
+  const taxLine = data.tax > 0
+    ? `<p style="margin:0;">VAT (included) ${formatPrice(data.tax)}</p>`
+    : ""
+
   const placed = new Date(data.orderedAt)
   const days = method?.estimatedDays
   const deliveryLine = days
@@ -71,6 +75,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
         </p>
         ${methodLine}
         ${shippingLine}
+        ${taxLine}
         ${deliveryLine}
         <div style="margin-top:24px;padding:16px;background:#f9fafb;border-radius:8px;">
           <p style="margin:0 0 8px;font-weight:bold;">Shipping to:</p>

@@ -35,6 +35,7 @@ export type OrderConfirmationEmailData = {
   shippingAddress: { name: string; line1: string; city: string; postalCode: string };
   shippingMethod?: { carrier: string; estimatedDays?: number };
   shipping: number;
+  tax: number;
   orderedAt: string;
 };
 
