@@ -40,7 +40,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
       (item) =>
         `<tr>
           <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">${item.name}</td>
-          <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;text-align:center;">${item.quantity}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;text-align:center;">${item.quantity} (${formatPrice(item.price)} each)</td>
           <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;text-align:right;">${formatPrice(item.subtotal)}</td>
         </tr>`
     )
