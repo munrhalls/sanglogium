@@ -69,6 +69,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-contain transition-transform duration-300 group-hover:scale-105"
               priority={selectedIndex === 0}
+              fetchPriority={selectedIndex === 0 ? "high" : undefined}
             />
           </figure>
         </button>

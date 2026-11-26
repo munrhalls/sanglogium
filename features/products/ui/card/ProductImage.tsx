@@ -58,6 +58,7 @@ export function ProductImage({
         sizes={sizes}
         className={`object-contain mix-blend-multiply ${reveal ? styles.reveal : ""}`}
         priority={priority}
+        fetchPriority={priority ? "high" : undefined}
         data-reveal={reveal ? "" : undefined}
         suppressHydrationWarning
       />
