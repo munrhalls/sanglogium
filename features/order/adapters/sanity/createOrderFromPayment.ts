@@ -250,7 +250,6 @@ export async function createOrderFromPayment(
     name: `${address.firstName ?? ''} ${address.lastName ?? ''}`.trim() || 'Guest',
     line1: `${address.street} ${address.streetNumber}`.trim(),
     city: address.city,
-    state: address.regionCode,
     postalCode: address.postalCode,
     country: address.regionCode,
   }
