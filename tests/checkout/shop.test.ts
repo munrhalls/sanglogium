@@ -54,8 +54,8 @@ export async function standInsObeyTheirRules() {
 
 export function shelfPrices() {
   return [
-    { _id: 'a', price_data: { unit_amount: 1000 } },
-    { _id: 'b', price_data: { unit_amount: 2500 } },
+    { _id: 'a', price_data: { unit_amount: 1000 }, stock: 10 },
+    { _id: 'b', price_data: { unit_amount: 2500 }, stock: 10 },
   ]
 }
 

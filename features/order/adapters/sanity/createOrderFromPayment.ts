@@ -74,7 +74,7 @@ function resolveOrderData(
 } {
   const traceId = pi.metadata?.checkoutSessionId ?? 'unknown'
 
-  // Fallback to PI metadata (webhook path)
+  // The order is built from the payment record alone
   const rawAddress = pi.metadata?.address
   const shippingCode = pi.metadata?.shippingCode ?? ''
   const shippingCostStr = pi.metadata?.shippingCost ?? '0'
@@ -264,7 +264,7 @@ export async function createOrderFromPayment(
     items,
     shippingAddress,
     pricing,
-    status: 'processing' as const,
+    status: items.some((item) => item.fulfilled < item.quantity) ? ('short_of_stock' as const) : ('processing' as const),
     dates: {
       orderedAt: now,
       paidAt: now,

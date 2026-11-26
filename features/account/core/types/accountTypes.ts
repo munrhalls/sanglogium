@@ -29,6 +29,7 @@ export type OrderDetail = {
   status?:
     | "pending_payment"
     | "processing"
+    | "short_of_stock"
     | "packed"
     | "shipped"
     | "out_for_delivery"

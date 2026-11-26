@@ -4,6 +4,7 @@ import { backendClient } from "@/platform/sanity/backendClient";
 const OPEN_STATUSES = [
   "pending_payment",
   "processing",
+  "short_of_stock",
   "packed",
   "shipped",
   "out_for_delivery",
