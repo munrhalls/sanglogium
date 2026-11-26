@@ -24,8 +24,7 @@ export default function DacCard({ item, idx }: { item: any; idx: number }) {
             alt={productName}
             width={400}
             height={400}
-            priority={idx === 0}
-            loading={idx === 0 ? "eager" : "lazy"}
+            loading="lazy"
             sizes="(max-width: 768px) 50vw, 25vw"
             className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-110"
           />
