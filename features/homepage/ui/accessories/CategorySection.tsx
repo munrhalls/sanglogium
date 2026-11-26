@@ -7,6 +7,7 @@ import {
   CarouselDots,
 } from '@/platform/design/ui/carousel/CarouselControls';
 import AccessoryCard from "./AccessoryCard";
+import AccessorySlides from "./AccessorySlides";
 import { AccessoryCategory, AccessoryItem } from "@/features/homepage/core/types/accessoryTypes";
 
 interface CategorySectionProps {
@@ -48,14 +49,16 @@ export default function CategorySection({ category, items }: CategorySectionProp
 
         <div className="relative">
           <CarouselTrack className="w-full mx-0 items-stretch md:-mx-3 md:w-[calc(100%+1.5rem)]">
-            {filteredItems.map((item, idx) => (
-              <CarouselSlide
-                key={`${category.filter}-${item._id}`}
-                className="flex flex-col px-2 md:px-3"
-              >
-                <AccessoryCard item={item} idx={idx} />
-              </CarouselSlide>
-            ))}
+            <AccessorySlides>
+              {filteredItems.map((item, idx) => (
+                <CarouselSlide
+                  key={`${category.filter}-${item._id}`}
+                  className="flex flex-col px-2 md:px-3"
+                >
+                  <AccessoryCard item={item} idx={idx} />
+                </CarouselSlide>
+              ))}
+            </AccessorySlides>
           </CarouselTrack>
         </div>
 
