@@ -22,6 +22,19 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
 
   const shippingLine = `<p style="margin:0;">Shipping ${formatPrice(shipping)}</p>`
 
+  const days = method?.estimatedDays
+  const deliveryLine = days
+    ? (() => {
+        const placed = new Date(data.orderedAt)
+        const from = new Date(placed)
+        from.setDate(from.getDate() + days)
+        const to = new Date(placed)
+        to.setDate(to.getDate() + days + 1)
+        const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+        return `<p style="margin:0;">Estimated delivery ${fmt(from)}–${fmt(to)}</p>`
+      })()
+    : ""
+
   const itemsHtml = items
     .map(
       (item) =>
@@ -57,6 +70,7 @@ export async function sendOrderConfirmationEmail(data: OrderConfirmationEmailDat
         </p>
         ${methodLine}
         ${shippingLine}
+        ${deliveryLine}
         <div style="margin-top:24px;padding:16px;background:#f9fafb;border-radius:8px;">
           <p style="margin:0 0 8px;font-weight:bold;">Shipping to:</p>
           <p style="margin:0;">${shippingAddress.name}</p>
