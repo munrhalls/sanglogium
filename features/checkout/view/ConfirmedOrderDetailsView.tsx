@@ -113,7 +113,7 @@ export default async function ConfirmedOrderDetailsView({ orderPromise, fallback
           )}
           {order.pricing.tax > 0 && (
             <div className="flex justify-between items-baseline">
-              <span className="type-section-caption">Tax</span>
+              <span className="type-section-caption">VAT (included)</span>
               <span className="type-price">{formatPrice(order.pricing.tax)}</span>
             </div>
           )}
