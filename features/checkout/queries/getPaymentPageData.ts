@@ -73,7 +73,7 @@ export async function getPaymentPageData(ports: {
 
   if (sanityProducts.length !== session.basket.length) {
     await logEvent({ correlationId: traceId, slice: 'payment-init', event: 'payment_product_mismatch', data: { expected: session.basket.length, received: sanityProducts.length }, outcome: 'error' });
-    throw new Error("Product mismatch — basket contains unknown product IDs");
+    redirect("/basket?error=invalid_basket");
   }
 
   for (const product of sanityProducts) {
