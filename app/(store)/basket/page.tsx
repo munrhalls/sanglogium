@@ -24,6 +24,7 @@ export default async function BasketPage({
       {error === "invalid_basket" ? <BasketInvalidRefusal /> : null}
       {error === "missing_intent" ? <BasketUnconfirmedRefusal /> : null}
       {error === "no_active_intent" ? <BasketUnconfirmedRefusal /> : null}
+      {error === "intent_mismatch" ? <BasketUnconfirmedRefusal /> : null}
       <Suspense fallback={<Loader />}>
         <BasketCheckout />
       </Suspense>
