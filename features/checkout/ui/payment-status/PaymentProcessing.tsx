@@ -13,9 +13,6 @@ export default function PaymentProcessing({ paymentIntentId }: { paymentIntentId
           <p className="type-body text-text-caption">
             Your payment is being processed by your bank. This usually takes a few minutes.
           </p>
-          <p className="type-body text-text-caption">
-            We&apos;ll email a confirmation once settled.
-          </p>
           <code className="block font-mono type-caption text-brand-400 bg-surface-elevated rounded-md px-3 py-2">
             {paymentIntentId}
           </code>
