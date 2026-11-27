@@ -1,4 +1,4 @@
-import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
+import { normalizeText, searchTerms } from '@/features/product-search/core/rules/searchText';
 import { buildSearchResult, scopeToCategory, toFeatureProducts } from '@/features/product-search/core/rules/searchResults';
 import type { SearchResult } from '@/features/product-search/core/types/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
@@ -21,14 +21,18 @@ export async function searchProductsFullQuery(
   }
 
   const rawQuery = query.trim();
-  const searchTerm = `${rawQuery}*`;
-  const spacedTerm = `${deriveSpacedQuery(rawQuery)}*`;
+  let terms = searchTerms(rawQuery);
 
   const safePage = Math.max(1, Math.floor(page) || 1);
   const effectivePerPage = Math.max(1, Math.floor(perPage) || DEFAULT_PER_PAGE);
 
   try {
-    const countResult = await source.countSearchMatches(searchTerm, spacedTerm);
+    let countResult = await source.countSearchMatches(terms);
+    // Nothing for the words as typed: look again with spaces, symbols and the brand/name line ignored, as the suggestions do.
+    if (!countResult) {
+      terms = { ...terms, loose: true };
+      countResult = await source.countSearchMatches(terms);
+    }
 
     const unfilteredCount = countResult ?? 0;
     if (unfilteredCount === 0) {
@@ -36,14 +40,14 @@ export async function searchProductsFullQuery(
     }
 
     const sortWindow = Math.min(unfilteredCount, MAX_SORT_WINDOW);
-    const matchedProducts = await source.fetchMatchedProducts(searchTerm, spacedTerm, sortWindow);
+    const matchedProducts = await source.fetchMatchedProducts(terms, sortWindow);
 
     const matched = matchedProducts ?? [];
 
     const lookup = source.getCategoryLookup();
     const { category: activeCategory, scoped } = scopeToCategory({ matched, category, lookup });
     const { narrowing, ...filter } = await source.getFilterPanel(toFeatureProducts(scoped), filterQuery ?? {});
-    const narrowedIds = await source.fetchNarrowedIds(searchTerm, spacedTerm, narrowing);
+    const narrowedIds = await source.fetchNarrowedIds(terms, narrowing);
     if (narrowedIds === null) throw new Error('narrowed ids read failed');
 
     return buildSearchResult({

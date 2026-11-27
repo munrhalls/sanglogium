@@ -48,7 +48,7 @@ const { buildUrlContract } = await import('@/features/product-filtering/url/cont
 const { getFilterPanel, getFilterPanelOver } = await import('@/features/product-filtering/server');
 const { scopeToCategory, toFeatureProducts, buildSearchResult } = await import('@/features/product-search/core/rules/searchResults');
 const { ROOT_CATEGORIES } = await import('@/features/product-search/core/rules/searchScoring');
-const { deriveSpacedQuery } = await import('@/features/product-search/core/rules/searchText');
+const { searchTerms } = await import('@/features/product-search/core/rules/searchText');
 const { countSearchMatches, fetchMatchedProducts, fetchNarrowedIds } = await import('@/features/product-search/adapters/sanity/searchProducts');
 
 // The same walk as getCategoryLookup in features/catalogue/adapters/catalogue-index/catalogueIndex.ts, on the same JSON (that module cannot be loaded in plain node).
@@ -338,12 +338,11 @@ async function question3(): Promise<{ findings: string[]; summaries: string[] }>
   const summaries: string[] = [];
   const lookup = getCategoryLookup();
   for (const word of WORDS) {
-    const searchTerm = `${word}*`;
-    const spacedTerm = `${deriveSpacedQuery(word)}*`;
-    const unfilteredCount = await countSearchMatches(searchTerm, spacedTerm);
+    const terms = searchTerms(word);
+    const unfilteredCount = await countSearchMatches(terms);
     if (unfilteredCount === null) throw new Error(`count read failed for "${word}"`);
     if (unfilteredCount <= 30) throw new Error(`the proof's word "${word}" matches ${unfilteredCount} products (needs more than 30): pick another word`);
-    const matched = await fetchMatchedProducts(searchTerm, spacedTerm, Math.min(unfilteredCount, 2000));
+    const matched = await fetchMatchedProducts(terms, Math.min(unfilteredCount, 2000));
     if (!matched) throw new Error(`matched products read failed for "${word}"`);
     const products = toFeatureProducts(matched);
     const empty = await getFilterPanelOver(products, { scope: 'all-products', query: '' });
@@ -355,7 +354,7 @@ async function question3(): Promise<{ findings: string[]; summaries: string[] }>
     for (const option of panelBrand.options.slice(0, 3)) {
       const query = contract.encode('', { [brand.path]: [option.value] });
       const res = await getFilterPanelOver(products, { scope: 'all-products', query });
-      const narrowedIds = await fetchNarrowedIds(searchTerm, spacedTerm, res.narrowing);
+      const narrowedIds = await fetchNarrowedIds(terms, res.narrowing);
       if (narrowedIds === null) throw new Error(`narrowed ids read failed for "${word}" / ${option.value}`);
       const { narrowing: _narrowing, ...filter } = res;
       const result = buildSearchResult({
