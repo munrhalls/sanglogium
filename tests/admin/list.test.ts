@@ -3,7 +3,8 @@
 // Stripe holds 150 paid payments made up for this proof, plus a failed, a
 // cancelled and a still-processing one. Sanity holds an order for every paid one
 // except the 121st newest, which sits on Stripe's second page. Every payment
-// carries a made-up customer's private details.
+// carries a made-up customer's private details. One more paid payment with no
+// order was refunded in full, and one in part; Stripe keeps both as succeeded.
 
 import {
   calls, line, tryImport, firstLine, signInAs, setOwnerList, setStripePayments, setSanityOrders,
@@ -15,8 +16,9 @@ export const title = 'The list of paid payments with no order'
 const MINUTE = 60_000
 const MISSING = 'pi_list_120'
 
-function payment(id: string, status: string, minutesAgo: number, amount: number) {
+function payment(id: string, status: string, minutesAgo: number, amount: number, refunded = 0) {
   return {
+    charge: { id: `ch_${id.slice(3)}`, object: 'charge', refunded: refunded >= amount, amount_refunded: refunded },
     id,
     object: 'payment_intent',
     status,
@@ -37,6 +39,8 @@ export async function ask() {
     payment('pi_list_failed', 'requires_payment_method', 30, 5_000),
     payment('pi_list_canceled', 'canceled', 31, 5_001),
     payment('pi_list_processing', 'processing', 32, 5_002),
+    payment('pi_list_refunded', 'succeeded', 33, 7_000, 7_000),
+    payment('pi_list_partial', 'succeeded', 34, 8_000, 1_000),
   ])
   setSanityOrders(paid.filter((p) => p.id !== MISSING).map((p) => ({ _type: 'order', paymentIntentId: p.id })))
   setOwnerList(OWNER)
@@ -65,14 +69,26 @@ export async function ask() {
     else if (unknown.length) lines.push(line(id, question, false, `It answered no: it asked Sanity a question the stand-in does not know: ${unknown[0]}.`))
     else {
       const list = Array.isArray(rows) ? rows as Array<Record<string, unknown>> : []
-      const ids = list.map((row) => row.paymentIntentId)
+      const ids = list.map((row) => row.paymentIntentId).filter((id) => id !== 'pi_list_refunded' && id !== 'pi_list_partial')
       const want = paid.find((p) => p.id === MISSING)!
-      const row = list[0]
+      const row = list.find((r) => r.paymentIntentId === MISSING) ?? {}
       if (ids.length === 1 && ids[0] === MISSING && row.amount === want.amount && row.currency === 'pln') {
         lines.push(line(id, question, true, `It answered yes: it showed ${MISSING} with its amount, and nothing else.`))
       } else {
         lines.push(line(id, question, false, `It answered no: it showed [${ids.join(', ')}], not [${MISSING}] with amount ${want.amount}.`))
       }
+    }
+  }
+  {
+    const id = 'pay-list-refunded'
+    const question = 'After the owner refunds a payment that had no order, does the admin list stop showing it?'
+    if (failure || !Array.isArray(rows)) lines.push(line(id, question, false, `It answered no: ${failure || 'the list is not a list'}.`))
+    else {
+      const ids = (rows as Array<Record<string, unknown>>).map((row) => row.paymentIntentId)
+      const gone = !ids.includes('pi_list_refunded')
+      const partKept = ids.includes('pi_list_partial')
+      if (gone && partKept) lines.push(line(id, question, true, 'It answered yes: the refunded payment is gone, and the one refunded only in part still shows.'))
+      else lines.push(line(id, question, false, `It answered no: ${gone ? '' : 'the refunded payment still shows'}${!gone && !partKept ? '; ' : ''}${partKept ? '' : 'the payment refunded only in part is missing'}.`))
     }
   }
   {

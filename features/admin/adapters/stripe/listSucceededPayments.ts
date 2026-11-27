@@ -28,10 +28,14 @@ export async function listSucceededPayments(createdSince: number): Promise<PaidP
     const page = await client.paymentIntents.list({
       created: { gte: createdSince },
       limit: 100,
+      expand: ['data.latest_charge'],
       ...(startingAfter ? { starting_after: startingAfter } : {}),
     })
     for (const pi of page.data) {
-      if (pi.status === 'succeeded') {
+      // A fully refunded payment leaves the list; a partly refunded one (refunded false) stays.
+      const charge = pi.latest_charge
+      const fullyRefunded = typeof charge === 'object' && charge !== null && charge.refunded === true
+      if (pi.status === 'succeeded' && !fullyRefunded) {
         payments.push({ id: pi.id, amount: pi.amount, currency: pi.currency, created: pi.created })
       }
     }

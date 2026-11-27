@@ -174,6 +174,8 @@ function inCreatedRange(created, range) {
 }
 
 // Stripe lists newest first, at most 100 a page, and pages with starting_after.
+// A payment's charge (kept here as `charge`) comes back as latest_charge: its id,
+// or the whole charge when the list asks for expand: ['data.latest_charge'].
 function paymentPage(params) {
   const rows = stripePayments
     .filter((payment) => inCreatedRange(payment.created, params.created))
@@ -184,8 +186,12 @@ function paymentPage(params) {
     if (start === 0) throw new Error(`No such payment_intent: '${params.starting_after}'`)
   }
   const limit = Math.min(Math.max(params.limit ?? 10, 1), 100)
-  const data = rows.slice(start, start + limit)
-  return { object: 'list', data: structuredClone(data), has_more: start + limit < rows.length, url: '/v1/payment_intents' }
+  const expand = Array.isArray(params.expand) && params.expand.includes('data.latest_charge')
+  const data = rows.slice(start, start + limit).map((payment) => {
+    const { charge, ...rest } = structuredClone(payment)
+    return { ...rest, latest_charge: charge ? (expand ? charge : charge.id) : null }
+  })
+  return { object: 'list', data, has_more: start + limit < rows.length, url: '/v1/payment_intents' }
 }
 
 function listPayments(params = {}) {
@@ -370,6 +376,10 @@ export async function standInsKeepTheirRules() {
   const all = await stripe.paymentIntents.list({ limit: 100 }).autoPagingToArray({ limit: 10000 })
   const iterated = []
   for await (const payment of stripe.paymentIntents.list({ limit: 100 })) iterated.push(payment.id)
+  setStripePayments([{ id: 'pi_ruler_charge', created: 1, status: 'succeeded', charge: { id: 'ch_ruler', object: 'charge', refunded: true, amount_refunded: 5 } }])
+  const plain = (await stripe.paymentIntents.list({ limit: 1 })).data[0]
+  const expanded = (await stripe.paymentIntents.list({ limit: 1, expand: ['data.latest_charge'] })).data[0]
+  if (plain.latest_charge !== 'ch_ruler' || expanded.latest_charge?.refunded !== true || 'charge' in plain) throw broken('stand-in Stripe does not expand the charge the way Stripe does')
   if (firstPage.data.length !== 100 || !firstPage.has_more || all.length !== 205 || iterated.length !== 205 || new Set(iterated).size !== 205) {
     throw broken('stand-in Stripe does not page the way Stripe does')
   }
