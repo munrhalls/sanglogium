@@ -241,7 +241,7 @@ async function oddAnswer(door, params) {
       const q = Array.isArray(params.q) ? params.q[0] : params.q
       const suggestions = await door.getSuggestions(q)
       if (!Array.isArray(suggestions)) return 'the suggestions are not a list'
-      const page = door.getSearchPage(params)
+      const page = await door.getSearchPage(params)
       if (page.kind === 'redirect') return typeof page.to === 'string' && page.to.startsWith('/') ? null : `it jumps to "${page.to}"`
       const r = await page.resultsPromise
       if (!Array.isArray(r?.products) || !Number.isInteger(r.totalCount) || r.totalCount < r.products.length) return 'the results are not a list with a count'
@@ -287,13 +287,13 @@ run(async () => {
   const answers = new Map()
   async function answer(text) {
     const suggestions = (await door.getSuggestions(text)).map((p) => p._id)
-    const page = door.getSearchPage({ q: text })
+    const page = await door.getSearchPage({ q: text })
     if (page.kind === 'redirect') return { redirect: page.to, suggestions }
     const first = await page.resultsPromise
     const all = first.products.map((p) => p._id)
     if (needAll.has(text)) {
       for (let n = 2; all.length < first.totalCount && n <= first.totalCount; n += 1) {
-        const next = await door.getSearchPage({ q: text, page: String(n) }).resultsPromise
+        const next = await (await door.getSearchPage({ q: text, page: String(n) })).resultsPromise
         if (next.products.length === 0) break
         all.push(...next.products.map((p) => p._id))
       }
@@ -331,10 +331,10 @@ run(async () => {
       results.push({ id, text: QUESTIONS[id], checked: list.length, unit: 'searches', findings: list.map((c) => judges[id](c, answers.get(c.key))).filter(Boolean) })
     }
     if (id === 'F1') {
-      const landed = new Map(landingCases.map((c) => {
-        const page = door.getSearchPage({ q: c.key })
+      const landed = new Map(await Promise.all(landingCases.map(async (c) => {
+        const page = await door.getSearchPage({ q: c.key })
         return [c.key, page.kind === 'redirect' ? { redirect: page.to } : {}]
-      }))
+      })))
       const spoiled = spoilTest(landingCases, lands, landed, (c, a) => ({ redirect: `${a.redirect}x` }))
       if (spoiled) broken(`F1: ${spoiled}`)
       results.push({ id, text: QUESTIONS.F1, checked: landingCases.length, unit: 'words', findings: landingCases.map((c) => lands(c, landed.get(c.key))).filter(Boolean) })

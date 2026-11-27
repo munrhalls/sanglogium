@@ -7,6 +7,7 @@
 //   (every function they export is the real one, from the same file);
 // - a screen file (.tsx) is replaced by one with the same export names; drawing one throws;
 // - the catalogue index JSON is read as a module;
+// - `next/headers` says who is asking (see below);
 // - `@/platform/sanity/client` (sanityFetch and client.fetch) hands every read to `globalThis.__searchRead`, which the proof sets:
 //   the real catalogue (live.mjs) or a stand-in. The query text and params are the shop's own.
 // Everything else falls through to tools/alias-loader.mjs, which must be imported before this file.
@@ -29,6 +30,12 @@ const SWAPS = {
     'const read = (query, params = {}) => { if (typeof globalThis.__searchRead !== "function") throw new Error("no catalogue set"); return globalThis.__searchRead(query, params) }',
     'export const sanityFetch = ({ query, params = {} }) => read(query, params)',
     'export const client = { fetch: (query, params) => read(query, params) }',
+  ].join('\n'),
+  // Who a request comes from: the address the proof sets in globalThis.__searchVisitor, else a new pretend visitor for
+  // every request (so proofs that search thousands of times are never one visitor).
+  'next/headers': [
+    'let n = 0',
+    'export async function headers() { return new Headers({ "x-forwarded-for": globalThis.__searchVisitor ?? `proof-visitor-${++n}` }) }',
   ].join('\n'),
   '@/features/catalogue/server': `export * from ${at('features/catalogue/adapters/catalogue-index/catalogueIndex.ts')}`,
   '@/features/catalogue': `export { isFacetedQuery, canonicalCategoryPath } from ${at('features/catalogue/core/rules/seo.ts')}`,
