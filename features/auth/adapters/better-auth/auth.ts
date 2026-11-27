@@ -122,6 +122,7 @@ export function createAuth(deps: AuthDeps) {
     },
     deleteUser: {
       enabled: true,
+      deleteTokenExpiresIn: 60 * 60,
       sendDeleteAccountVerification: async ({ user, url, token }) => {
         await deps.emails.sendDeleteAccountVerification({ user, url, token });
       },
