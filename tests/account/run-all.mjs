@@ -8,7 +8,7 @@
 // npm run proof:account
 
 import { spawn } from 'node:child_process'
-import { readdirSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -58,6 +58,23 @@ await Promise.all(Array.from({ length: width }, async () => {
   }
 }))
 for (const file of files.filter((name) => ALONE.has(name))) results.set(file, await run(file))
+
+// The proof book must list every printed question with its proof file, and nothing else.
+const book = readFileSync(path.join(repoRoot, 'docs/features/account/proof-book.md'), 'utf8')
+const inBook = new Map([...book.matchAll(/^- \*\*(.+?)\*\* Safe answer: (?:Yes|No)\.\n {2}Cannot lie: .+\n {2}Proof: `tests\/account\/(.+?\.test\.ts)`/gm)].map((m) => [m[2], m[1]]))
+for (const file of files) {
+  const question = inBook.get(file)
+  const { line } = results.get(file)
+  const asked = line.replace(/^(PASS {2}|NO {4}|proof broken: )/, '')
+  if (!question) results.set(file, { code: 2, line: `proof broken: the proof book does not list ${file}` })
+  else if (!asked.startsWith(question)) results.set(file, { code: 2, line: `proof broken: the proof book's question for ${file} is not the one it asks` })
+}
+for (const file of inBook.keys()) {
+  if (!files.includes(file)) {
+    files.push(file)
+    results.set(file, { code: 2, line: `proof broken: the proof book lists ${file}, which is not a proof here` })
+  }
+}
 
 let no = 0
 let brokenCount = 0
