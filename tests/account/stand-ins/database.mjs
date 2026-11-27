@@ -21,6 +21,10 @@ const client = createClient({ url: `file:${path.join(folder, 'sign-in.db')}` })
 
 let refuse = null
 
+// A real sign-in database answers over the network, after a delay. Proofs about timing set one.
+export const wire = { delayMs: 0 }
+const wait = () => (wire.delayMs ? new Promise((resolve) => setTimeout(resolve, wire.delayMs)) : null)
+
 // The next statement whose SQL matches is refused once, as a lost connection would be.
 export function refuseOnce(match) {
   refuse = match
@@ -35,6 +39,7 @@ function guard(sql) {
 
 const guarded = {
   execute: async (statement) => {
+    await wait()
     guard(typeof statement === 'string' ? statement : statement.sql)
     return client.execute(statement)
   },
@@ -43,6 +48,7 @@ const guarded = {
     const tx = await client.transaction(mode)
     return {
       execute: async (statement) => {
+        await wait()
         guard(typeof statement === 'string' ? statement : statement.sql)
         return tx.execute(statement)
       },

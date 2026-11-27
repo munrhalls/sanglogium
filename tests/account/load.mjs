@@ -55,6 +55,10 @@ registerHooks({
     if (specifier === 'kysely-libsql' && context.parentURL && fileURLToPath(context.parentURL) === AUTH_FILE) {
       return standIn('database.mjs')
     }
+    // The sign-in code runs here outside a Next request, so Next's after() is stood in for it alone.
+    if (specifier === 'next/server' && context.parentURL && fileURLToPath(context.parentURL) === AUTH_FILE) {
+      return standIn('next-server.mjs')
+    }
     try {
       return nextResolve(specifier, context)
     } catch (error) {
