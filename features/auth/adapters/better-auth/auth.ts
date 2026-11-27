@@ -96,6 +96,8 @@ export function createAuth(deps: AuthDeps) {
       "/sign-in/email": { window: 15 * 60, max: 5 },
       "/sign-up/email": { window: 60 * 60, max: 3 },
       "/request-password-reset": { window: 60 * 60, max: 3 },
+      "/send-verification-email": { window: 60 * 60, max: 3 },
+      "/change-email": { window: 60 * 60, max: 3 },
     },
   },
   emailVerification: {
