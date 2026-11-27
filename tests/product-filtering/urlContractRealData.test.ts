@@ -62,6 +62,7 @@ const readRange = (v: string | null): UrlState[string] => {
   const parts = v.split(',');
   if (parts.length !== 2 || !parts.every((p) => STRICT_NUMBER.test(p))) return null;
   const [min, max] = parts.map(Number);
+  if (!Number.isFinite(min) || !Number.isFinite(max)) return null; // a number too big to hold reads as Infinity
   return min <= max ? { min, max } : null;
 };
 
@@ -203,6 +204,9 @@ function decodeCases(contract: UrlContract): string[] {
     ["'?zinkLevel=%205,6'", '?zinkLevel=%205,6', {}],
     ["'?zinkLevel=Infinity,5'", '?zinkLevel=Infinity,5', {}],
     ["'?zinkLevel=NaN,1'", '?zinkLevel=NaN,1', {}],
+    ["'?zinkLevel=0,1e999' (a number too big to hold)", '?zinkLevel=0,1e999', {}],
+    ["'?zinkLevel=-1e999,5'", '?zinkLevel=-1e999,5', {}],
+    ["'?zinkLevel=1e400,1e401'", '?zinkLevel=1e400,1e401', {}],
     ["'?zinkLevel=-4.5,30'", '?zinkLevel=-4.5,30', { zinkLevel: { min: -4.5, max: 30 } }],
     ["'?plinkRate=2.5,2.5'", '?plinkRate=2.5,2.5', { plinkRate: { min: 2.5, max: 2.5 } }],
     ["'?sort=ghost:asc'", '?sort=ghost:asc', {}],
