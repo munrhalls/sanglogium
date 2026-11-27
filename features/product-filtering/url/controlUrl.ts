@@ -43,14 +43,14 @@ export function buildUrlContract(model: ControlModel): UrlContract {
       // On or off; `true` when written.
       parsers[control.path] = parseAsBoolean.withDefault(false);
     } else {
-      // Written as `min,max`; a range at the full span is still a filter and is written as it is.
+      // Written as `min,max`; a range at the full span is still a filter and is written as it is. A number too big to hold (read as Infinity) is not a usable value.
       parsers[control.path] = createParser<RangeSelection>({
         parse: (query) => {
           const parts = query.split(',');
           if (parts.length !== 2 || !NUMBER.test(parts[0]) || !NUMBER.test(parts[1])) return null;
           const min = Number(parts[0]);
           const max = Number(parts[1]);
-          return min <= max ? { min, max } : null;
+          return Number.isFinite(min) && Number.isFinite(max) && min <= max ? { min, max } : null;
         },
         serialize: ({ min, max }) => `${min},${max}`,
         eq: (a, b) => a.min === b.min && a.max === b.max,
