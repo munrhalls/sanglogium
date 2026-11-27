@@ -52,3 +52,19 @@ export type FeatureProduct = {
   stock: number;
   filterAttributes?: Record<string, unknown>;
 };
+
+/** The patterns one search gives the catalogue matcher (built by searchTerms in core/rules/searchText.ts). */
+export interface SearchTerms {
+  /** The words, "anything after" added: "hd 800*". */
+  query: string;
+  /** The same with letters and numbers split: "hd 800*" for "hd800". */
+  spacedQuery: string;
+  /** The words with every space and symbol removed, matched anywhere: "*lcdx*". */
+  joinedAnywhere: string;
+  /** The same, matched from the start: "lcdx*". */
+  joinedStart: string;
+  /** The first one, two and three words as a possible brand, the rest as a name ("Dekoni Audio" + "Ear Pads*"). Always three entries; both null when there are not enough words. */
+  brandSplits: { brand: string | null; rest: string | null }[];
+  /** false: the words as typed (fast). true: also ignore spaces, symbols and the line between brand and name (slow). */
+  loose: boolean;
+}

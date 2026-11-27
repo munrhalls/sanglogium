@@ -1,3 +1,5 @@
+import type { SearchTerms } from '@/features/product-search/core/types/searchTypes';
+
 export function normalizeText(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
@@ -13,4 +15,25 @@ export function deriveSpacedQuery(value: string): string {
     .replace(/(\d+)\s+([a-zA-Z]+)/g, '$1$2')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+/**
+ * The patterns for one search, words as typed (loose: false). A symbol at the very end of the words is dropped
+ * before "anything after" (*) is added, so "3.9 ft." looks for "3.9 ft*" (the catalogue has no word "ft.").
+ */
+export function searchTerms(rawQuery: string): SearchTerms {
+  const words = rawQuery.trim().replace(/[^\p{L}\p{N}]+$/u, '');
+  const joinedWords = words.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+  const list = words.split(/\s+/).filter(Boolean);
+  const brandSplits = [1, 2, 3].map((k) =>
+    list.length > k ? { brand: list.slice(0, k).join(' '), rest: `${list.slice(k).join(' ')}*` } : { brand: null, rest: null }
+  );
+  return {
+    query: `${words}*`,
+    spacedQuery: `${deriveSpacedQuery(words)}*`,
+    joinedAnywhere: `*${joinedWords}*`,
+    joinedStart: `${joinedWords}*`,
+    brandSplits,
+    loose: false,
+  };
 }

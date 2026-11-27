@@ -1,4 +1,4 @@
-import { normalizeText, deriveSpacedQuery } from '@/features/product-search/core/rules/searchText';
+import { normalizeText, searchTerms } from '@/features/product-search/core/rules/searchText';
 import { rankAutocomplete } from '@/features/product-search/core/rules/searchResults';
 import type { AutocompleteProduct } from '@/features/product-search/core/types/searchTypes';
 import type { SearchSource } from '@/features/product-search/core/ports';
@@ -14,11 +14,12 @@ export async function getSearchSuggestions(
   }
 
   const rawQuery = query.trim();
-  const searchTerm = `${rawQuery}*`;
-  const spacedTerm = `${deriveSpacedQuery(rawQuery)}*`;
+  const terms = searchTerms(rawQuery);
 
   try {
-    const candidates = await source.fetchAutocompleteCandidates(searchTerm, spacedTerm);
+    let candidates = await source.fetchAutocompleteCandidates(terms);
+    // Nothing for the words as typed: look again with spaces, symbols and the brand/name line ignored ("LCDX" finds "LCD-X").
+    if (!candidates || candidates.length === 0) candidates = await source.fetchAutocompleteCandidates({ ...terms, loose: true });
     return rankAutocomplete(candidates ?? [], rawQuery, source.getCategoryLookup());
   } catch (error) {
     console.error(`[searchProductsAutocomplete] Failed for query "${query}":`, error);
