@@ -1,15 +1,16 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { z } from "zod";
+interface BasketItem {
+  productId: string;
+  quantity: number;
+}
 
-// Zod schema for validation
-const BasketItemSchema = z.object({
-  productId: z.string().min(1),
-  quantity: z.number().int().positive(),
-});
-
-// Infer TypeScript types from Zod schema
-type BasketItem = z.infer<typeof BasketItemSchema>;
+// A saved basket item is usable only with a non-empty product id and a positive whole quantity.
+const isBasketItem = (value: unknown): value is BasketItem => {
+  if (typeof value !== "object" || value === null) return false;
+  const { productId, quantity } = value as Record<string, unknown>;
+  return typeof productId === "string" && productId.length > 0 && Number.isInteger(quantity) && (quantity as number) > 0;
+};
 
 interface BasketState {
   items: BasketItem[];
@@ -93,13 +94,9 @@ const useBasketStore = create<BasketStore>()(
       items: [] as BasketItem[],
       _hasHydrated: false,
       addProduct: (productId) => {
-        // Input validation using Zod schema
-        const result = BasketItemSchema.safeParse({
-          productId,
-          quantity: 1,
-        });
-        if (!result.success) {
-          console.error("Invalid input:", result.error);
+        const newItem = { productId, quantity: 1 };
+        if (!isBasketItem(newItem)) {
+          console.error("Invalid input:", newItem);
           return;
         }
         const items = get().items;
@@ -113,7 +110,7 @@ const useBasketStore = create<BasketStore>()(
             ),
           });
         } else {
-          set({ items: [...items, result.data] });
+          set({ items: [...items, newItem] });
         }
       },
       removeProduct: (productId) => {
@@ -146,9 +143,9 @@ const useBasketStore = create<BasketStore>()(
           set({ items: get().items.filter((item) => item.productId !== productId) });
           return;
         }
-        const result = BasketItemSchema.safeParse({ productId, quantity });
-        if (!result.success) {
-          console.error("Invalid quantity:", result.error);
+        const newItem = { productId, quantity };
+        if (!isBasketItem(newItem)) {
+          console.error("Invalid quantity:", newItem);
           return;
         }
         const items = get().items;
@@ -157,12 +154,12 @@ const useBasketStore = create<BasketStore>()(
           set({
             items: items.map((item) =>
               item.productId === productId
-                ? { ...item, quantity: result.data.quantity }
+                ? { ...item, quantity: newItem.quantity }
                 : item,
             ),
           });
         } else {
-          set({ items: [...items, result.data] });
+          set({ items: [...items, newItem] });
         }
       },
       clear: () => {
@@ -178,14 +175,10 @@ const useBasketStore = create<BasketStore>()(
       onRehydrateStorage: () => (state) => {
         // Set hydration flag to prevent hydration errors in Next.js SSR
         state?.setHasHydrated(true);
-        // Hydration validation using Zod schema
+        // Restored items must all be usable, or the basket starts empty.
         if (state) {
-          const result = z.array(BasketItemSchema).safeParse(state.items);
-          if (!result.success) {
-            console.error(
-              "Invalid basket state from storage, resetting to empty:",
-              result.error,
-            );
+          if (!Array.isArray(state.items) || !state.items.every(isBasketItem)) {
+            console.error("Invalid basket state from storage, resetting to empty:", state.items);
             state.items = [];
           }
         }
