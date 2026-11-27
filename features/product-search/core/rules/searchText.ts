@@ -24,11 +24,16 @@ export function deriveSpacedQuery(value: string): string {
 export function searchTerms(rawQuery: string): SearchTerms {
   const words = rawQuery.trim().replace(/[^\p{L}\p{N}]+$/u, '');
   const joinedWords = words.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+  const list = words.split(/\s+/).filter(Boolean);
+  const brandSplits = [1, 2, 3].map((k) =>
+    list.length > k ? { brand: list.slice(0, k).join(' '), rest: `${list.slice(k).join(' ')}*` } : { brand: null, rest: null }
+  );
   return {
     query: `${words}*`,
     spacedQuery: `${deriveSpacedQuery(words)}*`,
     joinedAnywhere: `*${joinedWords}*`,
     joinedStart: `${joinedWords}*`,
+    brandSplits,
     loose: false,
   };
 }

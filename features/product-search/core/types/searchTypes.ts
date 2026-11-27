@@ -63,6 +63,8 @@ export interface SearchTerms {
   joinedAnywhere: string;
   /** The same, matched from the start: "lcdx*". */
   joinedStart: string;
+  /** The first one, two and three words as a possible brand, the rest as a name ("Dekoni Audio" + "Ear Pads*"). Always three entries; both null when there are not enough words. */
+  brandSplits: { brand: string | null; rest: string | null }[];
   /** false: the words as typed (fast). true: also ignore spaces, symbols and the line between brand and name (slow). */
   loose: boolean;
 }
