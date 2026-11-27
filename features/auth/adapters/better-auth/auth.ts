@@ -123,6 +123,7 @@ export function createAuth(deps: AuthDeps) {
     },
     deleteUser: {
       enabled: true,
+      deleteTokenExpiresIn: 60 * 60,
       sendDeleteAccountVerification: async ({ user, url, token }) => {
         await deps.emails.sendDeleteAccountVerification({ user, url, token });
       },
@@ -132,27 +133,9 @@ export function createAuth(deps: AuthDeps) {
             "Cannot delete account with open orders. Please wait for all orders to be delivered or cancelled."
           );
         }
-      },
-      afterDelete: async (user) => {
-        // Hard-delete the user profile (no legally required retention).
-        try {
-          await deps.profiles.deleteUserProfile(user.id);
-        } catch (error) {
-          console.error("[AUTH] afterDelete: failed to delete userProfile.", {
-            authId: user.id,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        }
-
-        // Anonymize order history: remove userId but keep orders for accounting/tax.
-        try {
-          await deps.orders.anonymizeUserOrders(user.id);
-        } catch (error) {
-          console.error("[AUTH] afterDelete: failed to anonymize orders.", {
-            authId: user.id,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        }
+        // Clean Sanity first: if this fails, the deletion stops and the account stays, so she can try again.
+        await deps.orders.anonymizeUserOrders(user.id);
+        await deps.profiles.deleteUserProfile(user.id);
       },
     },
   },
