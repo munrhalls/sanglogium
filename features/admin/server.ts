@@ -2,7 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import { getSignInFacts } from "@/features/auth/server";
-import { ownerList } from "./core/rules/ownerList";
+import { ownerList } from "@/platform/utils/ownerList";
 import { isOwner } from "./core/rules/isOwner";
 import type { AdminLedgers } from "./core/ports";
 import type { PaymentWithoutOrder } from "./core/types/adminTypes";

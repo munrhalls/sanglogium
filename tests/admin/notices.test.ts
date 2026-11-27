@@ -1,6 +1,6 @@
 // The owner's emails: an order to pack, an order short of stock, a payment with no order.
 //
-// The shop's real webhook and return handlers run, and the shop's real owner-email
+// The shop's real webhook and return handlers and its daily sweep run, and the shop's real owner-email
 // sender hands its emails to the stand-in Resend, which keeps one email per key
 // the way Resend does for 24 hours. The order book and the card company behind
 // the handlers are stand-ins that write down every call. Every order and payment
@@ -53,26 +53,30 @@ function orderBook() {
   const orders = new Map<string, Record<string, unknown>>()
   const plans = new Map<string, Item[]>()
   const refusing = new Set<string>()
+  const make = (payment: { id: string; amount: number }, orderedAt: string) => {
+    const items = (plans.get(payment.id) ?? WHOLE).map((item) => ({ ...item, subtotal: item.price * item.quantity, returnStatus: 'none' }))
+    const shippingAddress = { name: PRIVATE.name, line1: `${PRIVATE.street} ${PRIVATE.streetNumber}`, city: PRIVATE.city, state: '', postalCode: PRIVATE.postalCode, country: 'PL', phone: PRIVATE.phone }
+    const doc = {
+      _id: `order_${payment.id}`,
+      orderNumber: orderNumber(payment.id),
+      customerEmail: PRIVATE.email,
+      isGuest: true,
+      items,
+      pricing: { subtotal: payment.amount - 1_500, shipping: 1_500, tax: 0, discount: 0, total: payment.amount, currency: 'PLN' },
+      shippingAddress,
+      shippingMethod: { name: 'Courier', carrier: 'courier', price: 1_500, estimatedDays: 2 },
+      status: 'processing',
+      dates: { orderedAt },
+    }
+    orders.set(payment.id, doc)
+    return { doc, items, shippingAddress }
+  }
   const port = {
     async createOrderFromPayment(payment: { id: string; amount: number }) {
       calls.push({ system: 'orders', method: 'createOrderFromPayment' })
       if (refusing.has(payment.id)) throw new Error(`stand-in order book refused ${payment.id}`)
       if (orders.has(payment.id)) return { created: false }
-      const items = (plans.get(payment.id) ?? WHOLE).map((item) => ({ ...item, subtotal: item.price * item.quantity, returnStatus: 'none' }))
-      const shippingAddress = { name: PRIVATE.name, line1: `${PRIVATE.street} ${PRIVATE.streetNumber}`, city: PRIVATE.city, state: '', postalCode: PRIVATE.postalCode, country: 'PL', phone: PRIVATE.phone }
-      const doc = {
-        _id: `order_${payment.id}`,
-        orderNumber: orderNumber(payment.id),
-        customerEmail: PRIVATE.email,
-        isGuest: true,
-        items,
-        pricing: { subtotal: payment.amount - 1_500, shipping: 1_500, tax: 0, discount: 0, total: payment.amount, currency: 'PLN' },
-        shippingAddress,
-        shippingMethod: { name: 'Courier', carrier: 'courier', price: 1_500, estimatedDays: 2 },
-        status: 'processing',
-        dates: { orderedAt: '2026-11-26T09:00:00.000Z' },
-      }
-      orders.set(payment.id, doc)
+      const { doc, items, shippingAddress } = make(payment, new Date().toISOString())
       return { created: true, email: { to: PRIVATE.email, orderNumber: doc.orderNumber, items, total: payment.amount, shippingAddress, shipping: 1_500, tax: 0, orderedAt: doc.dates.orderedAt } }
     },
     async getOrderByPaymentIntentId(pi: string) {
@@ -80,7 +84,9 @@ function orderBook() {
       return orders.has(pi) ? structuredClone(orders.get(pi)) : null
     },
   }
-  return { port, plans, refusing, has: (pi: string) => orders.has(pi) }
+  // An order placed before this run, written straight into the book.
+  const seed = (payment: { id: string; amount: number }, orderedAt: string) => { make(payment, orderedAt) }
+  return { port, plans, refusing, seed, has: (pi: string) => orders.has(pi) }
 }
 
 export async function ask() {
@@ -91,6 +97,7 @@ export async function ask() {
   const payments = new Map<string, ReturnType<typeof snapshot>>()
   const customerMails: string[] = []
   let handled = 0
+  let sweepList: string[] = []
 
   const sender = await tryImport('@/features/checkout/adapters/resend/ownerNoticeEmail')
   const webhook = await tryImport('@/features/checkout/commands/handlePaymentWebhook')
@@ -110,6 +117,10 @@ export async function ask() {
       async retrievePayment(pi: string) {
         calls.push({ system: 'payments', method: 'retrievePayment' })
         return structuredClone(payments.get(pi))
+      },
+      async listPayments() {
+        calls.push({ system: 'payments', method: 'listPayments' })
+        return sweepList.map((pi) => structuredClone(payments.get(pi)))
       },
       async createPayment() {
         calls.push({ system: 'payments', method: 'createPayment' })
@@ -285,6 +296,36 @@ export async function ask() {
     const mails = noOrderMails(pi)
     if (statuses.every((s) => s === 500) && mails.length === 1) lines.push(line(id, question, true, 'It answered yes: five tries, one email.'))
     else lines.push(line(id, question, false, why(`It answered no: tries answered ${statuses.join(', ')}, ${mails.length} email(s)`) + '.'))
+  }
+
+  // pack-sweep-repeat
+  {
+    const id = 'pack-sweep-repeat'
+    const question = 'When the daily sweep passes an order placed two days ago, does the owner get no second email, while an order the sweep places now gets one?'
+    const old = 'pi_proof_old008'
+    const fresh = 'pi_proof_new009'
+    pay(old, 41_500, WHOLE)
+    pay(fresh, 41_500, WHOLE)
+    book.seed(payments.get(old)!, new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString())
+    sweepList = [old, fresh]
+    const sweeper = await tryImport('@/features/checkout/commands/sweepPaidPayments')
+    if (sweeper.missing) lines.push(line(id, question, false, `It could not be asked: ${sweeper.missing}.`))
+    else {
+      process.env.CRON_SECRET = 'admin-proof-cron'
+      handled += 2
+      let status: number | string
+      try {
+        const result = await sweeper.mod.sweepPaidPayments(ports, { authorization: 'Bearer admin-proof-cron', now: Math.floor(Date.now() / 1000) })
+        status = result.status
+      } catch (error) {
+        status = `it broke: ${firstLine(error)}`
+      }
+      delete process.env.CRON_SECRET
+      const oldMails = orderMails(old).length
+      const freshMails = orderMails(fresh).length
+      if (status === 200 && oldMails === 0 && freshMails === 1) lines.push(line(id, question, true, 'It answered yes: no email for the two-day-old order, one for the order the sweep placed.'))
+      else lines.push(line(id, question, false, why(`It answered no: sweep ${status}, ${oldMails} email(s) for the old order, ${freshMails} for the new one`) + '.'))
+    }
   }
 
   // leak-email

@@ -34,7 +34,7 @@ function ordersPort() {
 }
 
 function doors() {
-  return { orders: ordersPort(), payments: paymentsPort(), emails: { async sendOrderConfirmationEmail() {} } }
+  return { orders: ordersPort(), payments: paymentsPort(), emails: { async sendOrderConfirmationEmail() {}, async sendOwnerNotice() {} } }
 }
 
 export function fresh() {
