@@ -23,13 +23,19 @@ const WORDS = `name match $query ||
         overviewFields[].value match $query ||
         overviewFields[].value match $spacedQuery`;
 
-// Spaces, symbols and the line between brand and name ignored. About half a second per search, so it is added
-// only when WORDS finds nothing (the queries set terms.loose).
-const LOOSE = `(coalesce(brand->name, "") + " " + name) match $query ||
-        (coalesce(brand->name, "") + " " + name) match $spacedQuery ||
-        ${joined('name')} match $joinedAnywhere ||
-        ${joined('coalesce(brand->name, "") + name')} match $joinedStart ||
-        ${joined('sku')} match $joinedAnywhere`;
+// The first one, two or three words may be the brand: they are matched against the brand list once and the rest against
+// the name ("Dekoni Audio Ear Pads" finds Dekoni Audio's "Ear Pads for …").
+const BRAND_THEN_NAME = [1, 2, 3]
+  .map((k) => `($brand${k} != null && brand._ref in *[_type == "brand" && name match $brand${k}]._id && name match $rest${k})`)
+  .join(' ||\n        ');
+
+// Spaces, symbols and the line between brand and name ignored. Slower than WORDS (about 0.2 s per search, measured), so it
+// is added only when WORDS finds nothing (the queries set terms.loose). It never looks up each product's brand (brand->name):
+// that lookup is what made it slow.
+const LOOSE = `${joined('name')} match $joinedAnywhere ||
+        ${joined('sku')} match $joinedAnywhere ||
+        brand._ref in *[_type == "brand" && ${joined('name')} match $joinedStart]._id ||
+        ${BRAND_THEN_NAME}`;
 
 // One predicate for suggestions and results, so both see the same matched set. The suggestions score ALL of it
 // (not just the first N by _id), which is what keeps the popup's top rows equal to the results page's top rows.
@@ -41,6 +47,7 @@ const paramsOf = (terms: SearchTerms) => ({
   spacedQuery: terms.spacedQuery,
   joinedAnywhere: terms.joinedAnywhere,
   joinedStart: terms.joinedStart,
+  ...Object.fromEntries(terms.brandSplits.flatMap((split, i) => [[`brand${i + 1}`, split.brand], [`rest${i + 1}`, split.rest]])),
 });
 
 export async function fetchAutocompleteCandidates(
