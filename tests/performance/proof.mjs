@@ -8,8 +8,10 @@
 //   --runs N (runs per page and device, default 5)   --only id,id
 // One clock: Lighthouse 13.6.0 simulated throttling, the method PageSpeed uses. Phone = PageSpeed mobile (moto g power,
 // slow 4G, 4x CPU); computer = PageSpeed desktop. Green lines are Google's: score >= 90, LCP <= 2.5 s, TBT <= 200 ms, CLS <= 0.1.
-// A band counts only if all runs are distinct (PageSpeed returns a cached result for a repeat it saw recently; a repeated
-// fetchTime is dropped and retried) and the worst run passes.
+// Every distinct PageSpeed run (PageSpeed returns a cached result for a repeat it saw recently; a repeated fetchTime is dropped
+// and retried) is kept per deployed build in ~/.cache/sanglogium-performance/, and each line is judged over all runs of that
+// build: YES only if every run passes. More runs can only make a verdict stricter, so repeating the command repeats the verdict
+// unless a new run fails. "On the line" = the median passes but some run fails: not green.
 
 import { spawn, spawnSync, execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -17,6 +19,7 @@ import http from "node:http";
 import https from "node:https";
 import os from "node:os";
 import path from "node:path";
+import crypto from "node:crypto";
 import zlib from "node:zlib";
 import { parseEnv } from "node:util";
 
@@ -248,6 +251,20 @@ async function psiBands() {
   }
   return combos;
 }
+// The deployed build = the hash of the home page's own script files; it changes with every deploy.
+async function buildKey() {
+  const p = await page(LIVE, "home");
+  return crypto.createHash("sha1").update(p.scripts.filter((x) => !x.outside).map((x) => new URL(x.url).pathname).sort().join("\n")).digest("hex").slice(0, 12);
+}
+const POOL_DIR = path.join(os.homedir(), ".cache", "sanglogium-performance");
+function pooled(build, combos) {
+  const file = path.join(POOL_DIR, `pagespeed-${build}.json`);
+  const pool = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : [];
+  for (const c of combos) for (const r of c.runs) if (!pool.some((p) => p.page === c.key && p.device === c.device && p.at === r.at)) pool.push({ page: c.key, device: c.device, ...r });
+  fs.mkdirSync(POOL_DIR, { recursive: true });
+  fs.writeFileSync(file, JSON.stringify(pool));
+  return pool;
+}
 // ---------- local Lighthouse band (before/after only) ----------
 function lighthouseLocal(url, device) {
   const a = ["-y", LH, url, "--only-categories=performance", "--output=json", "--quiet", "--chrome-flags=--headless=new"];
@@ -256,7 +273,6 @@ function lighthouseLocal(url, device) {
   return metricsOf(JSON.parse(r.stdout));
 }
 const band = (xs, f) => { const v = xs.slice().sort((a, b) => a - b); return `${f(v[0])}/${f(v[Math.floor((v.length - 1) / 2)])}/${f(v[v.length - 1])}`; };
-const worst = (k, xs) => (LIMITS[k][1] === ">=" ? Math.min(...xs) : Math.max(...xs));
 const pass = (k, v) => (LIMITS[k][1] === ">=" ? v >= LIMITS[k][0] : v <= LIMITS[k][0]);
 const FMT = { score: (x) => String(x), lcp: (x) => (x / 1000).toFixed(2) + "s", tbt: (x) => Math.round(x) + "ms", cls: (x) => x.toFixed(3) };
 
@@ -306,13 +322,17 @@ try {
     for (const q of timing) say(q.id, null, q.question, "timing is judged only by PageSpeed on the live shop");
   } else if (timing.length && !EXACT) {
     console.error(`  PageSpeed: ${RUNS} rounds, 5 min apart`);
-    const combos = await psiBands();
+    const build = await buildKey();
+    const pool = pooled(build, await psiBands());
     for (const q of timing) {
       const [, key, dev, k] = q.id.match(/^(\w+)-(phone|computer)-(\w+)$/);
-      const c = combos.find((x) => x.key === key && x.device === (dev === "phone" ? "mobile" : "desktop"));
-      const xs = c.runs.map((r) => r[k]);
-      const yes = xs.length >= RUNS && pass(k, worst(k, xs));
-      say(q.id, yes, q.question, `${xs.length} distinct runs, min/median/max ${band(xs, FMT[k])}, worst ${FMT[k](worst(k, xs))} (line ${LIMITS[k][1]} ${FMT[k](LIMITS[k][0])}), Lighthouse ${c.runs[0]?.version}`);
+      const runs = pool.filter((p) => p.page === key && p.device === (dev === "phone" ? "mobile" : "desktop"));
+      const xs = runs.map((r) => r[k]);
+      const fails = xs.filter((x) => !pass(k, x)).length;
+      const median = xs.slice().sort((a, b) => a - b)[Math.floor((xs.length - 1) / 2)];
+      const yes = xs.length >= RUNS && fails === 0;
+      const tag = yes ? "every run passes" : xs.length < RUNS ? `only ${xs.length} runs` : pass(k, median) ? `on the line: the median passes, ${fails} of ${xs.length} runs fail` : `the median fails (${fails} of ${xs.length} runs fail)`;
+      say(q.id, yes, q.question, `${xs.length} distinct runs of build ${build}, min/median/max ${band(xs, FMT[k])} (line ${LIMITS[k][1]} ${FMT[k](LIMITS[k][0])}): ${tag}; Lighthouse ${runs[0]?.version}`);
     }
   }
 } finally {
