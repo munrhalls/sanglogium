@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { deleteAccount, requireFreshSession, signOut } from "@/features/auth";
+import { deleteAccount, requireFreshSession } from "@/features/auth";
 
 export default function DangerZoneSection() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteRequested, setDeleteRequested] = useState(false);
 
   async function handleDeleteClick() {
     const fresh = await requireFreshSession();
@@ -35,7 +36,8 @@ export default function DangerZoneSection() {
       return;
     }
 
-    await signOut();
+    setIsDeleting(false);
+    setDeleteRequested(true);
   }
 
   return (
@@ -52,7 +54,12 @@ export default function DangerZoneSection() {
         </a>
 
         <div>
-          {!showDeleteConfirm ? (
+          {deleteRequested ? (
+            <p className="text-sm text-error-500">
+              Check your email and open the link we sent to finish deleting your
+              account. This cannot be undone.
+            </p>
+          ) : !showDeleteConfirm ? (
             <button
               type="button"
               onClick={handleDeleteClick}

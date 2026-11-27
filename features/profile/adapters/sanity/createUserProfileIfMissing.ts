@@ -13,7 +13,9 @@ export async function createUserProfileIfMissing(user: {
     return "existing";
   }
 
-  await backendClient.create({
+  // A fixed id per account: two page loads that both find no profile still make one document.
+  await backendClient.createIfNotExists({
+    _id: `userProfile-${user.id}`,
     _type: "userProfile",
     authId: user.id,
     email: user.email,

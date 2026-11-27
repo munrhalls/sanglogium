@@ -23,6 +23,7 @@ const THUMB_CLASSES =
 export function DualRangeSlider({
   min,
   max,
+  name,
   minValue,
   maxValue,
   minLabel,
@@ -33,6 +34,8 @@ export function DualRangeSlider({
 }: {
   min: number;
   max: number;
+  /** The control's name; each thumb is named "Minimum <name>" and "Maximum <name>". */
+  name: string;
   minValue: number;
   maxValue: number;
   minLabel: string;
@@ -61,7 +64,7 @@ export function DualRangeSlider({
           min={min}
           max={max}
           value={minValue}
-          aria-label="Minimum price"
+          aria-label={`Minimum ${name}`}
           onChange={(event) => onChangeMin(Math.min(Number(event.target.value), maxValue))}
           className={THUMB_CLASSES}
         />
@@ -70,7 +73,7 @@ export function DualRangeSlider({
           min={min}
           max={max}
           value={maxValue}
-          aria-label="Maximum price"
+          aria-label={`Maximum ${name}`}
           disabled={maxDisabled}
           title={
             maxDisabled

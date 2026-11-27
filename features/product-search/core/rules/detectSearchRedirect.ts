@@ -4,26 +4,27 @@
  * search. Keeps /search as a fallback for model names and ambiguous queries.
  */
 
+// Every address here must be a page the listing reads: in-ear products are a category, and headphones have no wearing-style filter.
 const PRODUCT_TYPE_REDIRECTS: Record<string, string> = {
   headphones: '/products/headphones',
   headphone: '/products/headphones',
 
-  iem: '/products/headphones?wearingStyle=in-ear',
-  iems: '/products/headphones?wearingStyle=in-ear',
-  inear: '/products/headphones?wearingStyle=in-ear',
-  inears: '/products/headphones?wearingStyle=in-ear',
-  'in-ear': '/products/headphones?wearingStyle=in-ear',
-  'in-ears': '/products/headphones?wearingStyle=in-ear',
-  inearmonitor: '/products/headphones?wearingStyle=in-ear',
-  inearmonitors: '/products/headphones?wearingStyle=in-ear',
-  'in-ear-monitor': '/products/headphones?wearingStyle=in-ear',
-  'in-ear-monitors': '/products/headphones?wearingStyle=in-ear',
-  earbud: '/products/headphones?wearingStyle=in-ear',
-  earbuds: '/products/headphones?wearingStyle=in-ear',
-  'ear bud': '/products/headphones?wearingStyle=in-ear',
-  'ear buds': '/products/headphones?wearingStyle=in-ear',
-  earphone: '/products/headphones?wearingStyle=in-ear',
-  earphones: '/products/headphones?wearingStyle=in-ear',
+  iem: '/products/headphones/monitors-iems',
+  iems: '/products/headphones/monitors-iems',
+  inear: '/products/headphones/monitors-iems',
+  inears: '/products/headphones/monitors-iems',
+  'in-ear': '/products/headphones/monitors-iems',
+  'in-ears': '/products/headphones/monitors-iems',
+  inearmonitor: '/products/headphones/monitors-iems',
+  inearmonitors: '/products/headphones/monitors-iems',
+  'in-ear-monitor': '/products/headphones/monitors-iems',
+  'in-ear-monitors': '/products/headphones/monitors-iems',
+  earbud: '/products/headphones/monitors-iems',
+  earbuds: '/products/headphones/monitors-iems',
+  'ear bud': '/products/headphones/monitors-iems',
+  'ear buds': '/products/headphones/monitors-iems',
+  earphone: '/products/headphones/monitors-iems',
+  earphones: '/products/headphones/monitors-iems',
 
   dac: '/products/audio-electronics?deviceType=dac',
   dacs: '/products/audio-electronics?deviceType=dac',
@@ -48,8 +49,6 @@ const FEATURE_REDIRECTS: FeatureRedirect[] = [
   { test: (words) => /^planar[- ]?magnetic$/.test(words), target: '/products/headphones?driverType=planar-magnetic' },
   { test: (words) => /^electrostatic$/.test(words), target: '/products/headphones?driverType=electrostatic' },
   { test: (words) => /^dynamic$/.test(words), target: '/products/headphones?driverType=dynamic' },
-  { test: (words) => /^over[- ]?ear$/.test(words), target: '/products/headphones?wearingStyle=over-ear' },
-  { test: (words) => /^on[- ]?ear$/.test(words), target: '/products/headphones?wearingStyle=on-ear' },
 ];
 
 function normalizeForLookup(value: string): string {

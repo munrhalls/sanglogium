@@ -26,7 +26,6 @@ function words(value: string): string[] {
 
 interface BrandLike {
   name: string;
-  slug?: string | { current?: string } | null;
 }
 
 export function buildSuggestionEntries(
@@ -53,16 +52,15 @@ export function buildSuggestionEntries(
     const brandNorm = normalize(brand.name);
     if (seen.has(brandNorm)) continue;
     const matches =
-      words(brand.name).some((w) => w.startsWith(q)) || (q.length >= 3 && brandNorm.includes(q));
+      words(brand.name).some((w) => w.startsWith(q)) || brandNorm.startsWith(q) || (q.length >= 3 && brandNorm.includes(q));
     if (!matches) continue;
-    const slug = typeof brand.slug === 'string' ? brand.slug : brand.slug?.current;
-    if (!slug) continue;
     seen.add(brandNorm);
     brands += 1;
     entries.push({
       kind: 'brand',
       label: brand.name,
-      href: `/products?brand=${encodeURIComponent(slug)}`,
+      // The brand filter reads brand names ("64 Audio"), not slugs.
+      href: `/products?brand=${encodeURIComponent(brand.name)}`,
     });
   }
 
