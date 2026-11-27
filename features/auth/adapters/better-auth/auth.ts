@@ -227,6 +227,22 @@ export function createAuth(deps: AuthDeps) {
   },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/reset-password") {
+        // A reset ends every other reset link sent to this person.
+        const token = typeof ctx.body?.token === "string" ? ctx.body.token : "";
+        const used = token ? await ctx.context.internalAdapter.findVerificationValue(`reset-password:${token}`) : null;
+        if (used && used.expiresAt > new Date()) {
+          await ctx.context.adapter.deleteMany({
+            model: "verification",
+            where: [
+              { field: "value", value: used.value },
+              { field: "identifier", operator: "starts_with", value: "reset-password:" },
+              { field: "identifier", operator: "ne", value: `reset-password:${token}` },
+            ],
+          });
+        }
+        return;
+      }
       if (!NEEDS_RECENT_SIGN_IN.has(ctx.path)) return;
       const session = await getSessionFromCtx(ctx);
       if (!session) return;
