@@ -29,3 +29,27 @@ export async function sendEmail(data: {
     html: data.html,
   });
 }
+
+// Resend sends one email per key for 24 hours and returns its refusals instead of throwing, so both are handled here.
+export async function sendEmailOnce(data: {
+  to: string[];
+  subject: string;
+  text: string;
+  idempotencyKey: string;
+}): Promise<void> {
+  if (!resend) {
+    logDevEmail(data.idempotencyKey, data.to.join(", "), data.subject);
+    return;
+  }
+
+  const { error } = await resend.emails.send(
+    {
+      from: resendFromEmail,
+      to: data.to,
+      subject: data.subject,
+      text: data.text,
+    },
+    { idempotencyKey: data.idempotencyKey },
+  );
+  if (error) throw new Error(`Resend refused the email: ${error.name}`);
+}
