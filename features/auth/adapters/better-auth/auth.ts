@@ -1,5 +1,6 @@
 import "server-only";
 import type { AuthDeps } from "@/features/auth/core/ports";
+import { RECENT_SIGN_IN_SECONDS } from "@/features/auth/core/definitions/recentSignIn";
 import { betterAuth } from "better-auth";
 import { kyselyAdapter } from "@better-auth/kysely-adapter";
 import { Kysely } from "kysely";
@@ -80,7 +81,7 @@ export function createAuth(deps: AuthDeps) {
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
-    freshAge: 60 * 5,
+    freshAge: RECENT_SIGN_IN_SECONDS,
   },
   rateLimit: {
     window: 60,
