@@ -32,9 +32,9 @@ const ENV_FILE = path.join(root, ".env.local");
 const PAGE_SPEED = process.env.PAGE_SPEED || (fs.existsSync(ENV_FILE) ? parseEnv(fs.readFileSync(ENV_FILE, "utf8")).PAGE_SPEED : undefined);
 const CHILD_ENV = { ...process.env };
 delete CHILD_ENV.NODE_ENV; // next build / next start set it themselves
-// The build must fit beside other work on a 16 GB laptop: 2 page workers (Next reads CIRCLE_NODE_TOTAL - 1) and a 3 GB heap.
+// The build must fit beside other work on a 16 GB laptop: 1 page worker (Next reads CIRCLE_NODE_TOTAL - 1) and a 4 GB heap.
 // Both change only how fast it builds, not what it builds.
-const BUILD_ENV = { ...CHILD_ENV, CIRCLE_NODE_TOTAL: "3", NODE_OPTIONS: "--max-old-space-size=3072" };
+const BUILD_ENV = { ...CHILD_ENV, CIRCLE_NODE_TOTAL: "2", NODE_OPTIONS: "--max-old-space-size=4096" };
 
 const LIVE = "https://www.sanglogium.com";
 const BARE = "https://sanglogium.com/";
@@ -268,7 +268,8 @@ async function serveLocal() {
   if (dirty || !fs.existsSync(mark) || fs.readFileSync(mark, "utf8") !== sha) {
     console.error(`  building ${sha.slice(0, 9)}${dirty ? " (uncommitted changes)" : ""} for measurement`);
     const log = path.join(os.tmpdir(), `sanglogium-proof-build-${process.pid}.log`);
-    const b = spawnSync("sh", ["-c", `npm run build > "${log}" 2>&1`], { cwd: root, env: BUILD_ENV, stdio: "ignore" });
+    // oom_score_adj 1000: if memory runs out, the kernel kills this build, never another program.
+    const b = spawnSync("sh", ["-c", `echo 1000 > /proc/self/oom_score_adj; npm run build > "${log}" 2>&1`], { cwd: root, env: BUILD_ENV, stdio: "ignore" });
     if (b.status !== 0) throw new Error(`the production build failed (exit ${b.status ?? b.signal}); last lines of ${log}:\n${fs.readFileSync(log, "utf8").split("\n").slice(-25).join("\n")}`);
     if (!dirty) fs.writeFileSync(mark, sha);
   }
