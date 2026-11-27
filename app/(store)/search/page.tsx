@@ -10,7 +10,7 @@ interface SearchPageProps {
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const search = getSearchPage(await searchParams);
+  const search = await getSearchPage(await searchParams);
   if (search.kind === 'redirect') {
     redirect(search.to);
   }
