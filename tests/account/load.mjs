@@ -41,6 +41,8 @@ const SWAPS = {
   'next/navigation.js': 'navigation.mjs',
   '@/platform/sanity/backendClient': 'sanity.mjs',
   '@/platform/email/send': 'email.mjs',
+  'next/link': 'link.mjs',
+  'next/link.js': 'link.mjs',
 }
 const AUTH_FILE = path.join(repoRoot, 'features/auth/adapters/better-auth/auth.ts')
 
