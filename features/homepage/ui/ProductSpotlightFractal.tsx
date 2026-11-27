@@ -67,8 +67,6 @@ export default function ProductSpotlightFractal({ spotlightData }: ProductSpotli
 
                       height={800}
 
-                      priority={idx === 0}
-
                       sizes="(max-width: 1024px) 100vw, 50vw"
 
                       className="max-w-full max-h-full w-auto h-auto object-contain mix-blend-multiply"
