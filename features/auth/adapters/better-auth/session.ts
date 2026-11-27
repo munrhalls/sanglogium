@@ -39,6 +39,7 @@ export function createSessionReaders(
 
     try {
       const result = await profiles.createUserProfileIfMissing(user);
+      if (result === "existing") await profiles.syncUserProfile(user);
       markCached(user.id);
 
       if (result === "created") {
