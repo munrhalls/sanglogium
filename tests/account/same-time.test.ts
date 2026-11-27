@@ -5,7 +5,6 @@
 // proof compares the middle of five timings with a wide margin.
 
 import { prove, customer, Browser, askForReset, outbox } from './shop.test.ts'
-import { clock } from './stand-ins/world.mjs'
 import { wire as databaseWire } from './stand-ins/database.mjs'
 import { wire as sanityWire } from './stand-ins/sanity.mjs'
 
@@ -19,7 +18,8 @@ async function timed(ask) {
 prove('Do those same screens take about the same time whether or not the email has an account?', 'yes', async () => {
   const anna = await customer('anna', { signIn: false })
   const ben = await customer('ben', { verify: false, signIn: false })
-  const cara = await customer('cara')
+  const askers = []
+  for (let i = 0; i < 10; i += 1) askers.push(await customer(`asker${i}`))
   // Real services answer after a delay: email about 300 ms, Sanity about 150 ms, the sign-in database about 20 ms a statement.
   outbox.delayMs = 300
   sanityWire.delayMs = 150
@@ -31,7 +31,8 @@ prove('Do those same screens take about the same time whether or not the email h
     ['sign-in with a wrong password', anna.email, (email) => fresh().send('/sign-in/email', { body: { email, password: 'wrong-password-1' } })],
     ['forgot-password', anna.email, (email) => askForReset(fresh(), email)],
     ['resend-link', ben.email, (email) => fresh().send('/send-verification-email', { body: { email, callbackURL: '/sign-in?verified=true' } })],
-    ['change-email', anna.email, (email) => { clock.forward(11000); return cara.send('/change-email', { body: { newEmail: email, callbackURL: '/account' } }) }],
+    // One signed-in person per ask: from one place change-email is limited to 3 an hour, and a refusal would time nothing.
+    ['change-email', anna.email, (email) => askers.shift().send('/change-email', { body: { newEmail: email, callbackURL: '/account' } })],
   ]
   for (const [screen, existing, ask] of screens) {
     const known = []
