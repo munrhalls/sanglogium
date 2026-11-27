@@ -40,6 +40,7 @@ export function RangeField({
       <DualRangeSlider
         min={control.span.min}
         max={control.span.max}
+        name={control.label}
         minValue={shown.min}
         maxValue={shown.max}
         minLabel={formatRangeValue(control.path, shown.min)}

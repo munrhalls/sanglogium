@@ -13,7 +13,7 @@
 //   R10 part of the name -> among the results; all but the last two letters -> also among the six suggestions
 //   R11 a brand -> every product of the brand in the results, ahead of every other brand's product
 //   R12 a brand in small letters, or without its spaces and symbols -> every product of the brand in the results
-//   F1  a product type or a feature word, written loosely -> that type's or feature's page
+//   F1  a product type or a feature word the shop filters by, written loosely -> that type's or feature's page
 //   A1  for every search above that shows results, the suggestions are the first results, in the same order
 //   E3  odd input (very long, symbols, code-like text, emoji, odd page/sort/category values) -> an ordinary page, no error
 //   P1  only published products: the shop's catalogue read asks for published documents and carries no key
@@ -192,13 +192,13 @@ function rulerOfPublished() {
 const HEADPHONES = '/products/headphones'
 const LANDINGS = [
   [['headphones', 'Headphone'], HEADPHONES],
-  [['iem', 'IEMs', 'in-ear', 'in ear', 'In-Ear Monitors', 'earbuds', 'ear buds', 'earphones'], `${HEADPHONES}?wearingStyle=in-ear`],
+  // In-ear products have their own category (the shop's "IEMs" shortcut); the headphones filter has no wearing style.
+  [['iem', 'IEMs', 'in-ear', 'in ear', 'In-Ear Monitors', 'earbuds', 'ear buds', 'earphones'], `${HEADPHONES}/monitors-iems`],
   [['dac', 'DACs', 'digital to analog converter'], '/products/audio-electronics?deviceType=dac'],
   [['accessories', 'Accessory'], '/products/accessories'],
   ...[
     ['closed back', 'acousticDesign=closed-back'], ['open back', 'acousticDesign=open-back'], ['semi open', 'acousticDesign=semi-open'],
     ['planar magnetic', 'driverType=planar-magnetic'], ['electrostatic', 'driverType=electrostatic'], ['dynamic', 'driverType=dynamic'],
-    ['over ear', 'wearingStyle=over-ear'], ['on ear', 'wearingStyle=on-ear'],
   ].map(([words, filter]) => {
     const joined = words.replace(' ', '')
     const dashed = words.replace(' ', '-')
