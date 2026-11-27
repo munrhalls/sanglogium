@@ -13,6 +13,9 @@ If `OWNER_EMAILS` is unset or empty, nobody is the owner.
 ## Configuration
 - `OWNER_EMAILS`: comma-separated emails of the shop owner(s) allowed into `/manager`.
 
+## Pages
+- the `/manager` page lists paid Stripe payments of the last 30 days with no Sanity order (read only; `getPaymentsWithoutOrder` checks the owner first).
+
 ## Proof
 ```
 node --experimental-strip-types --import ./tools/alias-loader.mjs --import ./tests/admin/load.mjs tests/admin/admin.test.ts
