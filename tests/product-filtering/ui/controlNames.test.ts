@@ -8,8 +8,8 @@
 // It can say NO: before judging, the same judge is given a copy of the markup with one name taken out and must say NO.
 // No flakiness: every input is literal and every expected name is written by hand.
 //
-// Human-run: npx vitest run --config tools/vitest.config.ts 2>&1 | grep -E "^(1 |  1 |RESULT|NO VERDICT)"
-// (vitest is only the loader that lets plain node read .tsx; the filter keeps the proof's own lines, so two runs print the same text, without vitest's timings.
+// Human-run: npx vitest run --config tools/vitest.config.ts --reporter=verbose 2>&1 | grep -E "^(1 |  1 |RESULT|NO VERDICT)"
+// (vitest is only the loader that lets plain node read .tsx; the verbose reporter keeps a passing run's lines; the filter keeps the proof's own lines, so two runs print the same text, without vitest's timings.
 // No RESULT line means no verdict: the file could not even load.)
 
 import { test, expect } from 'vitest';
