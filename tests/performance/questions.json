@@ -1,0 +1,308 @@
+[
+ {
+  "id": "home-phone-score",
+  "page": "/",
+  "question": "Does the home page score 90 or more on PageSpeed on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-phone-lcp",
+  "page": "/",
+  "question": "Does the home page show its main picture within 2.5 s on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-phone-tbt",
+  "page": "/",
+  "question": "Is the home page too busy to answer a tap for 200 ms or less in total while it loads on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-phone-cls",
+  "page": "/",
+  "question": "Does the home page jump under the reader by 0.1 or less (Google's layout-shift score) on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-phone-score",
+  "page": "/products",
+  "question": "Does the all-products list score 90 or more on PageSpeed on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-phone-lcp",
+  "page": "/products",
+  "question": "Does the all-products list show its main picture within 2.5 s on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-phone-tbt",
+  "page": "/products",
+  "question": "Is the all-products list too busy to answer a tap for 200 ms or less in total while it loads on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-phone-cls",
+  "page": "/products",
+  "question": "Does the all-products list jump under the reader by 0.1 or less (Google's layout-shift score) on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-phone-score",
+  "page": "/products/headphones",
+  "question": "Does the headphones list score 90 or more on PageSpeed on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-phone-lcp",
+  "page": "/products/headphones",
+  "question": "Does the headphones list show its main picture within 2.5 s on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-phone-tbt",
+  "page": "/products/headphones",
+  "question": "Is the headphones list too busy to answer a tap for 200 ms or less in total while it loads on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-phone-cls",
+  "page": "/products/headphones",
+  "question": "Does the headphones list jump under the reader by 0.1 or less (Google's layout-shift score) on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-phone-score",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page score 90 or more on PageSpeed on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-phone-lcp",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page show its main picture within 2.5 s on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-phone-tbt",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Is the product page too busy to answer a tap for 200 ms or less in total while it loads on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-phone-cls",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page jump under the reader by 0.1 or less (Google's layout-shift score) on a mid-range phone on slow 4G?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-computer-score",
+  "page": "/",
+  "question": "Does the home page score 90 or more on PageSpeed on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-computer-lcp",
+  "page": "/",
+  "question": "Does the home page show its main picture within 2.5 s on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-computer-tbt",
+  "page": "/",
+  "question": "Is the home page too busy to answer a tap for 200 ms or less in total while it loads on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-computer-cls",
+  "page": "/",
+  "question": "Does the home page jump under the reader by 0.1 or less (Google's layout-shift score) on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-computer-score",
+  "page": "/products",
+  "question": "Does the all-products list score 90 or more on PageSpeed on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-computer-lcp",
+  "page": "/products",
+  "question": "Does the all-products list show its main picture within 2.5 s on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-computer-tbt",
+  "page": "/products",
+  "question": "Is the all-products list too busy to answer a tap for 200 ms or less in total while it loads on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "all-computer-cls",
+  "page": "/products",
+  "question": "Does the all-products list jump under the reader by 0.1 or less (Google's layout-shift score) on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-computer-score",
+  "page": "/products/headphones",
+  "question": "Does the headphones list score 90 or more on PageSpeed on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-computer-lcp",
+  "page": "/products/headphones",
+  "question": "Does the headphones list show its main picture within 2.5 s on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-computer-tbt",
+  "page": "/products/headphones",
+  "question": "Is the headphones list too busy to answer a tap for 200 ms or less in total while it loads on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "category-computer-cls",
+  "page": "/products/headphones",
+  "question": "Does the headphones list jump under the reader by 0.1 or less (Google's layout-shift score) on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-computer-score",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page score 90 or more on PageSpeed on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-computer-lcp",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page show its main picture within 2.5 s on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-computer-tbt",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Is the product page too busy to answer a tap for 200 ms or less in total while it loads on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "product-computer-cls",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page jump under the reader by 0.1 or less (Google's layout-shift score) on a desktop computer on a fast line?",
+  "cannotLie": "Google's own PageSpeed servers load the live page; a cached repeat (same timestamp) is thrown away, and the worst of 5 runs must pass, so one lucky run cannot pass it. It said NO on today's phone home page."
+ },
+ {
+  "id": "home-pictures-first",
+  "page": "/",
+  "question": "Does the home page ask only for the big top picture while it loads, and leave the pictures further down until the visitor scrolls?",
+  "cannotLie": "It reads the page exactly as the shop sends it to a phone and counts; the same page gives the same count every run. On today's page it finds 4 extra pictures preloaded and says NO."
+ },
+ {
+  "id": "home-ring-picture",
+  "page": "/",
+  "question": "Does the home page load without first downloading the 180 KB decorative ring picture that sits below the top picture?",
+  "cannotLie": "It reads the stylesheet and markup the page sends and finds which sections use the ring and whether they show before scrolling; today the ring is requested at first load and it says NO."
+ },
+ {
+  "id": "no-editing-tools",
+  "page": "all",
+  "question": "Does each page load without Sanity's content-editing tools and data client (57 KB) that visitors never use?",
+  "cannotLie": "It downloads exactly the scripts the page lists and searches them for code only the editing tools contain; today it finds that code on all four pages and says NO."
+ },
+ {
+  "id": "no-basket-validator",
+  "page": "all",
+  "question": "Does each page load without the zod checking library (46 KB) that only checks the saved basket?",
+  "cannotLie": "It downloads exactly the scripts the page lists and searches them for code only zod contains; today it finds it on all four pages and says NO."
+ },
+ {
+  "id": "main-picture-priority",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does the product page ask for its main photo at high priority, ahead of scripts?",
+  "cannotLie": "It reads the page exactly as the shop sends it to a phone and counts; the same page gives the same count every run. Today the main photo is preloaded without high priority and it says NO."
+ },
+ {
+  "id": "list-picture-priority",
+  "page": "/products/headphones",
+  "question": "Do the list pages ask for their first row of product pictures at high priority?",
+  "cannotLie": "It reads the page exactly as the shop sends it to a phone and counts; the same page gives the same count every run."
+ },
+ {
+  "id": "product-page-cache",
+  "page": "/product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Is the product page served from Vercel's cache instead of being built again for every visitor?",
+  "cannotLie": "It asks the live shop for the page twice and reads the cache answer Vercel itself writes on the reply; today it is 'MISS, no-store' every time, so it says NO."
+ },
+ {
+  "id": "pages-cache",
+  "page": "/, /products, /products/headphones",
+  "question": "Are the home page and both list pages served from Vercel's cache?",
+  "cannotLie": "It asks the live shop twice and reads Vercel's own cache answer on the reply."
+ },
+ {
+  "id": "text-before-font",
+  "page": "all",
+  "question": "Does the text show at once in a fallback font, without waiting for the shop's font file?",
+  "cannotLie": "It reads the font rules in the stylesheet the page sends; a rule without font-display: swap would make it say NO."
+ },
+ {
+  "id": "nothing-blocks-paint",
+  "page": "all",
+  "question": "Can each page paint without waiting for any separate stylesheet or script file?",
+  "cannotLie": "It reads the page head as sent: a stylesheet link or a plain (non-async) script file there makes it say NO."
+ },
+ {
+  "id": "main-picture-not-hidden",
+  "page": "/, /products, /products/headphones, /product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does each page send its main picture ready to show, instead of inside a hidden block that a script reveals later?",
+  "cannotLie": "It reads the page exactly as the shop sends it and finds whether the main picture sits inside a hidden block; the same page gives the same answer every run."
+ },
+ {
+  "id": "pictures-right-format",
+  "page": "all",
+  "question": "Are product pictures offered in several sizes and in modern formats (AVIF/WebP)?",
+  "cannotLie": "It reads every picture tag the page sends: a picture without a size list, or a Sanity address without auto=format, makes it say NO."
+ },
+ {
+  "id": "helpers-after-paint",
+  "page": "all",
+  "question": "Do Vercel Speed Insights and the shop's own speed reporter start only after the page has shown?",
+  "cannotLie": "It reads the page as sent: if either appears as a script file or preload in the page head, it says NO."
+ },
+ {
+  "id": "google-analytics-timing",
+  "page": "all",
+  "question": "Does Google Analytics (179 KB) wait until the page has shown before it downloads?",
+  "cannotLie": "It reads the page head as sent: today the analytics script is preloaded there, so it says NO."
+ },
+ {
+  "id": "error-monitor-timing",
+  "page": "all",
+  "question": "Does the Sentry error monitor (121 KB) load without competing with the page's first paint?",
+  "cannotLie": "It downloads exactly the scripts the page lists and finds Sentry's code among the ones listed in the page head; today it does, so it says NO."
+ },
+ {
+  "id": "no-redirect",
+  "page": "https://sanglogium.com/",
+  "question": "Does a visitor who opens sanglogium.com (the address the shop gives Google) get the page without first being sent to www.sanglogium.com?",
+  "cannotLie": "It asks the bare address and reads the reply status; a 3xx reply makes it say NO. Today it is 307."
+ },
+ {
+  "id": "returning-visitor-ring",
+  "page": "/",
+  "question": "Does a returning visitor reuse the ring picture from the browser cache instead of downloading it again after 5 minutes?",
+  "cannotLie": "It reads the cache rule Vercel sends with the picture; today it is max-age=300, so it says NO."
+ },
+ {
+  "id": "taps",
+  "page": "all",
+  "question": "Does the page answer every tap within 200 ms on a real phone?",
+  "cannotLie": "Not provable in this lab: the owner set the lab line for taps as TBT (the *-tbt items). Real taps show only in real-user data, which cannot be read (see real-user-data)."
+ },
+ {
+  "id": "real-user-data",
+  "page": "all",
+  "question": "Do real visitors' phones report green Core Web Vitals?",
+  "cannotLie": "Only real-user data can answer; nothing here may be guessed."
+ }
+]
