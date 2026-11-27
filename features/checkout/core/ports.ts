@@ -7,6 +7,7 @@ import type {
 import type {
   CheckoutSession,
   OrderForSuccessPage,
+  OwnerNotice,
   PaymentProduct,
   CheckoutProduct,
   PaymentSnapshot,
@@ -66,4 +67,5 @@ export type Payments = {
 
 export type OrderEmails = {
   sendOrderConfirmationEmail: (data: OrderConfirmationEmailData) => Promise<void>;
+  sendOwnerNotice: (notice: OwnerNotice) => Promise<void>;
 };

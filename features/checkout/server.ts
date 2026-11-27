@@ -8,6 +8,7 @@ import { getPaymentProducts } from './adapters/sanity/getPaymentProducts';
 import { getProductsByIds } from './adapters/sanity/getProductsByIds';
 import { getProductUnitAmountsByIds } from './adapters/sanity/getProductUnitAmountsByIds';
 import { sendOrderConfirmationEmail } from './adapters/resend/orderConfirmationEmail';
+import { sendOwnerNotice } from './adapters/resend/ownerNoticeEmail';
 import { retrievePayment, updatePaymentAmount, createPayment, listPayments } from './adapters/stripe/client';
 import { parseWebhookEvent } from './adapters/stripe/webhooks';
 import { getAddressPageData as getAddressPageDataQuery } from './queries/getAddressPageData';
@@ -45,7 +46,7 @@ const sessions: CheckoutSessions = { getCheckoutSession };
 
 const payments: Payments = { retrievePayment, parseWebhookEvent, updatePaymentAmount, createPayment, listPayments };
 
-const emails: OrderEmails = { sendOrderConfirmationEmail };
+const emails: OrderEmails = { sendOrderConfirmationEmail, sendOwnerNotice };
 
 
 export const getAddressPageData = () => getAddressPageDataQuery({ sessions });

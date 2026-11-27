@@ -13,7 +13,7 @@ export async function fetchOrderByPaymentIntentId(
       orderNumber,
       customerEmail,
       isGuest,
-      items[]{ productId, name, quantity, price, subtotal },
+      items[]{ productId, name, quantity, fulfilled, price, subtotal },
       pricing{ subtotal, shipping, tax, discount, total, currency },
       shippingAddress{ name, line1, city, state, postalCode, country, phone },
       shippingMethod{ name, carrier, price, estimatedDays },

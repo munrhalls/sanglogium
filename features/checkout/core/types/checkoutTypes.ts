@@ -1,6 +1,8 @@
 
 import type { PaymentMethodDetails } from '@/features/order';
 
+export type OwnerNotice = { key: string; subject: string; text: string };
+
 
 // Checkout-owned product shape (cycle guard): only the fields checkout reads.
 export type CheckoutProduct = {
@@ -57,6 +59,7 @@ export interface OrderForSuccessPage {
     productId: string;
     name: string;
     quantity: number;
+    fulfilled?: number;
     price: number;
     subtotal: number;
   }>;
