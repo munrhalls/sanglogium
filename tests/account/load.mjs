@@ -24,7 +24,7 @@ Object.assign(process.env, {
   LOG_LEVEL: 'silent',
 })
 for (const name of ['BETTER_AUTH_SECRETS', 'RESEND_API_KEY', 'SANITY_STUDIO_READ_WRITE']) delete process.env[name]
-// Google sign-in is on, as in a shop that has its Google keys; Google itself is a stand-in (shop.mjs).
+// Google sign-in is on, as in a shop that has its Google keys; Google itself is a stand-in (shop.test.ts).
 process.env.GOOGLE_CLIENT_ID = 'stand-in-google-client'
 process.env.GOOGLE_CLIENT_SECRET = 'stand-in-google-secret'
 
