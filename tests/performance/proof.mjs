@@ -228,6 +228,8 @@ const metricsOf = (L) => ({
   lcp: L.audits["largest-contentful-paint"].numericValue,
   tbt: L.audits["total-blocking-time"].numericValue,
   cls: L.audits["cumulative-layout-shift"].numericValue,
+  // What moved, so a failing layout-jump line can name it.
+  shifts: (L.audits["layout-shifts"]?.details?.items || []).map((i) => `${(i.score ?? 0).toFixed(3)} ${(i.node?.snippet || i.node?.selector || "?").slice(0, 120)}`),
 });
 async function psiBands() {
   const combos = [];
@@ -332,7 +334,7 @@ try {
       const median = xs.slice().sort((a, b) => a - b)[Math.floor((xs.length - 1) / 2)];
       const yes = xs.length >= RUNS && fails === 0;
       const tag = yes ? "every run passes" : xs.length < RUNS ? `only ${xs.length} runs` : pass(k, median) ? `on the line: the median passes, ${fails} of ${xs.length} runs fail` : `the median fails (${fails} of ${xs.length} runs fail)`;
-      say(q.id, yes, q.question, `${xs.length} distinct runs of build ${build}, min/median/max ${band(xs, FMT[k])} (line ${LIMITS[k][1]} ${FMT[k](LIMITS[k][0])}): ${tag}; Lighthouse ${runs[0]?.version}`);
+      say(q.id, yes, q.question, `${xs.length} distinct runs of build ${build}, min/median/max ${band(xs, FMT[k])} (line ${LIMITS[k][1]} ${FMT[k](LIMITS[k][0])}): ${tag}; Lighthouse ${runs[0]?.version}${k === "cls" ? runs.filter((r) => !pass(k, r.cls) && r.shifts?.length).map((r) => `; moved in the run of ${r.at}: ${r.shifts.join(" + ")}`).join("") : ""}`);
     }
   }
 } finally {
