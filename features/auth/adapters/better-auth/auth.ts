@@ -8,6 +8,7 @@ import { LibsqlDialect } from "kysely-libsql";
 import { nextCookies } from "better-auth/next-js";
 import { twoFactor } from "better-auth/plugins";
 import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
+import { jwtVerify } from "jose";
 function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";
 
@@ -210,6 +211,16 @@ export function createAuth(deps: AuthDeps) {
   },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/verify-email") {
+        // A change-email link works only in a browser signed in to the account it changes.
+        const token = typeof ctx.query?.token === "string" ? ctx.query.token : "";
+        const payload = await jwtVerify(token, new TextEncoder().encode(ctx.context.secret), { algorithms: ["HS256"] }).then(
+          (result) => result.payload,
+          () => null
+        );
+        if (payload?.updateTo && !(await getSessionFromCtx(ctx))) throw ctx.redirect("/sign-in?returnTo=%2Faccount");
+        return;
+      }
       if (ctx.path === "/reset-password") {
         // A reset ends every other reset link sent to this person.
         const token = typeof ctx.body?.token === "string" ? ctx.body.token : "";
