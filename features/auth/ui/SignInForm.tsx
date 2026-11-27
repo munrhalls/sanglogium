@@ -4,6 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/features/auth/state/authClient";
+import { safeReturnPath } from "@/features/auth/core/rules/returnPath";
 
 interface SignInFormProps {
   googleEnabled?: boolean;
@@ -90,9 +91,7 @@ export default function SignInForm({ googleEnabled }: SignInFormProps) {
       const destination =
         merge === "1"
           ? "/account?merge=1"
-          : returnTo && returnTo.startsWith("/")
-          ? returnTo
-          : "/account";
+          : safeReturnPath(returnTo);
 
       router.push(destination);
     }
