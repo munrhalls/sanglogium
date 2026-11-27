@@ -6,6 +6,7 @@ import { Kysely } from "kysely";
 import { LibsqlDialect } from "kysely-libsql";
 import { nextCookies } from "better-auth/next-js";
 import { twoFactor } from "better-auth/plugins";
+import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
 function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";
 
@@ -53,6 +54,16 @@ if (!process.env.BETTER_AUTH_SECRET) {
     "BETTER_AUTH_SECRET is required. Generate one with: openssl rand -base64 32"
   );
 }
+
+// Risky requests need a sign-in from the last `freshAge` seconds, counted from when the session was made.
+const NEEDS_RECENT_SIGN_IN = new Set([
+  "/change-email",
+  "/change-password",
+  "/two-factor/enable",
+  "/two-factor/disable",
+  "/delete-user",
+  "/delete-user/callback",
+]);
 
 export function createAuth(deps: AuthDeps) {
   return betterAuth({
@@ -212,6 +223,18 @@ export function createAuth(deps: AuthDeps) {
         },
       },
     },
+  },
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      if (!NEEDS_RECENT_SIGN_IN.has(ctx.path)) return;
+      const session = await getSessionFromCtx(ctx);
+      if (!session) return;
+      const age = Date.now() - new Date(session.session.createdAt).getTime();
+      if (age < ctx.context.sessionConfig.freshAge * 1000) return;
+      // The delete link is opened from an email: send the person to sign in again, then they open it again.
+      if (ctx.path === "/delete-user/callback") throw ctx.redirect("/sign-in?returnTo=%2Faccount");
+      throw new APIError("FORBIDDEN", { message: "Please sign in again to do this.", code: "SESSION_NOT_FRESH" });
+    }),
   },
   plugins: [
     nextCookies(),
