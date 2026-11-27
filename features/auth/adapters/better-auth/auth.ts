@@ -8,6 +8,7 @@ import { LibsqlDialect } from "kysely-libsql";
 import { nextCookies } from "better-auth/next-js";
 import { twoFactor } from "better-auth/plugins";
 import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
+import { after } from "next/server";
 import { jwtVerify } from "jose";
 function validateDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL || "";
@@ -79,6 +80,10 @@ export function createAuth(deps: AuthDeps) {
     : undefined,
   baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL,
   trustedOrigins: [process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"].filter(Boolean),
+  // Emails go out after the answer, so how long an answer takes never shows whether an account exists.
+  advanced: {
+    backgroundTasks: { handler: (promise) => after(promise) },
+  },
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
@@ -179,6 +184,7 @@ export function createAuth(deps: AuthDeps) {
       },
       create: {
         after: async (user) => {
+          after(async () => {
           try {
             const result = await deps.profiles.createUserProfileIfMissing(user);
             if (result === "existing") return;
@@ -205,6 +211,7 @@ export function createAuth(deps: AuthDeps) {
             // AND profile creation in a transaction would be required — but that
             // would bypass Better Auth's built-in endpoints and is out of scope.
           }
+          });
         },
       },
     },
