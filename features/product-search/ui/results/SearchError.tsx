@@ -19,7 +19,7 @@ export function SearchError({ onRetry }: SearchErrorProps) {
         <button
           type="button"
           onClick={onRetry}
-          className="px-6 py-2.5 bg-brand-400 text-brand-900 rounded-md type-button hover:bg-brand-300 transition-colors"
+          className="min-h-11 px-6 py-2.5 bg-brand-400 text-brand-900 rounded-md type-button hover:bg-brand-300 transition-colors"
         >
           Try again
         </button>
