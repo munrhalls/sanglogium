@@ -354,3 +354,96 @@ export async function signInContext() {
   })
   return copy.$context
 }
+
+// A screen of the shop, shown in a stand-in browser window (jsdom) for `browser`.
+// The screen's own code runs: its clicks call the real sign-in client, whose requests
+// are answered by the shop's route with this browser's cookies. Every place the screen
+// sends the browser (a link assignment or a router push) is recorded in `went`.
+let screenOwner = null
+answerNetwork((url) => url.startsWith(`${SHOP}/api/auth/`), async (input, init) => {
+  if (!screenOwner) broken('a screen asked the shop with no browser open')
+  await boot()
+  const request = new Request(input, init)
+  const headers = screenOwner.requestHeaders()
+  for (const [key, value] of request.headers) if (key !== 'cookie') headers.set(key, value)
+  if (request.method !== 'GET') headers.set('origin', SHOP)
+  const body = request.method === 'GET' ? undefined : await request.text()
+  const response = await (request.method === 'GET' ? route.GET : route.POST)(new Request(request.url, { method: request.method, headers, body }))
+  screenOwner.keep(response)
+  // What the screen was told, kept for the proof (the two-factor setup shows its key only as a picture).
+  screenOwner.told ??= {}
+  screenOwner.told[new URL(request.url).pathname.replace('/api/auth', '')] = await response.clone().json().catch(() => null)
+  return response
+})
+
+export async function showScreen(browser, { path = '/account', load }) {
+  const { JSDOM } = await import('jsdom')
+  const dom = new JSDOM('<!doctype html><html><body><div id="root"></div></body></html>', { url: `${SHOP}${path}`, pretendToBeVisual: true })
+  const win = dom.window
+  const went = []
+  const here = new URL(`${SHOP}${path}`)
+  const location = {
+    get href() { return here.href },
+    set href(value) { went.push(String(value)) },
+    assign: (value) => went.push(String(value)),
+    replace: (value) => went.push(String(value)),
+    reload: () => {},
+    get origin() { return here.origin },
+    get pathname() { return here.pathname },
+    get search() { return here.search },
+    get hash() { return here.hash },
+  }
+  const windowProxy = new Proxy(win, {
+    get(target, key) {
+      if (key === 'location') return location
+      const value = Reflect.get(target, key, target)
+      return typeof value === 'function' && !/^[A-Z]/.test(String(key)) ? value.bind(target) : value
+    },
+    set(target, key, value) {
+      if (key === 'location') { went.push(String(value)); return true }
+      return Reflect.set(target, key, value, target)
+    },
+  })
+  const globals = { window: windowProxy, document: win.document, navigator: win.navigator, location }
+  for (const name of Object.getOwnPropertyNames(win)) {
+    if (/^(HTML|SVG|Node|Element|Event|MouseEvent|KeyboardEvent|InputEvent|FocusEvent|SubmitEvent|CustomEvent|FormData|MutationObserver|getComputedStyle|requestAnimationFrame|cancelAnimationFrame|DocumentFragment|Text|Comment)/.test(name)) globals[name] = win[name]
+  }
+  for (const [name, value] of Object.entries(globals)) Object.defineProperty(globalThis, name, { value, configurable: true, writable: true })
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true
+  const { setPage } = await import('./stand-ins/navigation.mjs')
+  const router = { push: (to) => went.push(String(to)), replace: (to) => went.push(String(to)), refresh: () => {}, back: () => {}, forward: () => {}, prefetch: () => {} }
+  setPage({ router, searchParams: new URLSearchParams(here.search), pathname: here.pathname })
+  screenOwner = browser
+  const React = await import('react')
+  const { createRoot } = await import('react-dom/client')
+  // The shop runs as in production, where React has no act(): updates land on React's own schedule, so wait.
+  const act = async (work) => { await work(); await new Promise((resolve) => setTimeout(resolve, 0)) }
+  const element = await load()
+  const root = createRoot(win.document.getElementById('root'))
+  await act(async () => root.render(element))
+  const settle = async () => {
+    for (let i = 0; i < 40; i += 1) await act(async () => { await new Promise((resolve) => setTimeout(resolve, 25)) })
+  }
+  const find = (test) => [...win.document.querySelectorAll('button')].find((button) => test(button.textContent.trim()))
+  return {
+    went,
+    document: win.document,
+    async type(selector, value) {
+      const input = win.document.querySelector(selector)
+      if (!input) broken(`the screen has no ${selector}`)
+      const setter = Object.getOwnPropertyDescriptor(win.HTMLInputElement.prototype, 'value').set
+      await act(async () => {
+        setter.call(input, value)
+        input.dispatchEvent(new win.Event('input', { bubbles: true }))
+      })
+    },
+    async click(text) {
+      const button = find((label) => label === text)
+      if (!button) broken(`the screen has no "${text}" button`)
+      await act(async () => button.click())
+      await settle()
+    },
+    text: () => win.document.body.textContent,
+    close: () => { root.unmount(); screenOwner = null },
+  }
+}
