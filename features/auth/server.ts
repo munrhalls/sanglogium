@@ -37,6 +37,6 @@ const auth = createAuth({ profiles, orders, emails });
 export const authRouteHandlers = createRouteHandlers(auth);
 export const updateUserName = createUserNameUpdater(auth);
 
-const { getSession, requireSession, verifySession } = createSessionReaders(auth, profiles);
-export { getSession, requireSession, verifySession };
+const { getSession, requireSession, verifySession, getSignInFacts } = createSessionReaders(auth, profiles);
+export { getSession, requireSession, verifySession, getSignInFacts };
 export { isGoogleAuthEnabled } from './adapters/better-auth/providers';

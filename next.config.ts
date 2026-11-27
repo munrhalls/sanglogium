@@ -88,7 +88,9 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // 2. DYNAMIC APIs: No-Store Safety (Must come AFTER global)
+      // 2. ADMIN: owner-only pages are never stored by any cache (Must come AFTER global)
+      { source: "/manager/:path*", headers: [{ key: "Cache-Control", value: "private, no-store, max-age=0" }] },
+      // 3. DYNAMIC APIs: No-Store Safety (Must come AFTER global)
       {
         source: "/api/(checkout|order|shipping|webhook)(.*)",
         headers: [
@@ -99,7 +101,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // 3. REVALIDATION: Freshness required
+      // 4. REVALIDATION: Freshness required
       {
         source: "/api/revalidate",
         headers: [

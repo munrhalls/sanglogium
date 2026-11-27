@@ -1,16 +1,10 @@
-import Link from "next/link";
+import { requireOwner } from "@/features/admin/server";
 
-export default function Manager() {
+export default async function Manager() {
+  await requireOwner();
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold">Manager</h1>
-      <ul className="mt-4 list-disc pl-5">
-        <li>
-          <Link href="/manager/performance" className="text-blue-600 hover:underline">
-            Performance baseline
-          </Link>
-        </li>
-      </ul>
+      <h1 className="text-2xl font-bold">Admin</h1>
     </div>
   );
 }
