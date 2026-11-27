@@ -252,6 +252,12 @@
   "cannotLie": "It reads the page head as sent: a stylesheet link or a plain (non-async) script file there makes it say NO."
  },
  {
+  "id": "main-picture-not-hidden",
+  "page": "/, /products, /products/headphones, /product/audioquest-dragontail-carbon-usb-a-to-c-adapter",
+  "question": "Does each page send its main picture ready to show, instead of inside a hidden block that a script reveals later?",
+  "cannotLie": "It reads the page exactly as the shop sends it and finds whether the main picture sits inside a hidden block; the same page gives the same answer every run."
+ },
+ {
   "id": "pictures-right-format",
   "page": "all",
   "question": "Are product pictures offered in several sizes and in modern formats (AVIF/WebP)?",

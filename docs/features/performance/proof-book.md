@@ -81,6 +81,7 @@ A phone on slow 4G has one thin line, and every file shares it. A page is fast w
 | Question | Why it cannot lie |
 |---|---|
 | **nothing-blocks-paint**: Can each page paint without waiting for any separate stylesheet or script file? | It reads the page head as sent. A stylesheet link or a plain (not async) script file there makes it say NO. |
+| **main-picture-not-hidden**: Does each page send its main picture ready to show, instead of inside a hidden block that a script reveals later? | It reads each page as sent and finds whether the main picture sits inside a hidden block (`<div hidden id="S:…">`) that a later script call shows. |
 | **text-before-font**: Does the text show at once in a fallback font, without waiting for the shop's font file? | It reads the font rules in the stylesheet the page sends. A rule that downloads a font file without `font-display: swap` makes it say NO. |
 | **helpers-after-paint**: Do Vercel Speed Insights and the shop's own speed reporter start only after the page has shown? | It reads the page as sent and the reporter's code. Either one in the page head, or the reporter starting before the page is on screen, makes it say NO. |
 

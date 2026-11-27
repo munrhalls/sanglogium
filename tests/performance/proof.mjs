@@ -121,6 +121,21 @@ const EXACT_CHECKS = {
   },
   "no-editing-tools": markerCheck(["handshake/syn", "sanity.action.release.publish"]),
   "no-basket-validator": markerCheck(["ZodError"]),
+  "main-picture-not-hidden": async (base) => {
+    const out = [];
+    let yes = true;
+    const mains = { home: (t) => /alt="Hero Image"/.test(t), all: (t) => /data-reveal/.test(t), category: (t) => /data-reveal/.test(t), product: (t) => / - Image 1"/.test(t) };
+    for (const key of Object.keys(mains)) {
+      const html = (await page(base, key)).html;
+      const tag = tags(html, "img").find(mains[key]);
+      const at = tag ? html.indexOf(tag) : -1;
+      // A streamed block is sent as <div hidden id="S:n"> and shown later by the script call $RC("B:n","S:n").
+      const block = at < 0 ? null : [...html.matchAll(/<div hidden id="(S:\d+)">/g)].find((m) => { const end = html.indexOf(`"${m[1]}")`, m.index); return m.index < at && (end < 0 || end > at); });
+      if (!tag || block) yes = false;
+      out.push(`${PAGES[key]}: ${!tag ? "main picture not found" : block ? `main picture is inside hidden block ${block[1]}, shown later by a script` : "main picture is in the page as sent"}`);
+    }
+    return { yes, evidence: out.join("; ") };
+  },
   "main-picture-priority": async (base) => {
     const p = await page(base, "product");
     const main = tags(p.html, "img").find((t) => / - Image 1"/.test(t));
