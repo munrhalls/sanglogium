@@ -133,27 +133,9 @@ export function createAuth(deps: AuthDeps) {
             "Cannot delete account with open orders. Please wait for all orders to be delivered or cancelled."
           );
         }
-      },
-      afterDelete: async (user) => {
-        // Hard-delete the user profile (no legally required retention).
-        try {
-          await deps.profiles.deleteUserProfile(user.id);
-        } catch (error) {
-          console.error("[AUTH] afterDelete: failed to delete userProfile.", {
-            authId: user.id,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        }
-
-        // Anonymize order history: remove userId but keep orders for accounting/tax.
-        try {
-          await deps.orders.anonymizeUserOrders(user.id);
-        } catch (error) {
-          console.error("[AUTH] afterDelete: failed to anonymize orders.", {
-            authId: user.id,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        }
+        // Clean Sanity first: if this fails, the deletion stops and the account stays, so she can try again.
+        await deps.orders.anonymizeUserOrders(user.id);
+        await deps.profiles.deleteUserProfile(user.id);
       },
     },
   },
@@ -228,6 +210,22 @@ export function createAuth(deps: AuthDeps) {
   },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/reset-password") {
+        // A reset ends every other reset link sent to this person.
+        const token = typeof ctx.body?.token === "string" ? ctx.body.token : "";
+        const used = token ? await ctx.context.internalAdapter.findVerificationValue(`reset-password:${token}`) : null;
+        if (used && used.expiresAt > new Date()) {
+          await ctx.context.adapter.deleteMany({
+            model: "verification",
+            where: [
+              { field: "value", value: used.value },
+              { field: "identifier", operator: "starts_with", value: "reset-password:" },
+              { field: "identifier", operator: "ne", value: `reset-password:${token}` },
+            ],
+          });
+        }
+        return;
+      }
       if (!NEEDS_RECENT_SIGN_IN.has(ctx.path)) return;
       const session = await getSessionFromCtx(ctx);
       if (!session) return;
