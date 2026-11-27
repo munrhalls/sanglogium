@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { fileURLToPath } from 'node:url';
 
 // Scoped to tests/product-filtering/ui/ only: those proofs import real .tsx
 // components, which plain `node --experimental-strip-types` cannot load at all
@@ -17,6 +18,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // jsdom is a forced, not a default, cost.
 export default defineConfig({
   plugins: [tsconfigPaths(), react()],
+  // tsconfig.json leaves tests/ out, so the plugin above does not resolve '@/' in a test file itself; this does, the same way.
+  resolve: { alias: [{ find: /^@\//, replacement: fileURLToPath(new URL('../', import.meta.url)) }] },
   test: {
     include: ['tests/product-filtering/ui/**/*.test.{ts,tsx}'],
     environment: 'node',
