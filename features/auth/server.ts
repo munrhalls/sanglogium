@@ -1,8 +1,8 @@
 import 'server-only';
-// Server-only entry: session guards, the auth route handlers, account name updates and the provider flag. Never import from client components or Node .mjs scripts.
+// Server-only entry: session guards, the auth route handlers, account name updates, the sign-in record and the provider flag. Never import from client components or Node .mjs scripts.
 import { createAuth } from './adapters/better-auth/auth';
 import { createSessionReaders } from './adapters/better-auth/session';
-import { createRouteHandlers, createUserNameUpdater } from './adapters/better-auth/serverApi';
+import { createRouteHandlers, createUserNameUpdater, createSignInRecordReader } from './adapters/better-auth/serverApi';
 import type { UserProfiles, OrderLifecycle, AuthEmails } from './core/ports';
 import { createUserProfileIfMissing, syncUserProfile, deleteUserProfile, getProfileIdByAuthId } from '@/features/profile/server';
 import { hasOpenOrders } from './adapters/sanity/hasOpenOrders';
@@ -36,6 +36,7 @@ const auth = createAuth({ profiles, orders, emails });
 
 export const authRouteHandlers = createRouteHandlers(auth);
 export const updateUserName = createUserNameUpdater(auth);
+export const getSignInRecord = createSignInRecordReader(auth);
 
 const { getSession, requireSession, verifySession, getSignInFacts } = createSessionReaders(auth, profiles);
 export { getSession, requireSession, verifySession, getSignInFacts };

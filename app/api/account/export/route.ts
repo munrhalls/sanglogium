@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSession } from "@/features/auth/server";
+import { getSession, getSignInRecord } from "@/features/auth/server";
 import { getAccountExport } from "@/features/account/server";
 
 export async function GET() {
@@ -8,7 +8,20 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const exportData = await getAccountExport(session.userId);
+  const [accountData, signInRecord] = await Promise.all([getAccountExport(session.userId), getSignInRecord()]);
+  const exportData = {
+    ...accountData,
+    signIn: {
+      account: {
+        email: session.user.email,
+        name: session.user.name,
+        emailVerified: session.user.emailVerified,
+        twoFactorEnabled: Boolean(session.user.twoFactorEnabled),
+        createdAt: session.user.createdAt,
+      },
+      ...signInRecord,
+    },
+  };
 
   const json = JSON.stringify(exportData, null, 2);
   const date = exportData.exportedAt.split("T")[0];
