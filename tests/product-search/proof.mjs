@@ -19,19 +19,21 @@ export function chosen(known) {
   return asked.length > 0 ? known.filter((id) => asked.includes(id)) : known
 }
 
-// questions: [{ id, text, checked, unit, findings: string[] }], already limited to the chosen ones.
+// questions: [{ id, text, checked, unit, findings: string[], perCase? }], already limited to the chosen ones.
+// perCase false: the findings are statements about the whole question, not one per case.
 export function report(questions) {
   let nos = 0
   for (const question of questions) {
     if (question.checked === 0) broken(`${question.id} checked nothing`)
     const findings = [...question.findings].sort()
     console.log(`${question.id} ${question.text}`)
+    const perCase = question.perCase !== false
     if (findings.length === 0) {
-      console.log(`  PASS — ${question.checked} of ${question.checked} ${question.unit}`)
+      console.log(perCase ? `  PASS — ${question.checked} of ${question.checked} ${question.unit}` : `  PASS — ${question.checked} ${question.unit} checked`)
       continue
     }
     nos += 1
-    console.log(`  NO — ${findings.length} of ${question.checked} ${question.unit}:`)
+    console.log(perCase ? `  NO — ${findings.length} of ${question.checked} ${question.unit}:` : `  NO — ${question.checked} ${question.unit} checked:`)
     const shown = full ? findings : findings.slice(0, 5)
     for (const finding of shown) console.log(`    ${finding}`)
     if (shown.length < findings.length) console.log(`    … ${findings.length - shown.length} more (--full prints all)`)
